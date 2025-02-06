@@ -25,9 +25,12 @@
     "@mantine/hooks": "7.16.2",
     "@next/bundle-analyzer": "^15.1.5",
     "@tabler/icons-react": "^3.28.1",
+    "gray-matter": "^4.0.3",
     "next": "15.1.5",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

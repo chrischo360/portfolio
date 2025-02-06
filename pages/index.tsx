@@ -1,11 +1,10 @@
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
-import { Welcome } from '../components/Welcome/Welcome';
-
+import { Title, Text } from '@mantine/core';
 export default function HomePage() {
   return (
     <>
-      <Welcome />
-      <ColorSchemeToggle />
+      <Title>TO BUILD: Interactive Game Involving Congestion Pricing</Title>
+      <Text>About Me: </Text>
+      <Text></Text>
     </>
   );
 }
