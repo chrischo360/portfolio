@@ -1,10 +1,10 @@
-import classes from './Navbar.module.css';
+import classes from './Header.module.css';
 import { Group, Button } from '@mantine/core';
 import Link from 'next/link';
 
-export function Navbar() {
+export function Header() {
   return (
-    <Group position="apart" px="lg" py="md">
+    <Group justify="center" w="100%" px="lg" py="md">
       <Link href="/" passHref>
         <Button variant="subtle">Home</Button>
       </Link>

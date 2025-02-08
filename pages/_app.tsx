@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { AppShell, MantineProvider, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { theme } from '../theme';
-import { Navbar } from '../components/Navbar/Navbar';
+import { Header } from '../components/Header/Header';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [opened, { toggle }] = useDisclosure();
@@ -19,9 +19,17 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <link rel="shortcut icon" href="/favicon.svg" />
       </Head>
-      <AppShell header={{ height: 60 }} footer={{ height: 60 }} padding="md">
+      <AppShell
+        header={{
+          height: 60,
+          collapsed: false,
+          offset: true,
+        }}
+        footer={{ height: 60 }}
+        padding="md"
+      >
         <AppShell.Header>
-          <Navbar />
+          <Header />
         </AppShell.Header>
         <AppShell.Main>
           <Component {...pageProps} />
