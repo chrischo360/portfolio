@@ -1,5 +1,6 @@
 ---
 title: 'Example Post Title'
+slug: 'example-post-title'
 publishedDate: '2024-02-06'
 tags: ['technology', 'writing']
 excerpt: 'A brief summary of the post that appears in previews'
