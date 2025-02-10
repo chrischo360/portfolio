@@ -8,11 +8,11 @@ export function Header() {
       <Link href="/" passHref>
         <Button variant="subtle">Home</Button>
       </Link>
-      <Link href="/writing" passHref>
-        <Button variant="subtle">Writing</Button>
-      </Link>
       <Link href="/work" passHref>
         <Button variant="subtle">Work</Button>
+      </Link>
+      <Link href="/writing" passHref>
+        <Button variant="subtle">Writing</Button>
       </Link>
     </Group>
   );

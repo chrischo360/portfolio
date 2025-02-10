@@ -1,7 +1,7 @@
 import '@mantine/core/styles.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { AppShell, MantineProvider, Burger } from '@mantine/core';
+import { AppShell, MantineProvider, Burger, Container } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { theme } from '../theme';
 import { Header } from '../components/Header/Header';
@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <MantineProvider theme={theme}>
       <Head>
-        <title>My Work and Writing</title>
+        <title>Chris C. | Work and Writing</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
@@ -32,7 +32,9 @@ export default function App({ Component, pageProps }: AppProps) {
           <Header />
         </AppShell.Header>
         <AppShell.Main>
-          <Component {...pageProps} />
+          <Container size="sm">
+            <Component {...pageProps} />
+          </Container>
         </AppShell.Main>
         <AppShell.Footer />
       </AppShell>
