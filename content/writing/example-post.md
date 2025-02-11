@@ -6,10 +6,6 @@ tags: ['technology', 'writing']
 excerpt: 'A brief summary of the post that appears in previews'
 ---
 
-# Example Post Title
-
-This is the main content of your post. You can use all standard Markdown features:
-
 ## Subheadings
 
 - Bullet points

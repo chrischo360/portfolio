@@ -7,6 +7,29 @@ import { MantineProvider, useMantineColorScheme } from '@mantine/core';
 import { theme } from '../theme';
 
 export const parameters = {
+  actions: { argTypesRegex: "^on[A-Z].*" },
+  controls: {
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
+    },
+  },
+  viewport: {
+    viewports: {
+      mobile: {
+        name: 'Mobile',
+        styles: { width: '360px', height: '640px' },
+      },
+      tablet: {
+        name: 'Tablet',
+        styles: { width: '768px', height: '1024px' },
+      },
+      desktop: {
+        name: 'Desktop',
+        styles: { width: '1440px', height: '900px' },
+      },
+    },
+  },
   layout: 'fullscreen',
   options: {
     showPanel: false,
@@ -28,6 +51,13 @@ function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
 }
 
 export const decorators = [
-  (renderStory: any) => <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>,
-  (renderStory: any) => <MantineProvider theme={theme}>{renderStory()}</MantineProvider>,
+  (Story) => (
+    <ColorSchemeWrapper>
+      <MantineProvider theme={theme}>
+        <div style={{ padding: '2rem' }}>
+          <Story />
+        </div>
+      </MantineProvider>
+    </ColorSchemeWrapper>
+  ),
 ];
