@@ -23,23 +23,14 @@ export interface Technology {
 
 export interface Project {
   id: string;
+  display: boolean;
   title: string;
   description: string;
   technologies: Technology[];
   imageUrl?: string;
   githubUrl?: string;
   liveUrl?: string;
+  videoUrl?: string;
   startDate: string;
   endDate?: string;
-}
-
-export interface Writing {
-  id: string;
-  title: string;
-  slug: string;
-  content: string;
-  excerpt?: string;
-  publishedDate: string;
-  lastModified?: string;
-  tags?: string[];
 }
