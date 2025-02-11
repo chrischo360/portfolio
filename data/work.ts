@@ -9,8 +9,8 @@ export const projects: Project[] = [
     technologies: [],
     githubUrl: 'https://github.com/chrischo360/portfolio',
     liveUrl: 'https://yourwebsite.com',
-    startDate: '2023-01',
-    endDate: '2023-present',
+    startDate: '',
+    endDate: '',
   },
   {
     id: '2',
@@ -19,8 +19,8 @@ export const projects: Project[] = [
     technologies: [],
     githubUrl: 'https://github.com/chrischo360/lacuna',
     liveUrl: 'https://lacuna-six.vercel.app',
-    startDate: '2020-01',
-    endDate: '2020-01',
+    startDate: '',
+    endDate: '',
   },
   {
     id: '3',
@@ -28,8 +28,8 @@ export const projects: Project[] = [
     description: '',
     technologies: [],
     githubUrl: '',
-    startDate: '2020-01',
-    endDate: '2020-01',
+    startDate: '',
+    endDate: '',
   },
   {
     id: '4',
