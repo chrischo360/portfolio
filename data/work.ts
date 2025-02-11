@@ -3,6 +3,7 @@ import { Project } from '../types/work';
 export const projects: Project[] = [
   {
     id: '1',
+    display: true,
     title: 'Personal Website',
     description:
       'A personal website to showcase some of my writing and work. Built with Next.js and Mantine UI',
@@ -14,6 +15,7 @@ export const projects: Project[] = [
   },
   {
     id: '2',
+    display: true,
     title: 'Lacuna Mentors',
     description: '',
     technologies: [],
@@ -24,6 +26,7 @@ export const projects: Project[] = [
   },
   {
     id: '3',
+    display: false,
     title: 'LifeOS',
     description: '',
     technologies: [],
@@ -33,6 +36,7 @@ export const projects: Project[] = [
   },
   {
     id: '4',
+    display: false,
     title: 'Notion Clone',
     description: '',
     technologies: [],
@@ -43,6 +47,7 @@ export const projects: Project[] = [
   },
   {
     id: '5',
+    display: false,
     title: 'Leetcode Solutions',
     description: '',
     technologies: [],
@@ -53,6 +58,7 @@ export const projects: Project[] = [
   },
   {
     id: '6',
+    display: false,
     title: 'SAIL Microservices',
     description: '',
     technologies: [],
@@ -63,6 +69,7 @@ export const projects: Project[] = [
   },
   {
     id: '7',
+    display: false,
     title: 'SAIL Website',
     description: '',
     technologies: [],
@@ -73,6 +80,7 @@ export const projects: Project[] = [
   },
   {
     id: '8',
+    display: false,
     title: 'SAIL Visualizing Energy',
     description: '',
     technologies: [],
