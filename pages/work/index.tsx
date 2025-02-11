@@ -6,7 +6,7 @@ export default function WorkPage() {
   const displayedProjects = projects.filter(project => project.display);
 
   return (
-    <Container size="lg" py="xl">
+    <>
       <Title order={1} mb="xl">
         My Work
       </Title>
@@ -17,6 +17,6 @@ export default function WorkPage() {
           </Grid.Col>
         ))}
       </Grid>
-    </Container>
+    </>
   );
 }
