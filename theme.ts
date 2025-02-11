@@ -19,10 +19,15 @@ export const theme = createTheme({
     Button: {
       defaultProps: {
         color: 'button',
+        variant: 'outline'
       },
       styles: {
         root: {
           color: 'buttonText',
+          '&:hover': {
+            backgroundColor: 'inherit',
+            color: 'buttonText',
+          }
         },
       },
     },

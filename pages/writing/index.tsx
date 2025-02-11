@@ -10,6 +10,7 @@ interface WritingPageProps {
 
 export default function WritingPage({ writings }: WritingPageProps) {
   console.log(writings);
+
   return (
     <Stack>
       <Title order={1}>Writing</Title>

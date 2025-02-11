@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Header />
         </AppShell.Header>
         <AppShell.Main>
-          <Container size="sm">
+          <Container size="sm" py="xl">
             <Component {...pageProps} />
           </Container>
         </AppShell.Main>

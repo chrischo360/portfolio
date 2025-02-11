@@ -13,7 +13,7 @@ import { projects } from '../../data/work';
 
 export default function WorkPage() {
   return (
-    <Container size="lg" py="xl">
+    <>
       <Title order={1} mb="xl">
         My Work
       </Title>
@@ -69,6 +69,6 @@ export default function WorkPage() {
           </Grid.Col>
         ))}
       </Grid>
-    </Container>
+    </>
   );
 }
