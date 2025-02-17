@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
         header={{
           height: 60,
           collapsed: false,
-          offset: true,
+          offset: true
         }}
         footer={{ height: 60 }}
         padding="md"

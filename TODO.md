@@ -1,7 +1,8 @@
 # Dev Tooling
 
 - Understand storybook
-- Get a mock three.js working
+- Update neovim config
+  - Look into avante.nvim
 
 # About Page
 
@@ -11,6 +12,7 @@
   - Personal interests
   - What I'm currently working on
   - Career goals
+- Get a mock three.js working
 
 # Work Page
 
