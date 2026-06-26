@@ -51,9 +51,10 @@ export const homeContent = {
         "Building checkout, cart, browse, and loyalty acquisition experiences with a focus on measurable performance and reliable production behavior.",
     },
     highlights: [
-      "Reduced checkout P75 page latency by 43% while working across high-traffic purchase flows.",
-      "Built a GraphQL preloading flow that reduced modal load time from 3.8s to 0.5s.",
-      "Shipped production systems across React, Next.js, TypeScript, Java, Spring Boot, GraphQL, SQL, monitoring, and experimentation.",
+      "Cut checkout P75 page latency by 43% by removing legacy bottlenecks in high-traffic purchase flows.",
+      "Built a GraphQL preloading flow for a rewards checkout modal, dropping load time from 3.8s to 0.5s.",
+      "Prevented revenue loss on-call with a hotfix that unblocked checkout for all non-US stores.",
+      "Decomposed legacy checkout flows into federated GraphQL services across purchase surfaces.",
     ],
     actions: {
       open: "View full resume",
