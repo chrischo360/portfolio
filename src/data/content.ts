@@ -61,6 +61,7 @@ export const homeContent = {
     },
   },
   projects: {
+    enabled: false,
     heading: {
       title: "Projects",
       description:

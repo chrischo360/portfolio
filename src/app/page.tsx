@@ -21,9 +21,11 @@ export default function Home() {
             <ButtonLink variant="primary" size="large" href="#resume">
               View Resume <span aria-hidden="true">→</span>
             </ButtonLink>
-            <ButtonLink variant="secondary" size="large" href="#projects">
-              View Projects
-            </ButtonLink>
+            {homeContent.projects.enabled && (
+              <ButtonLink variant="secondary" size="large" href="#projects">
+                View Projects
+              </ButtonLink>
+            )}
           </div>
         </div>
         <aside className="resume-card" aria-label="Chris profile summary">
@@ -91,23 +93,25 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="projects"
-        className="section-pad"
-        aria-labelledby="projects-title"
-      >
-        <SectionHeading
-          id="projects-title"
-          title={homeContent.projects.heading.title}
+      {homeContent.projects.enabled && (
+        <section
+          id="projects"
+          className="section-pad"
+          aria-labelledby="projects-title"
         >
-          {homeContent.projects.heading.description}
-        </SectionHeading>
-        <div className="project-grid">
-          {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
-          ))}
-        </div>
-      </section>
+          <SectionHeading
+            id="projects-title"
+            title={homeContent.projects.heading.title}
+          >
+            {homeContent.projects.heading.description}
+          </SectionHeading>
+          <div className="project-grid">
+            {projects.map((project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section id="contact" className="contact" aria-labelledby="contact-title">
         <div className="contact-card">

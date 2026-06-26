@@ -13,7 +13,7 @@ export const siteConfig = {
   },
   navigation: [
     { label: "Resume", href: "/#resume", enabled: true },
-    { label: "Projects", href: "/#projects", enabled: true },
+    { label: "Projects", href: "/#projects", enabled: false },
     { label: "Contact", href: "/#contact", enabled: true },
     { label: "Blog", href: "/blog", enabled: false },
   ],
