@@ -5,14 +5,15 @@ export function Header() {
   const navigation = siteConfig.navigation.filter((item) => item.enabled);
 
   return (
-    <header className="border-b border-zinc-200 bg-white/80 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/80">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
-        <Link href="/" className="font-semibold tracking-tight">
-          {siteConfig.name}
+    <header className="site-header">
+      <div className="shell nav">
+        <Link className="brand" href="/#top" aria-label={`${siteConfig.name} home`}>
+          <span className="brand-mark">{siteConfig.initials}</span>
+          <span>{siteConfig.name}</span>
         </Link>
-        <nav aria-label="Main navigation" className="flex items-center gap-5 text-sm text-zinc-600 dark:text-zinc-300">
+        <nav className="nav-links" aria-label="Primary navigation">
           {navigation.map((item) => (
-            <Link key={item.href} href={item.href} className="transition hover:text-zinc-950 dark:hover:text-white">
+            <Link key={item.href} href={item.href}>
               {item.label}
             </Link>
           ))}
