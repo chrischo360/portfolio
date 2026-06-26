@@ -3,14 +3,14 @@ import type { ReactNode } from "react";
 type SectionHeadingProps = {
   id: string;
   title: string;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 export function SectionHeading({ id, title, children }: SectionHeadingProps) {
   return (
     <div className="section-head">
       <h2 id={id}>{title}</h2>
-      <p>{children}</p>
+      {children && <p>{children}</p>}
     </div>
   );
 }

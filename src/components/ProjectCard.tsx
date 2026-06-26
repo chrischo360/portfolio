@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import type { Project } from "@/data/projects";
 
 type ProjectCardProps = {
@@ -10,27 +12,24 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <article className="project-card featured">
         <div>
           <ProjectMeta org={project.org} category={project.category} />
+          {project.image && (
+            <Image
+              className="project-image"
+              src={project.image.src}
+              alt={project.image.alt}
+              width={640}
+              height={360}
+            />
+          )}
           <h3>{project.title}</h3>
-          <p>{project.summary}</p>
           <div className="case-study-body">
+            <div className="case-block">
+              <span className="case-label">Description</span>
+              <div className="case-copy">{project.summary}</div>
+            </div>
             <div className="case-block">
               <span className="case-label">Built</span>
               <div className="case-copy">{project.built}</div>
-            </div>
-            <div className="case-block">
-              <span className="case-label">Impact</span>
-              <div className="impact-list">
-                {project.metrics.map((metric) => (
-                  <div className="case-metric" key={metric.value}>
-                    <strong>{metric.value}</strong>
-                    <span>{metric.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="case-block">
-              <span className="case-label">Stack</span>
-              <ChipList items={project.stack} />
             </div>
           </div>
         </div>
@@ -47,15 +46,27 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <article className="project-card">
       <div>
         <ProjectMeta org={project.org} category={project.category} />
+        {project.image && (
+          <Image
+            className="project-image compact"
+            src={project.image.src}
+            alt={project.image.alt}
+            width={480}
+            height={240}
+          />
+        )}
         <h3>{project.title}</h3>
-        <p>{project.summary}</p>
-        <div className="compact-impact">
-          <span>Impact</span>
-          <strong>{project.impactValue}</strong>
-          <p>{project.impactCopy}</p>
+        <div className="case-study-body compact">
+          <div className="case-block compact">
+            <span className="case-label">Description</span>
+            <div className="case-copy">{project.summary}</div>
+          </div>
+          <div className="case-block compact">
+            <span className="case-label">Built</span>
+            <div className="case-copy">{project.built}</div>
+          </div>
         </div>
       </div>
-      <ChipList items={project.stack} />
     </article>
   );
 }
@@ -69,14 +80,3 @@ function ProjectMeta({ org, category }: { org: string; category: string }) {
   );
 }
 
-function ChipList({ items }: { items: string[] }) {
-  return (
-    <div className="chips">
-      {items.map((item) => (
-        <span className="chip" key={item}>
-          {item}
-        </span>
-      ))}
-    </div>
-  );
-}

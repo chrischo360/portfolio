@@ -1,40 +1,22 @@
+import Image from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ProjectCard } from "@/components/ProjectCard";
+import { ResumeModal } from "@/components/ResumeModal";
 import { SectionHeading } from "@/components/SectionHeading";
+import { homeContent } from "@/data/content";
 import { projects } from "@/data/projects";
 import { siteConfig } from "@/data/site";
 
-const snapshotItems = [
-  { value: "43%", label: "Checkout P75 latency reduction" },
-  { value: "3.8s → 0.5s", label: "GraphQL preloading modal improvement" },
-  { value: "60+", label: "Mentors onboarded at Lacuna Mentors" },
-];
-
-const resumeHighlights = [
-  "Reduced checkout P75 page latency by 43% while working across high-traffic purchase flows.",
-  "Built a GraphQL preloading flow that reduced modal load time from 3.8s to 0.5s.",
-  "Shipped production systems across React, Next.js, TypeScript, Java, Spring Boot, GraphQL, SQL, monitoring, and experimentation.",
-];
-
 export default function Home() {
-  const resumeActionHref = siteConfig.resumeHref || `mailto:${siteConfig.email}`;
-  const resumeActionLabel = siteConfig.resumeHref
-    ? "Download full resume"
-    : "Request full resume";
+  const resumeActionHref = siteConfig.resumeHref;
+  const resumeActionLabel = homeContent.resume.actions.open;
 
   return (
     <>
       <section className="hero" aria-labelledby="hero-title">
         <div>
-          <div className="eyebrow">{siteConfig.role}</div>
-          <h1 id="hero-title">I build reliable software, tools, and systems.</h1>
-          <p className="lead">
-            Chris is a full-stack software engineer focused on product-minded
-            systems, performance, developer tools, and clean user experiences.
-            He currently builds checkout, loyalty, and rewards acquisition
-            experiences at Wayfair, with experience shipping across React,
-            Next.js, TypeScript, Java, GraphQL, and production infrastructure.
-          </p>
+          <h1 id="hero-title">{homeContent.hero.heading}</h1>
+          <p className="lead">{homeContent.hero.lead}</p>
           <div className="cta-row" aria-label="Primary actions">
             <ButtonLink variant="primary" size="large" href="#resume">
               View Resume <span aria-hidden="true">→</span>
@@ -46,52 +28,59 @@ export default function Home() {
         </div>
         <aside className="resume-card" aria-label="Chris profile summary">
           <div className="profile-row">
-            <div className="headshot" aria-hidden="true">
-              {siteConfig.initials}
-            </div>
+            <Image
+              className="headshot"
+              src={homeContent.profile.image.src}
+              alt={homeContent.profile.image.alt}
+              width={82}
+              height={82}
+              priority
+            />
             <div>
               <h2>{siteConfig.name}</h2>
-              <p>Software Engineer, Fintech & Loyalty Rewards at Wayfair</p>
+              <p>{homeContent.profile.subtitle}</p>
             </div>
           </div>
-          <div className="snapshot-list">
-            {snapshotItems.map((item) => (
-              <div className="snapshot-item" key={item.label}>
-                <strong>{item.value}</strong>
-                <span>{item.label}</span>
-              </div>
+          <ol className="timeline">
+            {homeContent.timeline.items.map((item) => (
+              <li className="timeline-item" key={item.org}>
+                <Image
+                  className="timeline-logo"
+                  src={item.logo.src}
+                  alt={`${item.org} logo`}
+                  width={item.logo.width}
+                  height={item.logo.height}
+                  unoptimized
+                />
+                <span className="timeline-detail">
+                  <strong>{item.org}</strong>
+                  <span className="timeline-role">{item.role}</span>
+                  <span className="timeline-period">{item.period}</span>
+                </span>
+              </li>
             ))}
-          </div>
-          <div className="snapshot-note">
-            Product engineering, performance work, zero-to-one building, and
-            developer tooling.
-          </div>
+          </ol>
+          <div className="snapshot-note">{homeContent.timeline.tagline}</div>
         </aside>
       </section>
 
       <section id="resume" className="section-pad" aria-labelledby="resume-title">
-        <SectionHeading id="resume-title" title="Resume preview">
-          A systems-minded engineer comfortable moving from product requirements
-          to shipped production software.
-        </SectionHeading>
+        <SectionHeading
+          id="resume-title"
+          title={homeContent.resume.heading.title}
+        />
         <div className="resume-panel">
           <aside className="role-card">
             <div>
-              <div className="label">Current role</div>
-              <h3>Software Engineer, Fintech & Loyalty Rewards at Wayfair</h3>
-              <p>
-                Building checkout, cart, browse, and loyalty acquisition
-                experiences with a focus on measurable performance and reliable
-                production behavior.
-              </p>
+              <div className="label">{homeContent.resume.role.label}</div>
+              <h3>{homeContent.resume.role.title}</h3>
+              <p>{homeContent.resume.role.description}</p>
             </div>
-            <ButtonLink variant="secondary" href={resumeActionHref}>
-              {resumeActionLabel}
-            </ButtonLink>
+            <ResumeModal href={resumeActionHref} label={resumeActionLabel} />
           </aside>
           <div className="resume-detail">
             <div className="resume-items">
-              {resumeHighlights.map((highlight, index) => (
+              {homeContent.resume.highlights.map((highlight, index) => (
                 <div className="resume-item" key={highlight}>
                   <span className="num">{String(index + 1).padStart(2, "0")}</span>
                   <p>{highlight}</p>
@@ -107,9 +96,11 @@ export default function Home() {
         className="section-pad"
         aria-labelledby="projects-title"
       >
-        <SectionHeading id="projects-title" title="Featured projects">
-          Selected work across commerce infrastructure, zero-to-one marketplace
-          building, and AI-assisted developer workflows.
+        <SectionHeading
+          id="projects-title"
+          title={homeContent.projects.heading.title}
+        >
+          {homeContent.projects.heading.description}
         </SectionHeading>
         <div className="project-grid">
           {projects.map((project) => (

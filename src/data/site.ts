@@ -7,7 +7,7 @@ export const siteConfig = {
   role: "Full-stack software engineer",
   location: "New York, NY",
   email: "christopher.cho.dev@gmail.com",
-  resumeHref: "",
+  resumeHref: "/resume.pdf",
   blog: {
     enabled: false,
   },

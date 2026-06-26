@@ -11,6 +11,10 @@ export type FeaturedProject = {
   }>;
   stack: string[];
   href: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
 };
 
 export type CompactProject = {
@@ -19,9 +23,14 @@ export type CompactProject = {
   category: string;
   title: string;
   summary: string;
+  built: string;
   impactValue: string;
   impactCopy: string;
   stack: string[];
+  image?: {
+    src: string;
+    alt: string;
+  };
 };
 
 export type Project = FeaturedProject | CompactProject;
@@ -49,6 +58,10 @@ export const projects: Project[] = [
     ],
     stack: ["React", "Next.js", "TypeScript", "Java", "GraphQL", "Datadog"],
     href: "#resume",
+    image: {
+      src: "/gem.webp",
+      alt: "Wayfair gem graphic",
+    },
   },
   {
     variant: "compact",
@@ -57,10 +70,16 @@ export const projects: Project[] = [
     title: "Mentorship marketplace",
     summary:
       "Co-founded and built a mentorship marketplace from zero to one, owning the product and engineering path from early requirements to live scheduling workflows.",
+    built:
+      "Custom scheduling, mentor onboarding, profile discovery, and marketplace operations flows.",
     impactValue: "60+ mentors",
     impactCopy:
       "Custom scheduling system saved $900/month while supporting marketplace operations.",
     stack: ["Marketplace", "Scheduling", "0 → 1"],
+    image: {
+      src: "/lacuna.png",
+      alt: "Lacuna Mentors graphic",
+    },
   },
   {
     variant: "compact",
@@ -69,6 +88,8 @@ export const projects: Project[] = [
     title: "Agentic Developer Toolchain",
     summary:
       "Built AI-assisted developer tooling for PR generation and CI/CD debugging, focused on turning failing build feedback into concrete repair loops.",
+    built:
+      "PR description generation, CI failure parsing, and formatting / TypeScript repair loops.",
     impactValue: "Fix loops",
     impactCopy:
       "Detected build failures and applied formatting and TypeScript fixes through Claude Code workflows.",

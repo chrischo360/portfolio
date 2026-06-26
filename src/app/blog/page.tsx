@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { blogContent } from "@/data/content";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -7,11 +8,9 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <section className="section-pad" aria-labelledby="blog-title">
-      <div className="eyebrow">Blog</div>
-      <h1 id="blog-title">Writing coming soon.</h1>
-      <p className="lead">
-        This route is scaffolded but hidden from the main navigation for now.
-      </p>
+      <div className="eyebrow">{blogContent.eyebrow}</div>
+      <h1 id="blog-title">{blogContent.heading}</h1>
+      <p className="lead">{blogContent.lead}</p>
     </section>
   );
 }
