@@ -28,8 +28,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={sourceSerif.variable}>
       <body>
-        <a className="skip-link" href="#resume">
-          Skip to resume
+        <a className="skip-link" href="#top">
+          Skip to content
         </a>
         <Header />
         <main id="top" className="shell">

@@ -751,6 +751,171 @@ h1 {
   transform: translateX(2px);
 }
 
+.work-grid,
+.work-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.work-list {
+  grid-template-columns: 1fr;
+}
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.work-card-eyebrow {
+  margin: 0 0 14px;
+  color: var(--accent-ink);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.work-card h2,
+.work-card h3 {
+  margin: 0 0 14px;
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+
+.work-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.resume-claim {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-2);
+}
+
+.resume-claim span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent-ink);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.resume-claim p {
+  margin: 0;
+  color: var(--fg);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.work-index h1,
+.case-hero h1 {
+  max-width: 900px;
+}
+
+.case-study {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.case-hero {
+  margin-top: 34px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.case-body {
+  display: grid;
+  gap: 34px;
+  margin-top: 34px;
+}
+
+.case-section {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.case-section h2 {
+  margin: 0;
+  color: var(--accent-ink);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.case-section p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.case-section p:last-child {
+  margin-bottom: 0;
+}
+
+.case-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.case-media {
+  margin: 32px 0;
+}
+
+.case-media img,
+.case-media video,
+.case-media iframe {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.case-media img,
+.case-media video {
+  display: block;
+  height: auto;
+}
+
+.case-media iframe {
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+.case-media figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 13px;
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -972,8 +1137,15 @@ h1 {
   }
 
   .resume-panel,
-  .project-grid {
+  .project-grid,
+  .work-grid,
+  .work-list {
     grid-template-columns: 1fr;
+  }
+
+  .case-section {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .role-card {
@@ -1035,7 +1207,8 @@ h1 {
   }
 
   .role-card,
-  .project-card {
+  .project-card,
+  .work-card {
     padding: 24px;
   }
 

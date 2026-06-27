@@ -3,8 +3,8 @@ export const siteConfig = {
   initials: "CC",
   title: "Chris Cho - Software Engineer",
   description:
-    "Chris Cho is a full-stack software engineer building reliable software, tools, and systems across checkout, loyalty, developer tooling, and production infrastructure.",
-  role: "Full-stack software engineer",
+    "Chris Cho is a product-minded software engineer focused on reliable user-facing systems, frontend performance, checkout experiences, and developer workflows.",
+  role: "Product-minded software engineer",
   location: "New York, NY",
   email: "christopher.cho.dev@gmail.com",
   resumeHref: "/resume.pdf",
@@ -12,8 +12,8 @@ export const siteConfig = {
     enabled: false,
   },
   navigation: [
+    { label: "Work", href: "/work", enabled: true },
     { label: "Resume", href: "/#resume", enabled: true },
-    { label: "Projects", href: "/#projects", enabled: false },
     { label: "Contact", href: "/#contact", enabled: true },
     { label: "Blog", href: "/blog", enabled: false },
   ],

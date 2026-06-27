@@ -1,11 +1,10 @@
 import Image from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
-import { ProjectCard } from "@/components/ProjectCard";
 import { ResumeModal } from "@/components/ResumeModal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { homeContent } from "@/data/content";
-import { projects } from "@/data/projects";
 import { siteConfig } from "@/data/site";
+import { workCaseStudies } from "@/data/work";
 
 export default function Home() {
   const resumeActionHref = siteConfig.resumeHref;
@@ -18,14 +17,12 @@ export default function Home() {
           <h1 id="hero-title">{homeContent.hero.heading}</h1>
           <p className="lead">{homeContent.hero.lead}</p>
           <div className="cta-row" aria-label="Primary actions">
-            <ButtonLink variant="primary" size="large" href="#resume">
-              View Resume <span aria-hidden="true">→</span>
+            <ButtonLink variant="primary" size="large" href="/work">
+              Read selected work <span aria-hidden="true">→</span>
             </ButtonLink>
-            {homeContent.projects.enabled && (
-              <ButtonLink variant="secondary" size="large" href="#projects">
-                View Projects
-              </ButtonLink>
-            )}
+            <ButtonLink variant="secondary" size="large" href="#resume">
+              View Resume
+            </ButtonLink>
           </div>
         </div>
         <aside className="resume-card" aria-label="Chris profile summary">
@@ -93,25 +90,30 @@ export default function Home() {
         </div>
       </section>
 
-      {homeContent.projects.enabled && (
-        <section
-          id="projects"
-          className="section-pad"
-          aria-labelledby="projects-title"
-        >
-          <SectionHeading
-            id="projects-title"
-            title={homeContent.projects.heading.title}
-          >
-            {homeContent.projects.heading.description}
-          </SectionHeading>
-          <div className="project-grid">
-            {projects.map((project) => (
-              <ProjectCard key={project.title} project={project} />
-            ))}
-          </div>
-        </section>
-      )}
+      <section id="work" className="section-pad" aria-labelledby="work-title">
+        <SectionHeading id="work-title" title="Selected work">
+          Write-ups behind selected resume points: the problem, approach,
+          tradeoffs, and outcome behind each claim.
+        </SectionHeading>
+        <div className="work-grid">
+          {workCaseStudies.map((caseStudy) => (
+            <article className="work-card" key={caseStudy.slug}>
+              <div>
+                <p className="work-card-eyebrow">{caseStudy.eyebrow}</p>
+                <h3>{caseStudy.title}</h3>
+                <p>{caseStudy.summary}</p>
+              </div>
+              <div className="resume-claim">
+                <span>Resume point</span>
+                <p>{caseStudy.resumeBullet}</p>
+              </div>
+              <ButtonLink href={`/work/${caseStudy.slug}`}>
+                Read write-up <span aria-hidden="true">→</span>
+              </ButtonLink>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section id="contact" className="contact" aria-labelledby="contact-title">
         <div className="contact-card">

@@ -3,8 +3,8 @@ const currentRoleTitle =
 
 export const homeContent = {
   hero: {
-    heading: "Christopher Cho",
-    lead: "I'm a full-stack engineer currently at Wayfair, where I work on checkout, loyalty, and rewards. Lately I've been focused on making high-traffic flows faster and more reliable — and building tools that help the team ship quicker. Mostly working with React, Next.js, TypeScript, Java, and GraphQL.",
+    heading: "Product-minded software engineer focused on reliable user-facing systems.",
+    lead: "I'm currently at Wayfair working on checkout, loyalty, and rewards. I like problems where technical quality directly affects user experience, business outcomes, and team velocity — especially performance, production reliability, and clearer product systems.",
   },
   profile: {
     subtitle: currentRoleTitle,
@@ -40,7 +40,7 @@ export const homeContent = {
   },
   resume: {
     heading: {
-      title: "Resume",
+      title: "Resume points",
       description:
         "A systems-minded engineer comfortable moving from product requirements to shipped production software.",
     },
@@ -66,7 +66,7 @@ export const homeContent = {
     heading: {
       title: "Projects",
       description:
-        "Selected work across commerce infrastructure, zero-to-one marketplace building, and AI-assisted developer workflows.",
+        "Write-ups behind selected resume points, focused on the problem, tradeoffs, outcome, and what I learned.",
     },
   },
 } as const;
