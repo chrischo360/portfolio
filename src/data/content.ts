@@ -4,7 +4,7 @@ const currentRoleTitle =
 export const homeContent = {
   hero: {
     kicker: "Full-Stack Engineer · High-Traffic Checkout & Loyalty Systems",
-    heading: "I build checkout and loyalty systems that millions of people actually use.",
+    heading: "Product-minded software engineer focused on reliable user-facing systems.",
     lead: "I'm currently at Wayfair working on checkout, loyalty, and rewards. I like problems where technical quality directly affects user experience, business outcomes, and team velocity — especially performance, production reliability, and clearer product systems.",
   },
   profile: {
