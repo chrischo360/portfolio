@@ -72,7 +72,7 @@ export const homeContent = {
 } as const;
 
 export const blogContent = {
-  eyebrow: "Blog",
-  heading: "Writing coming soon.",
-  lead: "This route is scaffolded but hidden from the main navigation for now.",
+  eyebrow: "Case studies",
+  heading: "Deeper write-ups behind selected work.",
+  lead: "Config-driven articles that can support styled text, diagrams, images, GIFs, video, embeds, and draft media placeholders.",
 } as const;

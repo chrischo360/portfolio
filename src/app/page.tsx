@@ -4,11 +4,12 @@ import { ResumeModal } from "@/components/ResumeModal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { homeContent } from "@/data/content";
 import { siteConfig } from "@/data/site";
-import { workCaseStudies } from "@/data/work";
+import { getArticles } from "@/lib/markdoc/articles";
 
 export default function Home() {
   const resumeActionHref = siteConfig.resumeHref;
   const resumeActionLabel = homeContent.resume.actions.open;
+  const workArticles = getArticles("work");
 
   return (
     <>
@@ -96,19 +97,21 @@ export default function Home() {
           tradeoffs, and outcome behind each claim.
         </SectionHeading>
         <div className="work-grid">
-          {workCaseStudies.map((caseStudy) => (
-            <article className="work-card" key={caseStudy.slug}>
+          {workArticles.map((article) => (
+            <article className="work-card" key={article.slug}>
               <div>
-                <p className="work-card-eyebrow">{caseStudy.eyebrow}</p>
-                <h3>{caseStudy.title}</h3>
-                <p>{caseStudy.summary}</p>
+                <p className="work-card-eyebrow">{article.eyebrow}</p>
+                <h3>{article.title}</h3>
+                <p>{article.summary}</p>
               </div>
-              <div className="resume-claim">
-                <span>Resume point</span>
-                <p>{caseStudy.resumeBullet}</p>
-              </div>
-              <ButtonLink href={`/work/${caseStudy.slug}`}>
-                Read write-up <span aria-hidden="true">→</span>
+              {article.impact && (
+                <div className="resume-claim">
+                  <span>Why it matters</span>
+                  <p>{article.impact}</p>
+                </div>
+              )}
+              <ButtonLink href={article.href}>
+                Read story <span aria-hidden="true">→</span>
               </ButtonLink>
             </article>
           ))}

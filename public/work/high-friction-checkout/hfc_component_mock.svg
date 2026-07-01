@@ -1,0 +1,25 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="36" fill="#FBF7F2"/>
+  <rect x="80" y="70" width="1040" height="620" rx="28" fill="#F4EEE8" stroke="#E4D8CD" stroke-width="2"/>
+  <rect x="120" y="112" width="280" height="18" rx="9" fill="#D8CEC4"/>
+  <rect x="120" y="170" width="960" height="440" rx="24" fill="#1F1915" opacity="0.28"/>
+  <rect x="255" y="150" width="690" height="410" rx="26" fill="white" stroke="#D8C9BB" stroke-width="2"/>
+  <rect x="295" y="190" width="130" height="44" rx="13" fill="#4C1D95"/>
+  <text x="360" y="218" fill="white" font-family="Inter, Arial" font-size="18" font-weight="800" text-anchor="middle">REWARDS</text>
+  <rect x="835" y="186" width="68" height="68" rx="21" fill="url(#gem)" transform="rotate(8 869 220)"/>
+  <text x="869" y="229" fill="white" font-family="Inter, Arial" font-size="26" font-weight="900" text-anchor="middle">$</text>
+  <text x="295" y="298" fill="#221A14" font-family="Inter, Arial" font-size="40" font-weight="850">Earn rewards on this order</text>
+  <text x="295" y="338" fill="#6B625C" font-family="Inter, Arial" font-size="22">Join today and get contextual value based on your cart.</text>
+  <rect x="295" y="378" width="610" height="70" rx="16" fill="#FFFAF5" stroke="#E8DCD0"/>
+  <circle cx="326" cy="413" r="12" fill="white" stroke="#7C3AED" stroke-width="8"/>
+  <text x="356" y="405" fill="#221A14" font-family="Inter, Arial" font-size="20" font-weight="800">Yes, enroll me</text>
+  <text x="356" y="431" fill="#6B625C" font-family="Inter, Arial" font-size="17">Accept terms and add membership to checkout.</text>
+  <rect x="295" y="462" width="610" height="70" rx="16" fill="#FFFAF5" stroke="#E8DCD0"/>
+  <circle cx="326" cy="497" r="12" fill="white" stroke="#C8BDB2" stroke-width="4"/>
+  <text x="356" y="489" fill="#221A14" font-family="Inter, Arial" font-size="20" font-weight="800">No thanks</text>
+  <text x="356" y="515" fill="#6B625C" font-family="Inter, Arial" font-size="17">Continue checkout without rewards.</text>
+  <rect x="295" y="552" width="610" height="58" rx="15" fill="#7C3AED"/>
+  <text x="600" y="589" fill="white" font-family="Inter, Arial" font-size="20" font-weight="850" text-anchor="middle">Join Rewards</text>
+  <rect x="120" y="628" width="960" height="34" rx="17" fill="white" opacity="0.8" stroke="#E4D8CD"/>
+  <defs><linearGradient id="gem" x1="835" y1="186" x2="903" y2="254"><stop stop-color="#A78BFA"/><stop offset="1" stop-color="#F0ABFC"/></linearGradient></defs>
+</svg>

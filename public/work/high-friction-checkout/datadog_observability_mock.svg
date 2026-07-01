@@ -1,0 +1,25 @@
+<svg width="1200" height="640" viewBox="0 0 1200 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="640" rx="36" fill="#111111"/>
+  <text x="70" y="82" fill="#FFFFFF" font-family="Inter, Arial" font-size="40" font-weight="850">Checkout safety dashboard</text>
+  <text x="70" y="120" fill="#A3A3A3" font-family="Inter, Arial" font-size="22">Representative Datadog view: errors, payment failures, and latency watched during rollout.</text>
+  <rect x="70" y="165" width="320" height="170" rx="22" fill="#1C1C1C" stroke="#333"/>
+  <text x="100" y="210" fill="#A3A3A3" font-family="Inter, Arial" font-size="18" font-weight="800">checkout errors</text>
+  <text x="100" y="270" fill="#22C55E" font-family="Inter, Arial" font-size="54" font-weight="900">low</text>
+  <path d="M100 305 C140 275 170 318 210 288 C250 258 285 310 350 274" stroke="#22C55E" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <rect x="440" y="165" width="320" height="170" rx="22" fill="#1C1C1C" stroke="#333"/>
+  <text x="470" y="210" fill="#A3A3A3" font-family="Inter, Arial" font-size="18" font-weight="800">payment failures</text>
+  <text x="470" y="270" fill="#22C55E" font-family="Inter, Arial" font-size="54" font-weight="900">stable</text>
+  <path d="M470 305 C520 300 540 286 585 292 C640 299 675 280 720 288" stroke="#22C55E" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <rect x="810" y="165" width="320" height="170" rx="22" fill="#1C1C1C" stroke="#333"/>
+  <text x="840" y="210" fill="#A3A3A3" font-family="Inter, Arial" font-size="18" font-weight="800">page latency</text>
+  <text x="840" y="270" fill="#F59E0B" font-family="Inter, Arial" font-size="54" font-weight="900">P75</text>
+  <path d="M840 305 C880 278 915 315 955 292 C990 272 1030 300 1090 278" stroke="#F59E0B" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <rect x="70" y="380" width="1060" height="185" rx="22" fill="#1C1C1C" stroke="#333"/>
+  <text x="100" y="430" fill="#FFFFFF" font-family="Inter, Arial" font-size="24" font-weight="850">Production safety checks</text>
+  <text x="100" y="480" fill="#A3A3A3" font-family="Inter, Arial" font-size="22">• Alert if checkout errors spike</text>
+  <text x="470" y="480" fill="#A3A3A3" font-family="Inter, Arial" font-size="22">• Watch payment failures</text>
+  <text x="780" y="480" fill="#A3A3A3" font-family="Inter, Arial" font-size="22">• Track latency regressions</text>
+  <text x="100" y="525" fill="#A3A3A3" font-family="Inter, Arial" font-size="22">• Log missing schema variants</text>
+  <text x="470" y="525" fill="#A3A3A3" font-family="Inter, Arial" font-size="22">• Disable veil on failure</text>
+  <text x="780" y="525" fill="#A3A3A3" font-family="Inter, Arial" font-size="22">• Keep checkout recoverable</text>
+</svg>

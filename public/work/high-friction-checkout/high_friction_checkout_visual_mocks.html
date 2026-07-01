@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>High Friction Checkout Visual Mocks</title>
+  <style>
+    :root {
+      --ink: #221a14;
+      --muted: #6b625c;
+      --bg: #fbf7f2;
+      --card: #fffdf9;
+      --line: #eadfd4;
+      --purple: #7c3aed;
+      --purple-soft: #f1e8ff;
+      --green: #0f9f6e;
+      --green-soft: #e8f8f2;
+      --orange: #f97316;
+      --orange-soft: #fff1e7;
+      --blue: #2563eb;
+      --blue-soft: #eaf1ff;
+      --shadow: 0 18px 50px rgba(54, 37, 23, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #fff5ea, var(--bg) 36%, #f7f0ff 100%);
+      color: var(--ink);
+      padding: 48px;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: rgba(255, 253, 249, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+      background: #fff;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 48px;
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+      margin: 0 0 16px;
+    }
+
+    h2 {
+      font-size: 24px;
+      letter-spacing: -0.02em;
+      margin: 0 0 18px;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .tag {
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: var(--purple-soft);
+      color: var(--purple);
+    }
+
+    .mock-checkout {
+      background: #f6f3ef;
+      border: 1px solid #e5d8cb;
+      border-radius: 24px;
+      padding: 18px;
+      min-height: 390px;
+    }
+
+    .checkout-bar {
+      height: 14px;
+      width: 42%;
+      border-radius: 99px;
+      background: #d7cec5;
+      margin-bottom: 18px;
+    }
+
+    .veil {
+      position: absolute;
+      inset: 0;
+      background: rgba(32, 25, 20, 0.32);
+      border-radius: 24px;
+    }
+
+    .hfc-banner {
+      position: relative;
+      z-index: 2;
+      background: #fff;
+      border: 1px solid #ddd0c3;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 15px 35px rgba(32, 25, 20, 0.18);
+      margin-bottom: 18px;
+    }
+
+    .hfc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .logo-pill {
+      background: #4c1d95;
+      color: white;
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .gem {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #a78bfa, #f0abfc);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      transform: rotate(8deg);
+    }
+
+    .hfc-title {
+      font-size: 26px;
+      letter-spacing: -0.04em;
+      font-weight: 850;
+      margin-bottom: 6px;
+    }
+
+    .choice {
+      border: 1px solid #e9ded3;
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-top: 12px;
+      background: #fffaf5;
+    }
+
+    .radio {
+      width: 18px;
+      height: 18px;
+      border: 5px solid var(--purple);
+      border-radius: 50%;
+      margin-top: 2px;
+      flex: 0 0 auto;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 800;
+      background: var(--purple);
+      color: white;
+      flex: 1;
+    }
+
+    .ghost-line {
+      height: 52px;
+      border: 1px solid #e3d8ce;
+      background: #fffdfb;
+      border-radius: 16px;
+      margin-top: 12px;
+      opacity: 0.7;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .mini-title {
+      font-size: 15px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 850;
+      margin-bottom: 14px;
+    }
+
+    .flow-box {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      padding: 16px;
+      margin-bottom: 12px;
+      font-weight: 760;
+    }
+
+    .flow-box small {
+      display: block;
+      color: var(--muted);
+      font-weight: 550;
+      margin-top: 5px;
+      line-height: 1.35;
+    }
+
+    .json-card {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 14px;
+      white-space: pre-wrap;
+      overflow: auto;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .json-card.before {
+      background: #2a1712;
+      color: #ffe8dc;
+    }
+
+    .json-card.after {
+      background: #17142c;
+      color: #eee8ff;
+    }
+
+    .json-card .key { color: #fdba74; }
+    .json-card .value { color: #86efac; }
+    .json-card .muted-json { color: #b9a9ce; }
+
+    .arrow {
+      color: var(--muted);
+      text-align: center;
+      font-weight: 900;
+      margin: -4px 0 8px;
+    }
+
+    .schema-tree {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: #1f1630;
+      color: #f8f3ff;
+      border-radius: 20px;
+      padding: 18px;
+      font-size: 13px;
+      line-height: 1.8;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .schema-tree .accent { color: #c4b5fd; }
+    .schema-tree .green { color: #86efac; }
+    .schema-tree .muted-code { color: #b9a9ce; }
+
+    .schema-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .schema-layer {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 18px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 118px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .schema-label {
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      font-weight: 900;
+      color: var(--purple);
+      background: var(--purple-soft);
+    }
+
+    .schema-copy strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .schema-copy span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .screen-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .screen-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      background: #fffaf5;
+      min-height: 130px;
+    }
+
+    .screen-card .screen-name {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+
+    .mini-screen-line {
+      height: 10px;
+      border-radius: 99px;
+      background: #ded2c7;
+      margin-bottom: 8px;
+    }
+
+    .mini-screen-line.short { width: 58%; }
+    .mini-screen-line.medium { width: 78%; }
+    .mini-screen-button {
+      height: 24px;
+      border-radius: 9px;
+      background: var(--purple);
+      margin-top: 14px;
+    }
+
+    .block-pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .block-pill {
+      border-radius: 999px;
+      padding: 9px 11px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .config-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .config-tile {
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .config-tile strong { display: block; margin-bottom: 6px; }
+    .config-tile span { color: var(--muted); font-size: 14px; line-height: 1.4; }
+
+    .separation-diagram {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      align-items: stretch;
+      margin-top: 18px;
+    }
+
+    .sep-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
+      min-height: 230px;
+    }
+
+    .sep-card.schema { background: #f4ecff; }
+    .sep-card.component { background: #fffaf0; transform: translateY(-8px); box-shadow: 0 16px 35px rgba(54, 37, 23, 0.12); }
+    .sep-card.checkout { background: #eaf6ff; }
+
+    .sep-card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .sep-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .sep-caption {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--muted);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .state-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .state {
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-weight: 850;
+      flex: 1;
+      text-align: center;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .state.default { background: var(--blue-soft); color: var(--blue); }
+    .state.success { background: var(--green-soft); color: var(--green); }
+    .state.decline { background: var(--orange-soft); color: var(--orange); }
+    .state.error { background: #fee2e2; color: #dc2626; }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .metric {
+      background: #161616;
+      border-radius: 16px;
+      padding: 14px;
+      color: white;
+      min-height: 96px;
+      border: 1px solid #333;
+    }
+
+    .metric-label {
+      color: #a3a3a3;
+      font-size: 12px;
+      font-weight: 750;
+      margin-bottom: 10px;
+    }
+
+    .metric-value {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .spark {
+      height: 34px;
+      margin-top: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e 20%, #84cc16 45%, #f59e0b 58%, #22c55e 78%);
+      opacity: 0.85;
+      clip-path: polygon(0 55%, 12% 35%, 24% 48%, 35% 28%, 48% 44%, 59% 25%, 68% 60%, 79% 42%, 90% 50%, 100% 30%, 100% 100%, 0 100%);
+    }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .evidence .card {
+      padding: 22px;
+      min-height: 180px;
+    }
+
+    .number {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: white;
+      background: var(--purple);
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 900px) {
+      body { padding: 24px; }
+      .hero, .grid-2, .grid-3, .evidence { grid-template-columns: 1fr; }
+      h1 { font-size: 38px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="card">
+        <div class="eyebrow">Checkout migration case study</div>
+        <h1>A banner that was secretly a state machine.</h1>
+        <p>I migrated a loyalty enrollment flow from legacy PHP/React checkout into a schema-driven Block Builder experience, making it configurable without making checkout fragile.</p>
+        <div class="tag-row">
+          <span class="tag">Server-driven UI</span>
+          <span class="tag">GraphQL schema</span>
+          <span class="tag">Reducer state machine</span>
+          <span class="tag">Checkout safety</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="mock-checkout">
+          <div class="checkout-bar"></div>
+          <div class="veil"></div>
+          <div class="hfc-banner">
+            <div class="hfc-top">
+              <div class="logo-pill">REWARDS</div>
+              <div class="gem">$</div>
+            </div>
+            <div class="hfc-title">Earn rewards on this order</div>
+            <p>Join today and get contextual value based on your cart.</p>
+            <div class="choice"><div class="radio"></div><div><strong>Yes, enroll me</strong><br><span style="color:var(--muted)">Accept terms and add membership to checkout.</span></div></div>
+            <div class="choice"><div class="radio" style="border-color:#c8bdb2"></div><div><strong>No thanks</strong><br><span style="color:var(--muted)">Continue checkout without rewards.</span></div></div>
+            <div class="button-row"><button class="btn">Join Rewards</button></div>
+          </div>
+          <div class="ghost-line"></div>
+          <div class="ghost-line"></div>
+          <div class="ghost-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <div class="mini-title">Before</div>
+        <h2>One blob of checkout-specific data</h2>
+        <p>PHP decided the copy, images, eligibility, rewards values, and UI states. React mostly rendered a custom one-off shape.</p>
+        <div class="json-card before">{
+  <span class="key">"potentialRewards"</span>: <span class="value">"$18.42"</span>,
+  <span class="key">"isLoyaltySkuAdded"</span>: <span class="value">false</span>,
+  <span class="key">"isInSuppressionPeriod"</span>: <span class="value">false</span>,
+  <span class="key">"logoImageId"</span>: <span class="value">"..."</span>,
+  <span class="key">"default"</span>: {
+    <span class="key">"title"</span>: <span class="value">"Earn rewards today"</span>,
+    <span class="key">"choice1"</span>: <span class="value">"Yes, enroll me"</span>,
+    <span class="key">"choice2"</span>: <span class="value">"No thanks"</span>,
+    <span class="key">"cta"</span>: <span class="value">"Join Rewards"</span>
+  },
+  <span class="muted-json">"added"</span>: { <span class="muted-json">"..."</span>: <span class="muted-json">"..."</span> },
+  <span class="muted-json">"declined"</span>: { <span class="muted-json">"..."</span>: <span class="muted-json">"..."</span> }
+}</div>
+        <div class="flow-box">Problem <small>Changing copy/layout required code because content, business data, UI structure, and behavior were tangled together.</small></div>
+      </div>
+
+      <div class="card">
+        <div class="mini-title">After</div>
+        <h2>Schema for content, state for behavior</h2>
+        <p>Block Builder owns the shape of the experience. Checkout state owns live cart data. The reducer owns interaction flow.</p>
+        <div class="json-card after">{
+  <span class="key">"__typename"</span>: <span class="value">"BlockBuilderLoyaltyProgramHighFrictionCheckoutExperience"</span>,
+  <span class="key">"screens"</span>: [
+    {
+      <span class="key">"screenType"</span>: <span class="value">"DEFAULT"</span>,
+      <span class="key">"header"</span>: { <span class="key">"logo"</span>: <span class="value">"..."</span> },
+      <span class="key">"content"</span>: {
+        <span class="key">"titleOne"</span>: <span class="value">"Earn [PotentialRewards]"</span>,
+        <span class="key">"contentBlocks"</span>: [<span class="value">"Choices"</span>, <span class="value">"Terms"</span>, <span class="value">"CTA"</span>]
+      },
+      <span class="key">"footer"</span>: { <span class="key">"contentBlocks"</span>: [] }
+    },
+    { <span class="key">"screenType"</span>: <span class="value">"REWARDS_ADDED"</span> },
+    { <span class="key">"screenType"</span>: <span class="value">"REWARDS_DECLINED"</span> }
+  ]
+}</div>
+        <div class="flow-box">Result <small>Product can configure content; React renders typed blocks; checkout state fills dynamic values like cart total and rewards.</small></div>
+      </div>
+    </section>
+
+    <section class="grid-3">
+      <div class="card">
+        <div class="number">1</div>
+        <h2>Schema owns content</h2>
+        <p>Screens, copy, rich text, terms, choices, CTA blocks, and tiered reward messaging live in Block Builder.</p>
+      </div>
+      <div class="card">
+        <div class="number">2</div>
+        <h2>Checkout owns data</h2>
+        <p>Cart total, potential rewards, membership price, SKU status, and veil behavior stay close to checkout state.</p>
+      </div>
+      <div class="card">
+        <div class="number">3</div>
+        <h2>Reducer owns flow</h2>
+        <p>Terms accepted, selected choice, loading, errors, screen transitions, and veil dismissal live in local state.</p>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <div class="mini-title">Block Builder schema</div>
+        <h2>CMS controls the experience structure</h2>
+        <p>Instead of hardcoding one banner, the schema describes the full experience, each screen, the blocks inside each screen, and the styling knobs content editors can adjust.</p>
+        <div class="schema-stack">
+          <div class="schema-layer">
+            <div class="schema-label">Experience</div>
+            <div class="schema-copy"><strong>Entire checkout component</strong><span>Owns the set of screens and global error copy.</span></div>
+          </div>
+          <div class="schema-layer">
+            <div class="schema-label">Screen</div>
+            <div class="schema-copy"><strong>One state of the flow</strong><span>Default, success, and declined screens each have their own header, content, footer, and tiered copy.</span></div>
+          </div>
+          <div class="schema-layer">
+            <div class="schema-label">Blocks</div>
+            <div class="schema-copy"><strong>Composable UI pieces</strong><span>Logo, gem, promo image, rich text, choices, terms, default CTA, decline CTA.</span></div>
+          </div>
+          <div class="schema-layer">
+            <div class="schema-label">Styles</div>
+            <div class="schema-copy"><strong>CMS-level layout knobs</strong><span>Rows/columns, background colors, alignment, margins, padding, and gaps.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="mini-title">Screen previews</div>
+        <h2>Same renderer, different configured screens</h2>
+        <div class="screen-strip">
+          <div class="screen-card">
+            <div class="screen-name">DEFAULT</div>
+            <div class="mini-screen-line medium"></div>
+            <div class="mini-screen-line"></div>
+            <div class="mini-screen-line short"></div>
+            <div class="mini-screen-button"></div>
+          </div>
+          <div class="screen-card" style="background:#edfff8">
+            <div class="screen-name">ADDED</div>
+            <div class="mini-screen-line medium" style="background:#86efac"></div>
+            <div class="mini-screen-line short"></div>
+            <div class="mini-screen-button" style="background:#0f9f6e"></div>
+          </div>
+          <div class="screen-card" style="background:#fff6ed">
+            <div class="screen-name">DECLINED</div>
+            <div class="mini-screen-line medium" style="background:#fdba74"></div>
+            <div class="mini-screen-line"></div>
+            <div class="mini-screen-button" style="background:#f97316"></div>
+          </div>
+        </div>
+        <div class="block-pill-grid">
+          <span class="block-pill">Header logo</span>
+          <span class="block-pill">Gem image</span>
+          <span class="block-pill">Promo banner</span>
+          <span class="block-pill">Title copy</span>
+          <span class="block-pill">Choice options</span>
+          <span class="block-pill">Terms</span>
+          <span class="block-pill">Primary CTA</span>
+          <span class="block-pill">Decline CTA</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <div class="mini-title">CMS configurability</div>
+        <h2>What product could change without a new component</h2>
+        <div class="config-grid">
+          <div class="config-tile"><strong>Layout</strong><span>Switch content between row and column containers.</span></div>
+          <div class="config-tile"><strong>Spacing</strong><span>Adjust margins, padding, and gaps with design tokens.</span></div>
+          <div class="config-tile"><strong>Visuals</strong><span>Swap logo, gem, promo banner, and background color.</span></div>
+          <div class="config-tile"><strong>Messaging</strong><span>Change screen copy and tiered reward copy by reward amount.</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="mini-title">Interaction state</div>
+        <h2>Small state machine</h2>
+        <div class="state-row"><div class="state default">DEFAULT</div><strong>→</strong><div class="state success">REWARDS_ADDED</div></div>
+        <div class="state-row"><div class="state default">DEFAULT</div><strong>→</strong><div class="state decline">REWARDS_DECLINED</div></div>
+        <div class="state-row"><div class="state default">DEFAULT</div><strong>→</strong><div class="state error">SAFE FALLBACK</div></div>
+        <p style="margin-top:18px">If the component fails, the veil is disabled and checkout remains recoverable.</p>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:24px;">
+      <div class="mini-title">State separation</div>
+      <h2>Checkout provided facts. Block Builder provided content. HFC owned the mini-flow.</h2>
+      <div class="separation-diagram">
+        <div class="sep-card schema">
+          <h3>Block Builder schema</h3>
+          <ul>
+            <li>screens</li>
+            <li>copy</li>
+            <li>terms</li>
+            <li>CTAs</li>
+            <li>layout + styling</li>
+          </ul>
+        </div>
+        <div class="sep-card component">
+          <h3>HFC component</h3>
+          <ul>
+            <li>renders configured content</li>
+            <li>selected choice</li>
+            <li>terms accepted/error</li>
+            <li>loading/error</li>
+            <li>current screen</li>
+          </ul>
+        </div>
+        <div class="sep-card checkout">
+          <h3>Checkout state</h3>
+          <ul>
+            <li>cart total</li>
+            <li>potential rewards</li>
+            <li>membership price</li>
+            <li>loyalty SKU in cart</li>
+            <li>global veil behavior</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sep-caption">The component did not own checkout. It only owned the enrollment interaction.</div>
+    </section>
+
+    <section class="evidence">
+      <div class="card">
+        <div class="number">A</div>
+        <h2>45s video</h2>
+        <p>Show the real interaction: banner, veil, terms, enroll, success, and optional decline path.</p>
+      </div>
+      <div class="card" style="background:#111; color:#fff; border-color:#333;">
+        <div class="number" style="background:#22c55e">B</div>
+        <h2 style="color:#fff">Datadog</h2>
+        <div class="metric-row">
+          <div class="metric"><div class="metric-label">checkout errors</div><div class="metric-value">low</div><div class="spark"></div></div>
+          <div class="metric"><div class="metric-label">page latency</div><div class="metric-value">P75</div><div class="spark"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="number">C</div>
+        <h2>Schema preview</h2>
+        <p>Show Block Builder config/preview to prove the UI is content-driven, not a hardcoded one-off.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

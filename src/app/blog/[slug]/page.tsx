@@ -4,27 +4,27 @@ import { notFound } from "next/navigation";
 import { getArticle, getArticles } from "@/lib/markdoc/articles";
 import { renderArticle } from "@/lib/markdoc/render";
 
-type WorkArticlePageProps = {
+type BlogArticlePageProps = {
   params: Promise<{
     slug: string;
   }>;
 };
 
 export function generateStaticParams() {
-  return getArticles("work").map((article) => ({
+  return getArticles("blog").map((article) => ({
     slug: article.slug,
   }));
 }
 
 export async function generateMetadata({
   params,
-}: WorkArticlePageProps): Promise<Metadata> {
+}: BlogArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticle("work", slug);
+  const article = getArticle("blog", slug);
 
   if (!article) {
     return {
-      title: "Work",
+      title: "Blog",
     };
   }
 
@@ -34,9 +34,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function WorkArticlePage({ params }: WorkArticlePageProps) {
+export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
   const { slug } = await params;
-  const article = getArticle("work", slug);
+  const article = getArticle("blog", slug);
 
   if (!article) {
     notFound();
@@ -44,20 +44,21 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
 
   return (
     <article className="section-pad article-page">
-      <Link className="case-link" href="/work">
-        ← Back to selected work
+      <Link className="case-link" href="/blog">
+        ← Back to blog
       </Link>
 
       <header className="article-hero">
         <p className="article-eyebrow">{article.eyebrow}</p>
         <h1>{article.title}</h1>
         <p className="article-dek">{article.summary}</p>
-        {article.impact && <p className="article-impact">{article.impact}</p>}
-        <div className="article-tags" aria-label="Article topics">
-          {article.tags.map((tag) => (
-            <span key={tag}>{tag}</span>
-          ))}
-        </div>
+        {article.tags.length > 0 && (
+          <div className="article-tags" aria-label="Article topics">
+            {article.tags.map((tag) => (
+              <span key={tag}>{tag}</span>
+            ))}
+          </div>
+        )}
       </header>
 
       <div className="article-content">

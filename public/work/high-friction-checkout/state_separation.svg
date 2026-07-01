@@ -1,0 +1,30 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="36" fill="#FBF7F2"/>
+  <text x="70" y="86" fill="#221A14" font-family="Inter, Arial" font-size="42" font-weight="850">State separation</text>
+  <text x="70" y="124" fill="#6B625C" font-family="Inter, Arial" font-size="22">Checkout provided facts. Block Builder provided content. HFC owned the mini-flow.</text>
+  <rect x="70" y="180" width="320" height="300" rx="28" fill="#F4ECFF" stroke="#D8C8FF" stroke-width="2"/>
+  <text x="230" y="232" fill="#6D28D9" font-family="Inter, Arial" font-size="27" font-weight="900" text-anchor="middle">Block Builder</text>
+  <text x="125" y="285" fill="#6B625C" font-family="Inter, Arial" font-size="21">• screens</text>
+  <text x="125" y="322" fill="#6B625C" font-family="Inter, Arial" font-size="21">• copy + terms</text>
+  <text x="125" y="359" fill="#6B625C" font-family="Inter, Arial" font-size="21">• CTAs</text>
+  <text x="125" y="396" fill="#6B625C" font-family="Inter, Arial" font-size="21">• layout + styling</text>
+  <rect x="440" y="150" width="320" height="360" rx="28" fill="#FFF9EC" stroke="#F2D8A7" stroke-width="2"/>
+  <text x="600" y="205" fill="#B45309" font-family="Inter, Arial" font-size="29" font-weight="900" text-anchor="middle">HFC component</text>
+  <text x="495" y="262" fill="#6B625C" font-family="Inter, Arial" font-size="21">• renders content</text>
+  <text x="495" y="299" fill="#6B625C" font-family="Inter, Arial" font-size="21">• selected choice</text>
+  <text x="495" y="336" fill="#6B625C" font-family="Inter, Arial" font-size="21">• terms accepted</text>
+  <text x="495" y="373" fill="#6B625C" font-family="Inter, Arial" font-size="21">• loading / error</text>
+  <text x="495" y="410" fill="#6B625C" font-family="Inter, Arial" font-size="21">• current screen</text>
+  <rect x="810" y="180" width="320" height="300" rx="28" fill="#EAF6FF" stroke="#B8DFFF" stroke-width="2"/>
+  <text x="970" y="232" fill="#2563EB" font-family="Inter, Arial" font-size="27" font-weight="900" text-anchor="middle">Checkout state</text>
+  <text x="865" y="285" fill="#6B625C" font-family="Inter, Arial" font-size="21">• cart total</text>
+  <text x="865" y="322" fill="#6B625C" font-family="Inter, Arial" font-size="21">• potential rewards</text>
+  <text x="865" y="359" fill="#6B625C" font-family="Inter, Arial" font-size="21">• membership price</text>
+  <text x="865" y="396" fill="#6B625C" font-family="Inter, Arial" font-size="21">• loyalty SKU + veil</text>
+  <path d="M390 330 H435" stroke="#C5A8F7" stroke-width="5" stroke-linecap="round"/>
+  <path d="M425 318 L440 330 L425 342" stroke="#C5A8F7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M810 330 H765" stroke="#9ACCF5" stroke-width="5" stroke-linecap="round"/>
+  <path d="M775 318 L760 330 L775 342" stroke="#9ACCF5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="235" y="535" width="730" height="54" rx="18" fill="white" stroke="#EADFD4"/>
+  <text x="600" y="570" fill="#221A14" font-family="Inter, Arial" font-size="22" font-weight="800" text-anchor="middle">The component did not own checkout. It only owned enrollment interaction.</text>
+</svg>
