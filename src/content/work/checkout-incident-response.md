@@ -1,6 +1,7 @@
 ---
 slug: checkout-incident-response
 collection: work
+hidden: true
 eyebrow: Wayfair · Production support
 title: Unblocking checkout during a production incident
 summary: Responded to a production checkout issue affecting non-US stores by isolating the failure path and shipping a focused hotfix.

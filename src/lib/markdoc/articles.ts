@@ -12,6 +12,11 @@ export type Article = {
   title: string;
   summary: string;
   impact?: string;
+  hidden?: boolean;
+  hero?: {
+    src: string;
+    alt?: string;
+  };
   tags: string[];
   href: string;
   content: string;
@@ -22,6 +27,7 @@ const contentRoot = path.join(process.cwd(), "src/content");
 export function getArticles(collection?: ArticleCollection): Article[] {
   return getMarkdownFiles(contentRoot)
     .map(readArticle)
+    .filter((article) => !article.hidden)
     .filter((article) => !collection || article.collection === collection)
     .sort((a, b) => a.title.localeCompare(b.title));
 }

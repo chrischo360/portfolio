@@ -24,6 +24,12 @@ const nextConfig: NextConfig = {
   },
   // Required to support PostHog API requests that send a trailing slash.
   skipTrailingSlashRedirect: true,
+  images: {
+    // Allow SVG assets (e.g. case study hero banners) served from /public.
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
 };
 
 export default nextConfig;

@@ -2,40 +2,60 @@
 slug: high-friction-checkout
 collection: work
 eyebrow: Wayfair · Checkout architecture
-title: Schema-Driven UI for a Checkout Loyalty Flow
+title: Turning a Checkout Banner into Schema-Driven UI
 summary: I turned a hardcoded checkout loyalty banner into a schema-driven mini-flow that product could configure without making checkout more fragile.
-impact: Separated CMS content, checkout data, and local interaction state while preserving checkout safety.
+impact: Moved checkout content into CMS configuration while keeping purchase-critical state and failure handling safely in code.
+hero:
+  src: /work/high-friction-checkout/hfc_component_mock.svg
+  alt: Checkout loyalty enrollment component
 tags:
-  - Checkout
-  - Block Builder
+  - React
+  - GraphQL
   - Server-driven UI
-  - React state
+  - Checkout
+  - State management
 ---
 
-# Schema-Driven UI for a Checkout Loyalty Flow
+# Turning a Checkout Banner into Schema-Driven UI
 
 I turned a hardcoded checkout loyalty banner into a schema-driven mini-flow that product could configure without making checkout more fragile.
 
-![Mock of the checkout loyalty enrollment component](/work/high-friction-checkout/hfc_component_mock.svg)
+_A representative mock of the checkout enrollment component. The real component appeared above checkout sections and used a veil — a semi-transparent overlay — to focus the customer on the decision._
 
-{% callout title="Context" %}
-Block Builder is Wayfair’s server-driven UI platform. Product teams configure checkout content, while the frontend renders typed GraphQL blocks and keeps purchase-critical state local to checkout.
+## The short version
+
+At first glance, this was a banner. In checkout, though, a banner is never just a banner.
+
+- render configurable content from a CMS
+- use live checkout data like cart total and potential rewards
+- manage its own enrollment interaction
+- fail safely if anything went wrong
+
+{% callout title="Helpful references" %}
+- [Content management system](https://en.wikipedia.org/wiki/Content_management_system)
+- [Server-driven UI](https://www.infoq.com/articles/server-driven-ui/)
+- [GraphQL](https://graphql.org/learn/)
+- [React reducer state](https://react.dev/reference/react/useReducer)
+- [React context](https://react.dev/reference/react/useContext)
 {% /callout %}
 
-## History
+## Why this existed
 
-The first version lived in Wayfair’s legacy checkout stack:
+Wayfair wanted to increase Rewards enrollment during checkout.
 
-- A PHP controller/serializer prepared eligibility, reward values, suppression state, feature flags, localized copy, and image IDs.
-- A checkout-specific React component rendered the banner and owned the veil/screen behavior.
+The first version lived in the legacy checkout stack. PHP prepared eligibility, reward values, feature flags, localized copy, and images. React rendered a checkout-specific component.
 
-As checkout moved toward a newer schema-driven architecture during Wayfair’s broader [tech replatforming](https://www.constellationr.com/insights/news/wayfair-starts-reap-rewards-optimization-tech-replatforming-efforts), the same loyalty flow needed to work in the new Block Builder checkout.
+As checkout moved toward a newer schema-driven architecture during Wayfair’s broader [tech replatforming](https://www.constellationr.com/insights/news/wayfair-starts-reap-rewards-optimization-tech-replatforming-efforts), the same flow needed to exist in the new Block Builder checkout.
 
-The migration goal was not just parity. The goal was to separate content/configuration from checkout behavior so product could iterate faster without making checkout more fragile.
+{% callout title="Migration goal" %}
+The goal was not just parity. I wanted the content to move into configuration, while checkout behavior stayed in code where it could be tested and safely recovered.
+{% /callout %}
 
-## Problem
+## The problem: checkout cannot break
 
-Checkout cannot break, but the legacy flow mixed too many concerns:
+A normal marketing banner can fail quietly. A checkout banner cannot.
+
+If it traps the user behind a veil, breaks payment, or blocks the page, it can directly hurt conversion.
 
 - PHP owned content and reward logic.
 - React owned UI rendering.
@@ -46,10 +66,14 @@ That made the flow harder to evolve. A change to copy, layout, reward messaging,
 
 ## Before vs. after
 
-Before, the frontend received one checkout-specific data blob. It mixed business facts, content, images, and UI states.
+Before, the frontend received one checkout-specific data blob.
+
+{% callout title="What to notice" %}
+The old shape mixes live checkout facts with content, images, and UI states.
+{% /callout %}
 
 ```json
-// Before: PHP-shaped response blob
+// Before: legacy response
 {
   "potentialRewards": "$18.42",
   "isLoyaltySkuAdded": false,
@@ -66,10 +90,8 @@ Before, the frontend received one checkout-specific data blob. It mixed business
 }
 ```
 
-After, Block Builder described the content structure, while checkout supplied live data like cart total and reward amount.
-
 ```json
-// After: Block Builder / GraphQL-shaped content
+// After: schema-driven content
 {
   "__typename": "BlockBuilderLoyaltyProgramHighFrictionCheckoutExperience",
   "screens": [
@@ -88,65 +110,54 @@ After, Block Builder described the content structure, while checkout supplied li
 }
 ```
 
-```md
-Key shift:
-Content/layout -> Block Builder schema
-Dynamic checkout data -> checkout state
-Interaction flow -> local reducer/context
-```
-
-## Built as a Block Builder server-driven UI experience
-
 ![Block Builder schema preview mock](/work/high-friction-checkout/block_builder_schema_preview.svg)
 
-The banner was modeled as configurable content instead of a one-off hardcoded component:
+```md
+Key shift:
+Content/layout → Block Builder schema
+Dynamic checkout data → checkout state
+Interaction flow → local reducer/context
+```
 
-- **Experience:** the entire checkout component; owns the set of screens and global error copy.
-- **Screen:** one state of the flow: `DEFAULT`, `REWARDS_ADDED`, `REWARDS_DECLINED`.
-- **Component blocks:** logo, gem image, promo banner, title copy, choice options, terms, primary CTA, decline CTA.
-- **Configurability:** rows/columns, background color, alignment, margins, padding, gaps, and tiered reward copy.
+## The architecture: schema owns content, checkout owns facts
 
-The important product win: product/content could change the structure, copy, visuals, and reward-tier messaging from CMS configuration instead of creating a new hardcoded checkout component.
+The banner became configurable content instead of a one-off hardcoded component.
 
-## State separation
+- **Block Builder owned content:** screens, copy, terms, CTAs, images, layout, spacing, and tiered reward messaging.
+- **Checkout owned facts:** cart total, potential rewards, membership price, whether the loyalty membership item was already in the cart, and global veil behavior.
+- **The component owned interaction:** selected choice, terms accepted, loading/error, current screen, and whether the veil had been dismissed.
 
 ![State separation diagram](/work/high-friction-checkout/state_separation.svg)
 
-The component did not own checkout. It only owned the enrollment mini-flow.
+{% callout title="Key idea" %}
+Checkout provided the facts, Block Builder provided the content, and HFC managed only its own interaction state.
+{% /callout %}
 
-- **Checkout state owned purchase-critical facts:** cart total, potential rewards, membership price, whether the loyalty SKU was in the cart, and global veil behavior.
-- **Block Builder owned content/layout:** screens, copy, terms, CTAs, rows/columns, spacing, and styling.
-- **HFC local state owned interaction:** selected choice, terms accepted/error, loading/error, current screen, and whether the veil had been dismissed.
-
-Key line: checkout provided the facts, Block Builder provided the content, and HFC managed only its own interaction state.
-
-## Checkout-safe behavior
+## Safety rails
 
 Because this lived in checkout, failure handling mattered as much as the happy path.
 
-- Error boundaries protected the rest of checkout if the component failed.
-- The veil was disabled on failure so the customer could not get trapped.
-- Missing data fell back to default values/copy.
-- Missing Block Builder variants logged warnings and fell back to default screen content.
-- Observability helped catch checkout errors, payment failures, and latency regressions.
+- **Error boundary:** protect checkout if the component fails.
+- **Veil escape hatch:** disable the overlay on errors so the customer cannot get trapped.
+- **Default values:** keep rendering if optional data is missing.
+- **Schema warnings:** log missing CMS variants and fall back to default screen content.
+- **Observability:** watch checkout errors, payment failures, and latency regressions.
 
 ![Representative Datadog observability mock](/work/high-friction-checkout/datadog_observability_mock.svg)
 
-## What I’d show in the interview
+_Representative observability view. For the interview, I’d show sanitized production dashboards where possible._
 
-- **45-second component video:** banner appears, veil focuses the user, user accepts terms, enrolls, and sees the success state.
-- **Datadog dashboard:** checkout errors, payment failures, page latency, and component warnings/errors.
-- **Block Builder schema + preview:** the configured experience, screens, component blocks, and styling controls.
+## Evidence I’d show
+
+- **45-second component video:** the banner appears, the veil focuses the user, the user accepts terms, enrolls, and sees success.
+- **Schema preview:** configured screens, component blocks, and styling controls.
+- **Observability:** checkout errors, payment failures, page latency, and component warnings.
 
 Visual mock page: [high_friction_checkout_visual_mocks.html](/work/high-friction-checkout/high_friction_checkout_visual_mocks.html)
 
-## Why it matters
+## What this demonstrates
 
-- I migrated a legacy production flow into a cleaner architecture without losing checkout reliability.
-- I separated CMS content, checkout data, and component interaction state.
-- I made a product-facing checkout experience easier to iterate on while preserving safety in a revenue-critical flow.
-
-## TODO
-
-- [ ] Add metrics on High Friction Checkout
-- [ ] Add different translation support
+- I can migrate legacy production flows without losing reliability.
+- I can separate CMS content, live checkout data, and client interaction state.
+- I can build product-facing UI that is configurable for non-engineers.
+- I think about failure modes when working near revenue-critical flows.

@@ -1,7 +1,22 @@
-import type { Config } from "@markdoc/markdoc";
+import Markdoc, { type Config } from "@markdoc/markdoc";
+import { getNodeText, slugify } from "./toc";
 
 export const markdocConfig: Config = {
   nodes: {
+    heading: {
+      attributes: {
+        level: {
+          type: Number,
+          required: true,
+        },
+      },
+      transform(node, config) {
+        const children = node.transformChildren(config);
+        const id = slugify(getNodeText(node));
+
+        return new Markdoc.Tag(`h${node.attributes.level}`, { id }, children);
+      },
+    },
     fence: {
       render: "ArticleCode",
       attributes: {

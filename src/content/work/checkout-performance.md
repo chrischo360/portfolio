@@ -1,6 +1,7 @@
 ---
 slug: checkout-performance
 collection: work
+hidden: true
 eyebrow: Wayfair · Checkout performance
 title: Improving checkout performance in a high-traffic purchase flow
 summary: A focused performance improvement in a critical checkout path, centered on removing legacy bottlenecks and validating the impact through production metrics.

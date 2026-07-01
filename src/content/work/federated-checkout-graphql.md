@@ -1,6 +1,7 @@
 ---
 slug: federated-checkout-graphql
 collection: work
+hidden: true
 eyebrow: Wayfair · Checkout architecture
 title: Decomposing legacy checkout flows into federated GraphQL services
 summary: Helped move legacy checkout behavior into federated GraphQL services so purchase-related surfaces could evolve with clearer boundaries.

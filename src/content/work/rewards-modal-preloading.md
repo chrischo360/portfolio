@@ -1,6 +1,7 @@
 ---
 slug: rewards-modal-preloading
 collection: work
+hidden: true
 eyebrow: Wayfair · Rewards checkout
 title: Reducing rewards modal load time with GraphQL preloading
 summary: Moved data fetching earlier in the checkout flow so a rewards modal could open quickly when the user needed it.

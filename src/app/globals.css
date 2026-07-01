@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --bg: #fbfaf6;
@@ -25,8 +26,22 @@
 @theme inline {
   --color-background: var(--bg);
   --color-foreground: var(--fg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-success: var(--success);
   --font-serif: var(--font-body);
   --font-sans: var(--font-ui);
+  --font-heading: var(--font-heading);
+  --font-ui: var(--font-ui);
+  --radius-card: var(--radius);
 }
 
 * {
@@ -926,232 +941,152 @@ h1 {
   margin: 0 auto;
 }
 
-.article-content {
-  max-width: 860px;
-  margin: 54px auto 0;
+/* Markdoc article body: Tailwind Typography baseline + brand overrides. */
+.prose {
+  --tw-prose-body: var(--muted);
+  --tw-prose-headings: var(--fg);
+  --tw-prose-links: var(--accent-ink);
+  --tw-prose-bold: var(--fg);
+  --tw-prose-counters: var(--muted-2);
+  --tw-prose-bullets: var(--border-strong);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--fg);
+  --tw-prose-quote-borders: var(--accent);
+  --tw-prose-code: var(--accent-ink);
+  font-size: 17px;
+  line-height: 1.72;
 }
 
-.article-content h1 {
-  margin: 34px 0 18px;
+.prose :is(h1, h2, h3, h4) {
   font-family: var(--font-heading);
+  font-weight: 500;
+  scroll-margin-top: 96px;
+}
+
+.prose h1 {
   font-size: clamp(36px, 5vw, 56px);
   line-height: 1;
   letter-spacing: -0.05em;
 }
 
-.article-content h1 + p {
-  color: var(--fg);
-  font-size: 22px;
-  line-height: 1.45;
-}
-
-.article-content h2 {
-  max-width: 680px;
-  margin: 84px 0 18px;
-  font-family: var(--font-heading);
+.prose h2 {
+  margin-top: 84px;
+  margin-bottom: 18px;
   font-size: clamp(28px, 3.2vw, 40px);
   line-height: 1.08;
   letter-spacing: -0.04em;
-  font-weight: 500;
 }
 
-.article-content h3 {
-  max-width: 680px;
-  margin: 42px 0 12px;
-  font-family: var(--font-heading);
+.prose h3 {
   font-size: 24px;
-  font-weight: 500;
   letter-spacing: -0.03em;
 }
 
-.article-content p,
-.article-content li {
-  color: var(--muted);
-  font-size: 17px;
-  line-height: 1.72;
-}
-
-.article-content p {
-  max-width: 680px;
-  margin: 0 0 20px;
-}
-
-.article-content ul,
-.article-content ol {
-  display: grid;
-  max-width: 680px;
-  gap: 10px;
-  margin: 0 0 22px;
-  padding-left: 24px;
-}
-
-.article-content li ul,
-.article-content li ol {
-  margin-top: 8px;
-  margin-bottom: 0;
-}
-
-.article-content a {
-  color: var(--accent-ink);
-  text-decoration: underline;
+.prose a {
   text-decoration-color: var(--accent-line);
   text-underline-offset: 4px;
 }
 
-.article-content :not(pre) > code {
+.prose :not(pre) > code {
   padding: 2px 5px;
   border-radius: 5px;
   background: var(--surface-2);
-  color: var(--accent-ink);
-  font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.86em;
+  font-weight: 500;
 }
 
-.article-code-block {
-  width: 100%;
-  margin: 34px 0;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius);
-  background: #0d1117;
-  box-shadow: 0 22px 60px rgba(30, 35, 32, 0.12);
+/* Typography wraps inline code in backticks by default; remove them. */
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none;
 }
 
-.article-code-block figcaption {
-  padding: 11px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  color: #d8d1c5;
-  font-family: var(--font-ui);
-  font-size: 12px;
-  font-weight: 750;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.article-code-block .shiki {
-  margin: 0;
-  padding: 22px;
-  overflow-x: auto;
-  background: transparent !important;
-}
-
-.article-code-block code {
-  font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 13px;
-  line-height: 1.65;
-}
-
-.article-content pre {
-  width: 100%;
-  margin: 34px 0;
-  overflow-x: auto;
-  padding: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius);
-  background: #15130f;
-  color: #f6efe2;
-  box-shadow: 0 22px 60px rgba(30, 35, 32, 0.12);
-}
-
-.article-content pre code {
-  color: inherit;
-  font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.article-content input[type="checkbox"] {
-  margin-right: 8px;
-}
-
-.article-content img {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 34px 0;
+.prose img {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: 0 18px 46px rgba(30, 35, 32, 0.06);
 }
 
-.article-content blockquote {
-  max-width: 780px;
-  margin: 36px 0;
+.prose blockquote {
   padding: 28px;
   border: 1px solid var(--border);
   border-left: 4px solid var(--accent);
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: 0 18px 46px rgba(30, 35, 32, 0.06);
+  font-style: normal;
+  font-weight: 400;
 }
 
-.article-content blockquote p {
-  color: var(--fg);
+.prose blockquote p {
   font-family: var(--font-heading);
   font-size: 24px;
   line-height: 1.35;
 }
 
-.article-hero {
-  max-width: 860px;
-  margin: 54px auto 0;
-  padding: 58px 0 42px;
-  border-bottom: 1px solid var(--border);
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: none;
 }
 
-.article-eyebrow {
-  margin: 0 0 18px;
-  color: var(--accent-ink);
+.prose input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* "On this page" table of contents (Stripe-style).
+   Sticky lives on the parent <aside>, whose containing block spans the full
+   article height, giving the panel room to stick as you scroll. */
+.article-toc {
   font-family: var(--font-ui);
-  font-size: 13px;
-  font-weight: 750;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
-.article-hero h1 {
-  max-width: 780px;
-  margin: 0;
-  font-family: var(--font-heading);
-  font-size: clamp(46px, 8vw, 82px);
-  font-weight: 500;
-  letter-spacing: -0.065em;
-  line-height: 0.95;
-}
-
-.article-dek {
-  max-width: 680px;
-  margin: 26px 0 0;
-  color: var(--fg);
-  font-size: clamp(21px, 2.5vw, 28px);
-  line-height: 1.35;
-}
-
-.article-impact {
-  max-width: 680px;
-  margin: 18px 0 0;
-  color: var(--muted);
-  font-size: 17px;
-  line-height: 1.6;
-}
-
-.article-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 28px;
-}
-
-.article-tags span {
-  padding: 7px 11px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: rgba(255, 254, 250, 0.72);
-  color: var(--muted);
-  font-family: var(--font-ui);
+.article-toc-title {
+  margin: 0 0 14px;
   font-size: 12px;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+.article-toc ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--border);
+}
+
+.article-toc li {
+  margin: 0;
+}
+
+.article-toc a {
+  display: block;
+  margin-left: -1px;
+  padding: 2px 0 2px 16px;
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.article-toc-sub a {
+  padding-left: 30px;
+}
+
+.article-toc a:hover {
+  color: var(--fg);
+}
+
+.article-toc a.is-active {
+  color: var(--accent-ink);
+  border-left-color: var(--accent);
+  font-weight: 600;
 }
 
 .article-meta {
@@ -1266,36 +1201,13 @@ h1 {
   letter-spacing: -0.03em;
 }
 
-.article-callout,
 .article-diagram,
-.article-stats,
-.article-media-placeholder {
+.article-stats {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
 }
 
-.article-callout {
-  max-width: 780px;
-  margin: 34px 0;
-  padding: 24px;
-  border-left: 4px solid var(--accent-line);
-  box-shadow: 0 18px 46px rgba(30, 35, 32, 0.06);
-}
-
-.article-callout p:last-child {
-  margin-bottom: 0;
-}
-
-.article-callout.warning {
-  border-left-color: #b88242;
-}
-
-.article-callout.success {
-  border-left-color: var(--success);
-}
-
-.article-callout strong,
 .article-diagram > strong {
   display: block;
   margin-bottom: 8px;
@@ -1371,96 +1283,6 @@ h1 {
   display: block;
   color: var(--muted);
   line-height: 1.4;
-}
-
-.article-media {
-  width: 100%;
-  margin: 38px 0;
-}
-
-.article-media img,
-.article-media video,
-.article-media iframe {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.article-media img,
-.article-media video {
-  display: block;
-  height: auto;
-}
-
-.article-media iframe {
-  aspect-ratio: 16 / 9;
-  border: 0;
-}
-
-.article-media figcaption {
-  margin-top: 10px;
-  color: var(--muted);
-  font-family: var(--font-ui);
-  font-size: 13px;
-}
-
-.article-media-placeholder {
-  min-height: 260px;
-  display: grid;
-  place-content: center;
-  gap: 10px;
-  padding: 28px;
-  text-align: center;
-  background: linear-gradient(135deg, var(--surface), var(--surface-2));
-}
-
-.article-media-placeholder span {
-  color: var(--accent-ink);
-  font-family: var(--font-ui);
-  font-size: 12px;
-  font-weight: 750;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.article-media-placeholder strong {
-  font-family: var(--font-heading);
-  font-size: 28px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-}
-
-.article-code {
-  margin: 0;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: #15130f;
-}
-
-.article-code figcaption {
-  padding: 12px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  color: #e8dfcf;
-  font-family: var(--font-ui);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.article-code pre {
-  margin: 0;
-  padding: 18px;
-  overflow-x: auto;
-}
-
-.article-code code {
-  color: #f6efe2;
-  font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 13px;
-  line-height: 1.6;
 }
 
 .chips {

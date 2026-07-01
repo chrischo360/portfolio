@@ -20,12 +20,16 @@ type ArticleMediaProps =
 export function ArticleMedia(props: ArticleMediaProps) {
   if (props.status === "planned" || !props.src) {
     return (
-      <figure className="article-media planned">
-        <div className="article-media-placeholder">
-          <span>{props.type}</span>
-          <strong>{getMediaLabel(props)}</strong>
+      <figure className="my-[38px] w-full">
+        <div className="grid min-h-[260px] place-content-center gap-[10px] rounded-card border border-border bg-[linear-gradient(135deg,var(--surface),var(--surface-2))] p-7 text-center">
+          <span className="font-ui text-xs font-[750] uppercase tracking-[0.08em] text-accent-ink">
+            {props.type}
+          </span>
+          <strong className="font-heading text-[28px] font-medium tracking-[-0.03em]">
+            {getMediaLabel(props)}
+          </strong>
         </div>
-        {props.caption && <figcaption>{props.caption}</figcaption>}
+        {props.caption && <figcaption className={captionClass}>{props.caption}</figcaption>}
       </figure>
     );
   }
@@ -34,29 +38,45 @@ export function ArticleMedia(props: ArticleMediaProps) {
     case "image":
     case "gif":
       return (
-        <figure className="article-media">
-          <Image src={props.src} alt={props.alt ?? ""} width={1200} height={720} />
-          {props.caption && <figcaption>{props.caption}</figcaption>}
+        <figure className="my-[38px] w-full">
+          <Image
+            className="block h-auto w-full rounded-card border border-border bg-surface"
+            src={props.src}
+            alt={props.alt ?? ""}
+            width={1200}
+            height={720}
+          />
+          {props.caption && <figcaption className={captionClass}>{props.caption}</figcaption>}
         </figure>
       );
     case "video":
       return (
-        <figure className="article-media">
-          <video controls poster={props.poster}>
+        <figure className="my-[38px] w-full">
+          <video
+            className="block h-auto w-full rounded-card border border-border bg-surface"
+            controls
+            poster={props.poster}
+          >
             <source src={props.src} />
           </video>
-          {props.caption && <figcaption>{props.caption}</figcaption>}
+          {props.caption && <figcaption className={captionClass}>{props.caption}</figcaption>}
         </figure>
       );
     case "embed":
       return (
-        <figure className="article-media">
-          <iframe src={props.src} title={props.title} />
-          {props.caption && <figcaption>{props.caption}</figcaption>}
+        <figure className="my-[38px] w-full">
+          <iframe
+            className="aspect-[16/9] w-full rounded-card border-0 bg-surface"
+            src={props.src}
+            title={props.title}
+          />
+          {props.caption && <figcaption className={captionClass}>{props.caption}</figcaption>}
         </figure>
       );
   }
 }
+
+const captionClass = "mt-[10px] font-ui text-[13px] text-muted";
 
 function getMediaLabel(props: ArticleMediaProps) {
   switch (props.type) {

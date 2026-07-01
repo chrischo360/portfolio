@@ -48,24 +48,37 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
         ← Back to blog
       </Link>
 
-      <header className="article-hero">
-        <p className="article-eyebrow">{article.eyebrow}</p>
-        <h1>{article.title}</h1>
-        <p className="article-dek">{article.summary}</p>
+      <header className="mx-auto mt-[54px] max-w-[860px] border-b border-border pt-[58px] pb-[42px]">
+        <p className="mb-[18px] font-ui text-[13px] font-[750] uppercase tracking-[0.08em] text-accent-ink">
+          {article.eyebrow}
+        </p>
+        <h1 className="m-0 max-w-[780px] font-heading text-[clamp(46px,8vw,82px)] font-medium leading-[0.95] tracking-[-0.065em]">
+          {article.title}
+        </h1>
+        <p className="mt-[26px] max-w-[680px] text-[clamp(21px,2.5vw,28px)] leading-[1.35] text-fg">
+          {article.summary}
+        </p>
         {article.tags.length > 0 && (
-          <div className="article-tags" aria-label="Article topics">
+          <div className="mt-7 flex flex-wrap gap-[10px]" aria-label="Article topics">
             {article.tags.map((tag) => (
-              <span key={tag}>{tag}</span>
+              <span
+                key={tag}
+                className="rounded-full border border-border bg-[rgba(255,254,250,0.72)] px-[11px] py-[7px] font-ui text-xs font-bold text-muted"
+              >
+                {tag}
+              </span>
             ))}
           </div>
         )}
       </header>
 
-      <div className="article-content">
-        {renderArticle(article.content, {
-          title: article.title,
-          summary: article.summary,
-        })}
+      <div className="mx-auto mt-[54px] max-w-[860px]">
+        <div className="prose prose-neutral max-w-none prose-headings:max-w-[680px] prose-p:max-w-[680px] prose-ul:max-w-[680px] prose-ol:max-w-[680px] prose-blockquote:max-w-[780px] prose-pre:m-0 prose-pre:rounded-none prose-pre:p-[22px] prose-pre:!bg-transparent">
+          {renderArticle(article.content, {
+            title: article.title,
+            summary: article.summary,
+          })}
+        </div>
       </div>
     </article>
   );
