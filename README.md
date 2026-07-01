@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — Chris Cho
 
-## Getting Started
+Personal portfolio site for Chris Cho, a full-stack engineer working on high-traffic checkout and loyalty systems. It presents work experience, resume highlights, and long-form case studies behind selected projects.
 
-First, run the development server:
+Live site: https://www.christopher-cho.dev/
+
+## Tech stack
+
+- **[Next.js 16](https://nextjs.org)** (App Router) with Turbopack
+- **React 19** + **TypeScript**
+- **[Tailwind CSS 4](https://tailwindcss.com)** with the typography plugin
+- **[Markdoc](https://markdoc.dev)** for config-driven case-study articles
+- **[Shiki](https://shiki.style)** for syntax-highlighted code blocks
+- **[PostHog](https://posthog.com)** + **[Vercel Analytics](https://vercel.com/analytics)** for product analytics
+
+## Getting started
+
+Install dependencies and run the dev server:
 
 ```bash
-npm run dev
-# or
+yarn install
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command      | Description                        |
+| ------------ | ---------------------------------- |
+| `yarn dev`   | Start the development server       |
+| `yarn build` | Create a production build          |
+| `yarn start` | Serve the production build         |
+| `yarn lint`  | Run ESLint                         |
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                # App Router routes, layout, and global styles
+│   ├── page.tsx        # Home page
+│   ├── work/[slug]/    # Case-study article pages
+│   └── blog/           # Blog (currently disabled via site config)
+├── components/         # Reusable UI components
+├── content/work/       # Markdoc case-study source files
+├── data/               # Site config, home content, and project data
+└── lib/markdoc/        # Markdoc schema, parsing, and rendering helpers
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Content & configuration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Most of the site is data-driven. Update these files to change what's shown:
 
-## Deploy on Vercel
+- `src/data/site.ts` — site metadata, navigation, and external links
+- `src/data/content.ts` — home page copy (hero, timeline, resume, about)
+- `src/data/projects.ts` — featured and compact project cards
+- `src/content/work/*.md` — Markdoc case studies rendered at `/work/[slug]`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Analytics
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+PostHog is reverse-proxied through this domain (see `rewrites` in `next.config.ts`) to reduce ad-blocker loss. Configure the PostHog key via environment variables in `.env.local`.
+
+## Deployment
+
+Deployed on [Vercel](https://vercel.com). Pushes to the default branch trigger a production build.
