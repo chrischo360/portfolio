@@ -7,6 +7,9 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="shell nav">
+        <Link className="brand" href="/" aria-label={`${siteConfig.name} home`}>
+          <span>christopher-cho-dev</span>
+        </Link>
         <nav className="nav-links" aria-label="Primary navigation">
           {navigation.map((item) => (
             <Link key={item.href} href={item.href}>

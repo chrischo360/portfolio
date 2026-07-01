@@ -3,8 +3,8 @@ export const siteConfig = {
   initials: "CC",
   title: "Chris Cho - Software Engineer",
   description:
-    "Chris Cho is a product-minded software engineer focused on reliable user-facing systems, frontend performance, checkout experiences, and developer workflows.",
-  role: "Product-minded software engineer",
+    "Chris Cho is a full-stack engineer working on high-traffic checkout and loyalty systems at Wayfair — frontend performance, production reliability, and clearer product systems.",
+  role: "Full-Stack Engineer · High-Traffic Checkout & Loyalty Systems",
   location: "New York, NY",
   email: "christopher.cho.dev@gmail.com",
   resumeHref: "/resume.pdf",
@@ -12,8 +12,9 @@ export const siteConfig = {
     enabled: false,
   },
   navigation: [
-    { label: "Work", href: "/work", enabled: true },
+    { label: "Work", href: "/#work", enabled: true },
     { label: "Resume", href: "/#resume", enabled: true },
+    { label: "About", href: "/#about", enabled: true },
     { label: "Contact", href: "/#contact", enabled: true },
     { label: "Blog", href: "/blog", enabled: false },
   ],

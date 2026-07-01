@@ -1,0 +1,32 @@
+<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="620" rx="36" fill="#FBF7F2"/>
+  <text x="70" y="86" fill="#221A14" font-family="Inter, Arial" font-size="42" font-weight="850">Readiness vs. commitment</text>
+  <text x="70" y="124" fill="#6B625C" font-family="Inter, Arial" font-size="22">Preloading made the modal ready. It did not make the purchase happen.</text>
+
+  <!-- Readiness box -->
+  <rect x="70" y="180" width="480" height="330" rx="28" fill="#E9F7EF" stroke="#B7E3C8" stroke-width="2"/>
+  <text x="310" y="232" fill="#047857" font-family="Inter, Arial" font-size="27" font-weight="900" text-anchor="middle">Readiness (safe to preload)</text>
+  <text x="110" y="292" fill="#6B625C" font-family="Inter, Arial" font-size="21">• prefetch GraphQL modal data</text>
+  <text x="110" y="332" fill="#6B625C" font-family="Inter, Arial" font-size="21">• lazy-load modal code bundle</text>
+  <text x="110" y="372" fill="#6B625C" font-family="Inter, Arial" font-size="21">• read-only: no side effects</text>
+  <text x="110" y="412" fill="#6B625C" font-family="Inter, Arial" font-size="21">• runs during idle time</text>
+  <text x="110" y="462" fill="#047857" font-family="Inter, Arial" font-size="20" font-weight="800">→ modal opens instantly</text>
+
+  <!-- Commitment box -->
+  <rect x="650" y="180" width="480" height="330" rx="28" fill="#FDE7E7" stroke="#F3B4B4" stroke-width="2"/>
+  <text x="890" y="232" fill="#B91C1C" font-family="Inter, Arial" font-size="27" font-weight="900" text-anchor="middle">Commitment (deferred)</text>
+  <text x="690" y="292" fill="#6B625C" font-family="Inter, Arial" font-size="21">• create the purchase</text>
+  <text x="690" y="332" fill="#6B625C" font-family="Inter, Arial" font-size="21">• add membership to cart</text>
+  <text x="690" y="372" fill="#6B625C" font-family="Inter, Arial" font-size="21">• irreversible side effects</text>
+  <text x="690" y="412" fill="#6B625C" font-family="Inter, Arial" font-size="21">• only on explicit confirm</text>
+  <text x="690" y="462" fill="#B91C1C" font-family="Inter, Arial" font-size="20" font-weight="800">→ never triggered early</text>
+
+  <!-- gate arrow -->
+  <path d="M550 345 H645" stroke="#C9B89F" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 12"/>
+  <path d="M636 333 L651 345 L636 357" stroke="#C9B89F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="598" y="330" fill="#8A7C6A" font-family="Inter, Arial" font-size="16" font-weight="800" text-anchor="middle">user</text>
+  <text x="598" y="378" fill="#8A7C6A" font-family="Inter, Arial" font-size="16" font-weight="800" text-anchor="middle">confirms</text>
+
+  <rect x="235" y="535" width="730" height="54" rx="18" fill="white" stroke="#EADFD4"/>
+  <text x="600" y="570" fill="#221A14" font-family="Inter, Arial" font-size="21" font-weight="800" text-anchor="middle">Faster interaction, correct backend state, no premature purchase risk.</text>
+</svg>

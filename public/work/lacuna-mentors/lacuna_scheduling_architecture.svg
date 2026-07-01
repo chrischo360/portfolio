@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Inter, Arial, sans-serif">
+  <rect width="640" height="300" fill="#f8fafc"/>
+  <text x="24" y="34" fill="#1f2a44" font-size="16" font-weight="700">Custom scheduling: no per-seat cost</text>
+
+  <!-- Student -->
+  <rect x="24" y="70" width="150" height="70" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+  <text x="99" y="100" text-anchor="middle" fill="#1f2a44" font-size="13" font-weight="600">Student</text>
+  <text x="99" y="120" text-anchor="middle" fill="#64748b" font-size="11">picks a slot</text>
+
+  <!-- Marketplace -->
+  <rect x="245" y="70" width="150" height="70" rx="10" fill="#ffffff" stroke="#94a3b8"/>
+  <text x="320" y="100" text-anchor="middle" fill="#1f2a44" font-size="13" font-weight="600">Lacuna app</text>
+  <text x="320" y="120" text-anchor="middle" fill="#64748b" font-size="11">Next.js + Supabase</text>
+
+  <!-- Calendar API -->
+  <rect x="466" y="70" width="150" height="70" rx="10" fill="#ecfdf5" stroke="#a7f3d0"/>
+  <text x="541" y="96" text-anchor="middle" fill="#1f2a44" font-size="13" font-weight="600">Mentor calendar</text>
+  <text x="541" y="115" text-anchor="middle" fill="#64748b" font-size="11">Outlook / Graph API</text>
+  <text x="541" y="131" text-anchor="middle" fill="#64748b" font-size="11">(no seat fee)</text>
+
+  <!-- arrows -->
+  <line x1="174" y1="105" x2="243" y2="105" stroke="#475569" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="395" y1="105" x2="464" y2="105" stroke="#475569" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="464" y1="128" x2="397" y2="128" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#a)"/>
+
+  <text x="200" y="210" fill="#64748b" font-size="12">1. App reads live availability from the mentor's own calendar.</text>
+  <text x="200" y="232" fill="#64748b" font-size="12">2. Student books a slot; the app writes the event back.</text>
+  <text x="200" y="254" fill="#64748b" font-size="12">3. Cost stays fixed as the mentor roster grows.</text>
+
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#475569"/>
+    </marker>
+  </defs>
+</svg>

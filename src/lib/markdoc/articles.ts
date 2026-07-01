@@ -13,6 +13,7 @@ export type Article = {
   summary: string;
   impact?: string;
   hidden?: boolean;
+  order?: number;
   hero?: {
     src: string;
     alt?: string;
@@ -29,7 +30,11 @@ export function getArticles(collection?: ArticleCollection): Article[] {
     .map(readArticle)
     .filter((article) => !article.hidden)
     .filter((article) => !collection || article.collection === collection)
-    .sort((a, b) => a.title.localeCompare(b.title));
+    .sort((a, b) => {
+      const orderA = a.order ?? Number.POSITIVE_INFINITY;
+      const orderB = b.order ?? Number.POSITIVE_INFINITY;
+      return orderA - orderB || a.title.localeCompare(b.title);
+    });
 }
 
 export function getArticle(collection: ArticleCollection, slug: string) {

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Inter, Arial, sans-serif">
+  <rect width="640" height="320" fill="#f8fafc"/>
+  <text x="24" y="30" fill="#1f2a44" font-size="15" font-weight="700">Redundant calls vs. reusing data the page already has</text>
+
+  <!-- BEFORE -->
+  <text x="24" y="60" fill="#dc2626" font-size="12" font-weight="700">Before: rate limit exceeded</text>
+  <g>
+    <rect x="24" y="72" width="70" height="44" rx="6" fill="#ffffff" stroke="#fca5a5"/>
+    <text x="59" y="99" text-anchor="middle" fill="#7f1d1d" font-size="10">card 1</text>
+    <rect x="24" y="122" width="70" height="44" rx="6" fill="#ffffff" stroke="#fca5a5"/>
+    <text x="59" y="149" text-anchor="middle" fill="#7f1d1d" font-size="10">card 2</text>
+    <rect x="24" y="172" width="70" height="44" rx="6" fill="#ffffff" stroke="#fca5a5"/>
+    <text x="59" y="199" text-anchor="middle" fill="#7f1d1d" font-size="10">card 3…</text>
+  </g>
+  <rect x="200" y="112" width="90" height="64" rx="8" fill="#fef2f2" stroke="#dc2626"/>
+  <text x="245" y="140" text-anchor="middle" fill="#991b1b" font-size="10">pricing</text>
+  <text x="245" y="156" text-anchor="middle" fill="#991b1b" font-size="10">service</text>
+  <line x1="94" y1="94" x2="200" y2="130" stroke="#dc2626" stroke-width="1.5"/>
+  <line x1="94" y1="144" x2="200" y2="144" stroke="#dc2626" stroke-width="1.5"/>
+  <line x1="94" y1="194" x2="200" y2="158" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="150" y="200" fill="#dc2626" font-size="10">many calls</text>
+  <text x="200" y="196" fill="#b91c1c" font-size="10" font-weight="700">✗ over rate limit</text>
+
+  <!-- divider -->
+  <line x1="320" y1="60" x2="320" y2="280" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- AFTER -->
+  <text x="345" y="60" fill="#059669" font-size="12" font-weight="700">After: reuse existing data</text>
+  <rect x="345" y="100" width="150" height="70" rx="8" fill="#ffffff" stroke="#a7f3d0"/>
+  <text x="420" y="126" text-anchor="middle" fill="#065f46" font-size="10">product card</text>
+  <text x="420" y="144" text-anchor="middle" fill="#065f46" font-size="10">(already has price)</text>
+  <rect x="510" y="110" width="100" height="24" rx="6" fill="#ecfdf5" stroke="#a7f3d0"/>
+  <text x="560" y="127" text-anchor="middle" fill="#065f46" font-size="10">price display</text>
+  <rect x="510" y="140" width="100" height="24" rx="6" fill="#ecfdf5" stroke="#a7f3d0"/>
+  <text x="560" y="157" text-anchor="middle" fill="#065f46" font-size="10">savings badge</text>
+  <line x1="495" y1="122" x2="510" y2="122" stroke="#059669" stroke-width="1.5"/>
+  <line x1="495" y1="145" x2="510" y2="152" stroke="#059669" stroke-width="1.5"/>
+  <text x="420" y="210" text-anchor="middle" fill="#059669" font-size="10" font-weight="700">0 extra requests</text>
+</svg>

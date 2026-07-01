@@ -3,7 +3,8 @@ const currentRoleTitle =
 
 export const homeContent = {
   hero: {
-    heading: "Product-minded software engineer focused on reliable user-facing systems.",
+    kicker: "Full-Stack Engineer · High-Traffic Checkout & Loyalty Systems",
+    heading: "I build checkout and loyalty systems that millions of people actually use.",
     lead: "I'm currently at Wayfair working on checkout, loyalty, and rewards. I like problems where technical quality directly affects user experience, business outcomes, and team velocity — especially performance, production reliability, and clearer product systems.",
   },
   profile: {
@@ -68,6 +69,28 @@ export const homeContent = {
       description:
         "Write-ups behind selected resume points, focused on the problem, tradeoffs, outcome, and what I learned.",
     },
+  },
+  about: {
+    heading: {
+      title: "A few things about me",
+    },
+    items: [
+      {
+        question: "Most useful business-related book you've read?",
+        answer:
+          "Poor Charlie's Almanack. It changed how I think about problems: instead of judging behavior as simply good or bad, I look for the incentives, constraints, and feedback loops shaping the outcome — especially in product and team decisions.",
+      },
+      {
+        question: "Favorite non-business book?",
+        answer:
+          "The Inner Game of Tennis. It changed how I think about performance: improvement often comes less from forcing perfection and more from quieting self-judgment, paying attention, and letting learning happen through feedback.",
+      },
+      {
+        question: "Advice to your younger self?",
+        answer:
+          "Be less black-and-white with myself. Not every mistake is a verdict. Growth comes from small steps and feedback, not from getting each decision perfect.",
+      },
+    ],
   },
 } as const;
 

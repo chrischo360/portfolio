@@ -1,13 +1,14 @@
 ---
 slug: high-friction-checkout
 collection: work
+order: 1
 eyebrow: Wayfair · Checkout architecture
 title: Turning a Checkout Banner into Schema-Driven UI
 summary: I turned a hardcoded checkout loyalty banner into a schema-driven mini-flow that product could configure without making checkout more fragile.
 impact: Moved checkout content into CMS configuration while keeping purchase-critical state and failure handling safely in code.
 hero:
-  src: /work/high-friction-checkout/hfc_component_mock.svg
-  alt: Checkout loyalty enrollment component
+  src: /work/high-friction-checkout/hfc-hero.png
+  alt: Wayfair Rewards checkout enrollment component — "Earn $14.95 in Rewards today!"
 tags:
   - React
   - GraphQL
@@ -146,18 +147,3 @@ Because this lived in checkout, failure handling mattered as much as the happy p
 ![Representative Datadog observability mock](/work/high-friction-checkout/datadog_observability_mock.svg)
 
 _Representative observability view. For the interview, I’d show sanitized production dashboards where possible._
-
-## Evidence I’d show
-
-- **45-second component video:** the banner appears, the veil focuses the user, the user accepts terms, enrolls, and sees success.
-- **Schema preview:** configured screens, component blocks, and styling controls.
-- **Observability:** checkout errors, payment failures, page latency, and component warnings.
-
-Visual mock page: [high_friction_checkout_visual_mocks.html](/work/high-friction-checkout/high_friction_checkout_visual_mocks.html)
-
-## What this demonstrates
-
-- I can migrate legacy production flows without losing reliability.
-- I can separate CMS content, live checkout data, and client interaction state.
-- I can build product-facing UI that is configurable for non-engineers.
-- I think about failure modes when working near revenue-critical flows.

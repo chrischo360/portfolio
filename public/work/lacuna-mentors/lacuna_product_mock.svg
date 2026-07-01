@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="Inter, Arial, sans-serif">
+  <rect width="640" height="360" fill="#f5f7fb"/>
+  <rect x="0" y="0" width="640" height="48" fill="#1f2a44"/>
+  <text x="24" y="30" fill="#ffffff" font-size="18" font-weight="600">Lacuna Mentors</text>
+  <text x="520" y="30" fill="#cbd5e1" font-size="13">Find a mentor</text>
+  <text x="24" y="88" fill="#1f2a44" font-size="20" font-weight="700">Talk to someone who just did it</text>
+  <text x="24" y="112" fill="#64748b" font-size="13">Book time with a college student who recently went through admissions.</text>
+  <!-- mentor cards -->
+  <g>
+    <rect x="24" y="140" width="180" height="180" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+    <circle cx="60" cy="180" r="20" fill="#c7d2fe"/>
+    <text x="92" y="178" fill="#1f2a44" font-size="14" font-weight="600">Maya, Brown '26</text>
+    <text x="92" y="196" fill="#64748b" font-size="11">CS &amp; essays</text>
+    <rect x="44" y="264" width="140" height="34" rx="8" fill="#4f46e5"/>
+    <text x="114" y="286" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle">Book time</text>
+  </g>
+  <g>
+    <rect x="230" y="140" width="180" height="180" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+    <circle cx="266" cy="180" r="20" fill="#bbf7d0"/>
+    <text x="298" y="178" fill="#1f2a44" font-size="14" font-weight="600">Jordan, BU '25</text>
+    <text x="298" y="196" fill="#64748b" font-size="11">Financial aid</text>
+    <rect x="250" y="264" width="140" height="34" rx="8" fill="#4f46e5"/>
+    <text x="320" y="286" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle">Book time</text>
+  </g>
+  <g>
+    <rect x="436" y="140" width="180" height="180" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+    <circle cx="472" cy="180" r="20" fill="#fde68a"/>
+    <text x="504" y="178" fill="#1f2a44" font-size="14" font-weight="600">Sam, NYU '26</text>
+    <text x="504" y="196" fill="#64748b" font-size="11">Interviews</text>
+    <rect x="456" y="264" width="140" height="34" rx="8" fill="#4f46e5"/>
+    <text x="526" y="286" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle">Book time</text>
+  </g>
+</svg>

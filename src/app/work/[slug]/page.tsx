@@ -49,16 +49,13 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
 
   return (
     <article className="section-pad article-page">
-      <Link className="case-link" href="/work">
+      <Link className="case-link" href="/#work">
         ← Back to selected work
       </Link>
 
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_220px] lg:items-start lg:gap-16">
         <div className="min-w-0">
-          <header className="mx-auto mt-[54px] max-w-[860px] border-b border-border pt-[58px] pb-[42px]">
-            <p className="mb-[18px] font-ui text-[13px] font-[750] uppercase tracking-[0.08em] text-accent-ink">
-              {article.eyebrow}
-            </p>
+          <header className="mx-auto mt-[28px] max-w-[860px] border-b border-border pt-0 pb-[42px]">
             <h1 className="m-0 max-w-[780px] font-heading text-[clamp(46px,8vw,82px)] font-medium leading-[0.95] tracking-[-0.065em]">
               {article.title}
             </h1>

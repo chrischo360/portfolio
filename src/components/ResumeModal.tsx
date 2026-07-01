@@ -29,7 +29,7 @@ export function ResumeModal({ href, label }: ResumeModalProps) {
 
   return (
     <>
-      <button className="button primary" type="button" onClick={() => setIsOpen(true)}>
+      <button className="text-link" type="button" onClick={() => setIsOpen(true)}>
         {label} <span aria-hidden="true">→</span>
       </button>
       {isOpen && (
