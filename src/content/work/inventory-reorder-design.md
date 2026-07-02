@@ -366,19 +366,19 @@ Retailer selects recommendations
 
 ```mermaid
 flowchart LR
-  Client[Reorder Center client]
-  Gateway[API Gateway / Load Balancer]
+  Client[Reorder Center<br/>client]
+  Gateway[API Gateway<br/>Load Balancer]
   API[Backend API]
   DB[(Postgres)]
   Queue[[Queue]]
 
-  Client -->|GET sources / recommendations| Gateway
+  Client -->|GET sources + recs| Gateway
   Client -->|POST add to cart| Gateway
-  Client -->|POST refresh source| Gateway
+  Client -->|POST refresh| Gateway
   Gateway --> API
-  API -->|read source status + precomputed recs| DB
-  API -->|write cart items| DB
-  API -->|enqueue refresh job| Queue
+  API -->|read| DB
+  API -->|write cart| DB
+  API -->|enqueue| Queue
 ```
 
 - Reads are served from stored source status and precomputed recommendations.
@@ -394,21 +394,21 @@ flowchart LR
   Manual[Manual refresh API]
   SyncQueue[[Sync queue]]
   SyncWorkers[Sync workers<br/>provider adapters]
-  Providers[External inventory providers<br/>Square / Shopify / Toast / ECRS]
-  DB[(Postgres<br/>snapshots + mappings + settings + recs)]
+  Providers[External providers<br/>Square / Shopify<br/>Toast / ECRS]
+  DB[(Postgres<br/>snapshots<br/>mappings + settings<br/>recommendations)]
   RecQueue[[Recommendation queue]]
-  RecWorker[Recommendation worker]
+  RecWorker[Recommendation<br/>worker]
 
   Cron -->|enqueue sync job| SyncQueue
   Webhook -->|enqueue sync job| SyncQueue
   Manual -->|enqueue sync job| SyncQueue
   SyncQueue --> SyncWorkers
   SyncWorkers -->|fetch latest inventory| Providers
-  SyncWorkers -->|normalize + write inventory snapshots| DB
-  SyncWorkers -->|enqueue recommendation job| RecQueue
+  SyncWorkers -->|write snapshots| DB
+  SyncWorkers -->|enqueue rec job| RecQueue
   RecQueue --> RecWorker
-  DB -->|latest snapshots + reliable mappings + settings| RecWorker
-  RecWorker -->|write low-stock recommendations| DB
+  DB -->|snapshots + mappings + settings| RecWorker
+  RecWorker -->|write recommendations| DB
 ```
 
 - Scheduled syncs, provider webhooks, and manual refreshes all enqueue sync jobs instead of doing provider work inline.

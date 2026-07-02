@@ -31,6 +31,13 @@ export function ArticleMermaid({ chart }: ArticleMermaidProps) {
           startOnLoad: false,
           securityLevel: "strict",
           theme: "base",
+          flowchart: {
+            useMaxWidth: false,
+            htmlLabels: true,
+            nodeSpacing: 80,
+            rankSpacing: 90,
+            padding: 24,
+          },
           themeVariables: {
             background: "#fffefa",
             primaryColor: "#f7efe4",
@@ -40,6 +47,7 @@ export function ArticleMermaid({ chart }: ArticleMermaidProps) {
             secondaryColor: "#eef0e7",
             tertiaryColor: "#fffefa",
             fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
+            fontSize: "14px",
           },
         });
 
@@ -217,7 +225,7 @@ function DiagramControls({
 function ScaledSvg({ svg, scale, minWidth }: { svg: string; scale: number; minWidth: number }) {
   return (
     <div
-      className="origin-top-left [&_svg]:h-auto [&_svg]:max-w-none"
+      className="origin-top-left [&_svg]:h-auto [&_svg]:max-w-none [&_svg]:overflow-visible"
       style={{ transform: `scale(${scale})`, width: `${100 / scale}%` }}
     >
       <div style={{ minWidth }} dangerouslySetInnerHTML={{ __html: svg }} />
