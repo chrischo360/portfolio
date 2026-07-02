@@ -2,6 +2,14 @@ import posthog from "posthog-js";
 
 const analyticsOptOutKey = "portfolio:analytics-opt-out";
 const linkIdPattern = /^[a-zA-Z0-9_-]{3,64}$/;
+const portfolioLinkLabels: Record<string, string> = {
+  bf0a8a959a54: "LinkedIn profile",
+  "004f19de1149": "LinkedIn DM",
+  ea84bb9e3c46: "Resume PDF",
+  "4522a9d43d7d": "Email signature",
+  "273d988bb070": "GitHub profile",
+  "2147b7f5dde9": "Personal outreach",
+};
 
 function getLocalStorageValue(key: string) {
   try {
@@ -57,6 +65,10 @@ function getOptionalSearchParam(url: URL, name: string) {
   return url.searchParams.get(name) || undefined;
 }
 
+function getLinkLabel(linkId: string) {
+  return portfolioLinkLabels[linkId];
+}
+
 const url = new URL(window.location.href);
 applyAnalyticsPreference(url);
 
@@ -84,16 +96,18 @@ if (shouldCapture) {
         return;
       }
 
-      ph.register({
+      const linkLabel = getLinkLabel(linkId);
+      const linkProperties = {
         portfolio_link_id: linkId,
-      });
+        ...(linkLabel ? { portfolio_link_label: linkLabel } : {}),
+      };
 
-      ph.identify(`portfolio:${linkId}`, {
-        portfolio_link_id: linkId,
-      });
+      ph.register(linkProperties);
+
+      ph.identify(`portfolio:${linkId}`, linkProperties);
 
       ph.capture("portfolio_link_opened", {
-        portfolio_link_id: linkId,
+        ...linkProperties,
         landing_path: `${url.pathname}${url.search}${url.hash}`,
         utm_source: getOptionalSearchParam(url, "utm_source"),
         utm_medium: getOptionalSearchParam(url, "utm_medium"),
