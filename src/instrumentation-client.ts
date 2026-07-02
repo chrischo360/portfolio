@@ -1,11 +1,105 @@
 import posthog from "posthog-js";
 
-posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-  // Reverse proxy: requests go through this domain (see next.config.ts rewrites).
-  api_host: "/ingest",
-  // Used for links to the PostHog app (e.g. in the toolbar).
-  ui_host: "https://us.posthog.com",
-  // Capture pageviews on history changes for App Router client navigation.
-  capture_pageview: "history_change",
-  defaults: "2025-05-24",
-});
+const analyticsOptOutKey = "portfolio:analytics-opt-out";
+const linkIdPattern = /^[a-zA-Z0-9_-]{3,64}$/;
+
+function getLocalStorageValue(key: string) {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function setAnalyticsPreference(value: "on" | "off") {
+  try {
+    if (value === "off") {
+      window.localStorage.setItem(analyticsOptOutKey, "1");
+      return;
+    }
+
+    window.localStorage.removeItem(analyticsOptOutKey);
+  } catch {}
+}
+
+function applyAnalyticsPreference(url: URL) {
+  const preference = url.searchParams.get("analytics");
+
+  if (preference !== "on" && preference !== "off") {
+    return;
+  }
+
+  setAnalyticsPreference(preference);
+  url.searchParams.delete("analytics");
+  window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+function getLinkId(url: URL) {
+  const linkId = url.searchParams.get("lid");
+
+  if (!linkId || !linkIdPattern.test(linkId)) {
+    return undefined;
+  }
+
+  return linkId;
+}
+
+function cleanLinkIdFromUrl(url: URL) {
+  if (!url.searchParams.has("lid")) {
+    return;
+  }
+
+  url.searchParams.delete("lid");
+  window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+function getOptionalSearchParam(url: URL, name: string) {
+  return url.searchParams.get(name) || undefined;
+}
+
+const url = new URL(window.location.href);
+applyAnalyticsPreference(url);
+
+const linkId = getLinkId(url);
+cleanLinkIdFromUrl(url);
+
+const shouldCapture =
+  process.env.NODE_ENV === "production" &&
+  Boolean(process.env.NEXT_PUBLIC_POSTHOG_KEY) &&
+  getLocalStorageValue(analyticsOptOutKey) !== "1";
+
+if (shouldCapture) {
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+    api_host: "/ingest",
+    ui_host: "https://us.posthog.com",
+    capture_pageview: "history_change",
+    autocapture: false,
+    person_profiles: "identified_only",
+    session_recording: {
+      maskAllInputs: true,
+    },
+    defaults: "2025-05-24",
+    loaded: (ph) => {
+      if (!linkId) {
+        return;
+      }
+
+      ph.register({
+        portfolio_link_id: linkId,
+      });
+
+      ph.identify(`portfolio:${linkId}`, {
+        portfolio_link_id: linkId,
+      });
+
+      ph.capture("portfolio_link_opened", {
+        portfolio_link_id: linkId,
+        landing_path: `${url.pathname}${url.search}${url.hash}`,
+        utm_source: getOptionalSearchParam(url, "utm_source"),
+        utm_medium: getOptionalSearchParam(url, "utm_medium"),
+        utm_campaign: getOptionalSearchParam(url, "utm_campaign"),
+        utm_content: getOptionalSearchParam(url, "utm_content"),
+      });
+    },
+  });
+}
