@@ -22,9 +22,7 @@ tags:
 
 I co-founded and built Lacuna Mentors, a marketplace where high school students discover college mentors and book time with them on the spot, and I shipped it end-to-end to 60+ mentors and real bookings.
 
-_A representative mock of the mentor discovery and booking flow. The real product ran on Next.js and Supabase, deployed on Vercel._
-
-## The short version
+## About
 
 Lacuna was a two-sided marketplace: college students who had recently been through the admissions process on one side, and high schoolers who wanted that guidance on the other.
 
@@ -65,7 +63,7 @@ A marketplace only works if the entire loop works. A student who finds a great m
 
 So I built around the highest-value loops first and left everything else manual until it was worth automating.
 
-## Before vs. after: scheduling
+## Problem: Scheduling
 
 The hardest and most expensive piece was scheduling. Tools like Calendly charge per seat, so every new mentor would have added recurring cost, exactly the wrong shape for a marketplace trying to grow supply.
 
@@ -100,7 +98,7 @@ Booking UX → owned inside the marketplace
 Cost model → fixed instead of per-seat
 ```
 
-## The architecture: build the loops, fake the rest
+## Architecture
 
 I made a few deliberate tradeoffs to reach a live product fast.
 
@@ -114,11 +112,3 @@ I made a few deliberate tradeoffs to reach a live product fast.
 Prioritize by talking to users, not by guessing. I decided what to build next based on real mentor and student conversations instead of a speculative roadmap.
 {% /callout %}
 
-## How I decided what to build
-
-Because I was the only engineer, prioritization was the real skill.
-
-- **Talk to users:** mentor and student conversations drove the backlog, not a wishlist.
-- **Value-first loops:** onboarding, discovery, and booking came before polish.
-- **Manual before automated:** ops were done by hand until volume justified code.
-- **Lean stack:** chose tools one person could operate end-to-end.
