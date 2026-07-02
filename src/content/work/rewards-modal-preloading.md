@@ -151,17 +151,3 @@ Because this sat next to checkout and payments, fallback behavior mattered as mu
 - **Error handling:** full-query failure showed the standard error screen rather than leaving the modal stuck.
 - **Performance logging:** modal open time tracked whether the render came from preview or full data.
 
-## Evidence I’d show
-
-- **Before/after video:** blank spinner before; preview content immediately after.
-- **Timeline diagram:** closed modal preview query → open modal render → full checkout hydration.
-- **GraphQL diff:** preview query omits `purchaseContract`; full query includes it.
-- **Observability:** modal open timing split by preview/full render path, plus checkout/payment health dashboards.
-
-## What this demonstrates
-
-- I can identify when latency is caused by the wrong system boundary.
-- I can separate safe reads from side-effectful checkout work.
-- I can coordinate frontend, GraphQL, backend, and payment dependencies.
-- I can learn from a risky first approach and redesign the system safely.
-- I can improve perceived performance without shifting risk onto checkout infrastructure.
