@@ -146,4 +146,3 @@ Because this lived in checkout, failure handling mattered as much as the happy p
 
 ![Representative Datadog observability mock](/work/high-friction-checkout/datadog_observability_mock.svg)
 
-_Representative observability view. For the interview, I’d show sanitized production dashboards where possible._
