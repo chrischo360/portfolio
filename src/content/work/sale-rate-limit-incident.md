@@ -1,6 +1,7 @@
 ---
 slug: sale-rate-limit-incident
 collection: work
+hidden: true
 eyebrow: Wayfair · Production incident
 title: Keeping a Sale's Signature Feature Alive Under Load
 summary: I launched savings badges on product cards, then watched them fail hours into a big members-only sale. The cause was too many redundant API calls; the fix was to reuse data the page already had. Badges were back within ~18 hours.

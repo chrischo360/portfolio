@@ -1,6 +1,7 @@
 ---
 slug: checkout-performance
 collection: work
+hidden: true
 eyebrow: Wayfair · Checkout performance
 title: Cutting Checkout Latency 43% by Deleting Code, Not Adding It
 summary: A checkout page had quietly gotten slower every month for a year. I traced the regression to accumulated feature flags, then removed them in measured phases to cut P75 latency 43% without a risky rewrite.

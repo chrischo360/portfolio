@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Airgoods Reorder Center Mock</title>
+  <style>
+    :root {
+      --primary: #6248ff;
+      --primary-60: #a79aff;
+      --primary-20: #ebe8ff;
+      --secondary: #000000;
+      --tertiary: #f4f0ff;
+      --neutral: #f7f7f7;
+      --surface: #ffffff;
+      --surface-muted: #f5f1ff;
+      --text: #000000;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --error: #d92d20;
+      --warning: #b45309;
+      --warning-bg: #fff7ed;
+      --success: #047857;
+      --success-bg: #ecfdf5;
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-xl: 12px;
+      --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--neutral);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.43;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .shell {
+      min-height: 100vh;
+      padding-bottom: 92px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 1240px;
+      height: 64px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 21px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .nav a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .nav a.active {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .topbar-spacer {
+      flex: 1;
+    }
+
+    .search {
+      width: 280px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0 16px;
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .account {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--primary-20);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 40px 28px 0;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      height: 24px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: var(--tertiary);
+      color: var(--primary);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 56px;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      max-width: 620px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .button-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 36px;
+    }
+
+    .btn {
+      height: 36px;
+      border: 0;
+      border-radius: var(--radius-md);
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: default;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--surface);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      padding: 0;
+    }
+
+    .sync-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+    }
+
+    .sync-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sync-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 4px var(--success-bg);
+    }
+
+    .sync-title {
+      font-weight: 700;
+    }
+
+    .sync-copy {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .link {
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .sources-panel {
+      margin-bottom: 20px;
+    }
+
+    .sources-panel summary {
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .sources-panel summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .manage-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 32px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--neutral);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .chevron {
+      font-size: 14px;
+      line-height: 1;
+      transition: transform 160ms ease;
+    }
+
+    .sources-panel[open] .chevron {
+      transform: rotate(180deg);
+    }
+
+    .sources-list {
+      margin-top: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .source-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 16px;
+      align-items: center;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .source-row:last-child {
+      border-bottom: 0;
+    }
+
+    .source-name {
+      font-weight: 700;
+    }
+
+    .source-meta {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .toggle {
+      width: 42px;
+      height: 24px;
+      border-radius: 999px;
+      padding: 3px;
+      background: var(--primary);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .toggle.off {
+      background: var(--border);
+      justify-content: flex-start;
+    }
+
+    .toggle-knob {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--surface);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .metric-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    .metric-value {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -0.03em;
+    }
+
+    .metric-helper {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) 160px 150px 170px 150px 160px;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .field,
+    .select {
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      padding: 0 16px;
+      color: var(--text);
+    }
+
+    .table-card {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: var(--surface-muted);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .check {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+
+    .product {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 260px;
+    }
+
+    .product-art {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+      background: var(--primary-20);
+      font-weight: 800;
+      font-size: 12px;
+      flex: 0 0 auto;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .product-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-art.warning-art {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .product-art.muted-art {
+      background: var(--neutral);
+      color: var(--muted);
+    }
+
+    .product-name {
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .product-meta,
+    .cell-muted {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stock-number {
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    .qty-control {
+      display: inline-flex;
+      align-items: center;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .qty-control span {
+      display: grid;
+      place-items: center;
+      min-width: 30px;
+      height: 30px;
+      font-size: 12px;
+    }
+
+    .qty-control .qty {
+      min-width: 42px;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      font-weight: 700;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      height: 24px;
+      border-radius: 999px;
+      padding: 0 10px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .chip-low {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .chip-out {
+      background: #fef3f2;
+      color: var(--error);
+    }
+
+    .chip-watch {
+      background: var(--tertiary);
+      color: var(--primary);
+    }
+
+    .chip-map {
+      background: var(--neutral);
+      color: var(--muted);
+    }
+
+    .row-action {
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .row-action.disabled {
+      color: var(--muted);
+    }
+
+    .helper-panel {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .panel-title {
+      margin: 0 0 8px;
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.19;
+    }
+
+    .panel-copy {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .mapping-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mapping-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .bulk-bar {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 30;
+      width: min(1184px, calc(100vw - 56px));
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--secondary);
+      color: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: 14px 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+    }
+
+    .bulk-title {
+      font-weight: 800;
+    }
+
+    .bulk-copy {
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 12px;
+    }
+
+    .bulk-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bulk-actions .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: var(--surface);
+      box-shadow: none;
+    }
+
+    @media (max-width: 980px) {
+      .topbar-inner,
+      .main {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .search,
+      .nav {
+        display: none;
+      }
+
+      .hero,
+      .helper-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .button-row {
+        padding-top: 0;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .summary-grid,
+      .filters {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .table-card {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 980px;
+      }
+
+      .bulk-bar {
+        width: calc(100vw - 24px);
+        bottom: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">Airgoods</div>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="#">Browse</a>
+          <a href="#">Orders</a>
+          <a href="#" class="active">Reorder Center</a>
+          <a href="#">Integrations</a>
+        </nav>
+        <div class="topbar-spacer"></div>
+        <input class="search" value="" placeholder="Search catalog" aria-label="Search catalog" />
+        <div class="account">
+          <span>Greenpoint Market</span>
+          <span class="avatar">GM</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <div class="eyebrow">POS-powered replenishment</div>
+          <h1 id="page-title">Reorder Center</h1>
+          <p class="subtitle">Products from your connected inventory sources that may need replenishment. Review low inventory, adjust suggested quantities, and turn recommendations into an Airgoods order.</p>
+        </div>
+        <div class="button-row">
+          <button class="btn btn-secondary">View sync details</button>
+          <button class="btn btn-primary">Create order</button>
+        </div>
+      </section>
+
+      <details class="sources-panel">
+        <summary>
+          <section class="sync-banner" aria-label="Inventory source sync status">
+            <div class="sync-left">
+              <span class="sync-dot" aria-hidden="true"></span>
+              <div>
+                <div class="sync-title">2 inventory sources active · Square synced 18 minutes ago</div>
+                <div class="sync-copy">Viewing all active sources. Source systems remain the inventory truth.</div>
+              </div>
+            </div>
+            <span class="manage-trigger">Manage sources <span class="chevron">⌄</span></span>
+          </section>
+        </summary>
+        <div class="sources-list" aria-label="Connected inventory sources">
+          <div class="source-row">
+            <div>
+              <div class="source-name">Square POS</div>
+              <div class="source-meta">Main Store · synced 18 minutes ago · 428 products checked</div>
+            </div>
+            <span class="chip chip-watch">Primary</span>
+            <button class="btn btn-secondary">Refresh</button>
+            <span class="toggle" aria-label="Square POS enabled"><span class="toggle-knob"></span></span>
+          </div>
+          <div class="source-row">
+            <div>
+              <div class="source-name">Shopify Online</div>
+              <div class="source-meta">Online Store · synced 42 minutes ago · 219 products checked</div>
+            </div>
+            <span class="chip chip-low">Active</span>
+            <button class="btn btn-secondary">Refresh</button>
+            <span class="toggle" aria-label="Shopify Online enabled"><span class="toggle-knob"></span></span>
+          </div>
+          <div class="source-row">
+            <div>
+              <div class="source-name">Toast Cafe</div>
+              <div class="source-meta">Cafe counter · disconnected 2 days ago · hidden from recommendations</div>
+            </div>
+            <span class="chip chip-map">Paused</span>
+            <button class="btn btn-secondary" disabled>Refresh</button>
+            <span class="toggle off" aria-label="Toast Cafe disabled"><span class="toggle-knob"></span></span>
+          </div>
+        </div>
+      </details>
+
+      <section class="summary-grid" aria-label="Inventory summary">
+        <article class="card">
+          <div class="metric-label"><span>Out of stock</span><span class="chip chip-out">Urgent</span></div>
+          <div class="metric-value">4</div>
+          <div class="metric-helper">Products need attention now</div>
+        </article>
+        <article class="card">
+          <div class="metric-label"><span>Low inventory</span><span class="chip chip-low">Below threshold</span></div>
+          <div class="metric-value">18</div>
+          <div class="metric-helper">Ready for review today</div>
+        </article>
+        <article class="card">
+          <div class="metric-label"><span>Recommended reorder</span><span class="chip chip-watch">3 suppliers</span></div>
+          <div class="metric-value">$1,284</div>
+          <div class="metric-helper">Estimated replenishment value</div>
+        </article>
+        <article class="card">
+          <div class="metric-label"><span>Ready to order</span><span class="chip chip-map">Mapped</span></div>
+          <div class="metric-value">31</div>
+          <div class="metric-helper">Matched Airgoods variants</div>
+        </article>
+      </section>
+
+      <section class="filters" aria-label="Recommendation filters">
+        <input class="field" placeholder="Search products" aria-label="Search products" />
+        <select class="select" aria-label="Inventory source filter">
+          <option>All sources</option>
+          <option>Square POS</option>
+          <option>Shopify Online</option>
+        </select>
+        <select class="select" aria-label="Urgency filter">
+          <option>All urgency</option>
+          <option>Out of stock</option>
+          <option>Low stock</option>
+          <option>Watchlist</option>
+        </select>
+        <select class="select" aria-label="Supplier filter">
+          <option>All suppliers</option>
+          <option>Phony Negroni x St. Agrestis</option>
+          <option>ZaZa Snacks</option>
+          <option>Vegobears</option>
+          <option>Almave</option>
+        </select>
+        <select class="select" aria-label="Location filter">
+          <option>Main Store</option>
+          <option>Warehouse</option>
+        </select>
+        <select class="select" aria-label="Orderability filter">
+          <option>Ready to order</option>
+          <option>Added to cart</option>
+          <option>Dismissed</option>
+        </select>
+      </section>
+
+      <section class="card table-card" aria-label="Low inventory recommendations">
+        <table>
+          <thead>
+            <tr>
+              <th><input class="check" type="checkbox" checked aria-label="Select all" /></th>
+              <th>Product</th>
+              <th>Supplier</th>
+              <th>Source</th>
+              <th>Location</th>
+              <th>Current stock</th>
+              <th>Threshold</th>
+              <th>Suggested reorder</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input class="check" type="checkbox" checked aria-label="Select Aura Bora" /></td>
+              <td>
+                <div class="product">
+                  <div class="product-art"><img src="https://cdn.airgoods.com/uploads/processed/st-agrestis/mkt/Phony-Negroni---Colored-2-pack--Awards-1-4bf77bfaa6f14dd4b9f295151aabfec7.webp" alt="St. Agrestis Non-Alcoholic Phony Negroni" /></div>
+                  <div>
+                    <div class="product-name">St. Agrestis Non-Alcoholic Phony Negroni®</div>
+                    <div class="product-meta">2 options · MSRP $6.25</div>
+                  </div>
+                </div>
+              </td>
+              <td>Phony Negroni x St. Agrestis</td>
+              <td><span class="cell-muted">Square POS</span></td>
+              <td><span class="cell-muted">Main Store</span></td>
+              <td><span class="stock-number">3</span></td>
+              <td>8</td>
+              <td><span class="qty-control"><span>−</span><span class="qty">24</span><span>+</span></span></td>
+              <td><span class="chip chip-low">Low stock</span></td>
+              <td><span class="row-action">Add to cart</span></td>
+            </tr>
+            <tr>
+              <td><input class="check" type="checkbox" checked aria-label="Select Chomps" /></td>
+              <td>
+                <div class="product">
+                  <div class="product-art warning-art"><img src="https://cdn.airgoods.com/uploads/processed/zaza-snacks/mkt/IMG_3045-191de2538a29425a8fc3cbebe8c14310.webp" alt="ZaZa Za'atar Pita Chips" /></div>
+                  <div>
+                    <div class="product-name">ZaZa Za'atar Pita Chips</div>
+                    <div class="product-meta">Za'atar · MSRP $7.00</div>
+                  </div>
+                </div>
+              </td>
+              <td>ZaZa Snacks</td>
+              <td><span class="cell-muted">Square POS</span></td>
+              <td><span class="cell-muted">Main Store</span></td>
+              <td><span class="stock-number">0</span></td>
+              <td>12</td>
+              <td><span class="qty-control"><span>−</span><span class="qty">48</span><span>+</span></span></td>
+              <td><span class="chip chip-out">Out of stock</span></td>
+              <td><span class="row-action">Add to cart</span></td>
+            </tr>
+            <tr>
+              <td><input class="check" type="checkbox" checked aria-label="Select Poppi" /></td>
+              <td>
+                <div class="product">
+                  <div class="product-art"><img src="https://cdn.airgoods.com/uploads/processed/vegobears/mkt/VegoBears-Venice-Beach-RGB_lowes-6980738692784d7b9a9c55256507b83d.webp" alt="Vegobears Venice Beach Organic Sour Gummy Bears" /></div>
+                  <div>
+                    <div class="product-name">Vegobears Venice Beach Organic Sour Gummy Bears</div>
+                    <div class="product-meta">4oz · 10 pack · MSRP $2.90</div>
+                  </div>
+                </div>
+              </td>
+              <td>Vegobears</td>
+              <td><span class="cell-muted">Shopify Online</span></td>
+              <td><span class="cell-muted">Online Store</span></td>
+              <td><span class="stock-number">5</span></td>
+              <td>10</td>
+              <td><span class="qty-control"><span>−</span><span class="qty">24</span><span>+</span></span></td>
+              <td><span class="chip chip-low">Low stock</span></td>
+              <td><span class="row-action">Add to cart</span></td>
+            </tr>
+            <tr>
+              <td><input class="check" type="checkbox" aria-label="Select Fishwife" /></td>
+              <td>
+                <div class="product">
+                  <div class="product-art"><img src="https://cdn.airgoods.com/uploads/processed/almave/mkt/almave-almaveblanco700ml237floz-000-82eea79c-640d-438a-9e71-4fc62d3c4861.webp" alt="Almave Blanco" /></div>
+                  <div>
+                    <div class="product-name">Almave Blanco</div>
+                    <div class="product-meta">700ml / 23.7 fl oz · MSRP $29.00</div>
+                  </div>
+                </div>
+              </td>
+              <td>Almave</td>
+              <td><span class="cell-muted">Square POS</span></td>
+              <td><span class="cell-muted">Main Store</span></td>
+              <td><span class="stock-number">9</span></td>
+              <td>10</td>
+              <td><span class="qty-control"><span>−</span><span class="qty">12</span><span>+</span></span></td>
+              <td><span class="chip chip-watch">Watchlist</span></td>
+              <td><span class="row-action">Add to cart</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+      <section class="helper-panel" aria-label="Supporting panels">
+        <article class="card">
+          <h2 class="panel-title">Why these items?</h2>
+          <p class="panel-copy">Airgoods compares the latest POS inventory snapshot against reorder thresholds and reliable Airgoods variant matches. Suggested quantities are explainable first: refill each item toward its target stock level before adding demand forecasting later.</p>
+        </article>
+        <article class="card">
+          <h2 class="panel-title">What is included?</h2>
+          <p class="panel-copy">The table only includes POS items that Airgoods can reliably map to orderable product variants. POS items without a reliable Airgoods match are excluded from MVP recommendations.</p>
+        </article>
+      </section>
+    </main>
+
+    <aside class="bulk-bar" aria-label="Selected reorder actions">
+      <div>
+        <div class="bulk-title">3 items selected · Estimated total $412</div>
+        <div class="bulk-copy">Selected recommendations will be added to your cart with the quantities shown.</div>
+      </div>
+      <div class="bulk-actions">
+        <button class="btn btn-primary">Add selected to cart</button>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

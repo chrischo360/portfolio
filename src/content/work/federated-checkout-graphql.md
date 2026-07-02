@@ -1,6 +1,7 @@
 ---
 slug: federated-checkout-graphql
 collection: work
+hidden: true
 eyebrow: Wayfair · Checkout architecture
 title: Untangling a Checkout Monolith into Federated GraphQL Services
 summary: Legacy checkout behavior lived deep inside a PHP monolith, which made every purchase surface slow and risky to change. I helped move it into federated GraphQL services with clear ownership boundaries, so features could evolve independently.
