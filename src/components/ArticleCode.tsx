@@ -1,4 +1,5 @@
 import { codeToHtml } from "shiki";
+import { ArticleMermaid } from "./ArticleMermaid";
 
 type ArticleCodeProps = {
   content: string;
@@ -6,6 +7,10 @@ type ArticleCodeProps = {
 };
 
 export async function ArticleCode({ content, language }: ArticleCodeProps) {
+  if (language === "mermaid") {
+    return <ArticleMermaid chart={content.trimEnd()} />;
+  }
+
   const html = await highlightCode(content, language);
 
   return (
