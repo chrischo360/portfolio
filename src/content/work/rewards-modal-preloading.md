@@ -66,19 +66,12 @@ page loads
   → prefetch standalone purchase query
   → backend prepares full checkout experience
   → payment intent / purchase contract / payment-session work starts
-  → user may never open the modal
+  → multiplied across millions of page views, checkout/payment services can be overloaded
+  → many users may never open the modal
 ```
-
-That was the wrong boundary.
 
 A safe prefetch should be cheap, reversible, and okay to run for many users. This one could create checkout/payment load for users who only saw a loyalty banner.
 
-The lesson was simple:
-
-```md
-Do not prefetch consequences.
-Prefetch only readiness.
-```
 
 ## Before vs. after
 
@@ -125,7 +118,7 @@ Purchase/payment state → full query on open
 Contract-dependent UI → loading placeholders until checkout data arrives
 ```
 
-## The architecture: preview owns readiness, checkout owns commitment
+## Architecture
 
 The final design separated the modal into two API states.
 
