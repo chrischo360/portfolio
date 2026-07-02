@@ -97,6 +97,8 @@ user opens modal
   → modal renders
 ```
 
+{% media type="video" src="/work/rewards-modal-preloading/rewards-modal-before.mp4" title="Before: blank spinner on modal open" caption="Before: opening the modal started the full checkout query, so customers waited on a blank loading state." /%}
+
 After, the modal had a lightweight preview path.
 
 ```text
@@ -111,6 +113,8 @@ user opens modal
   → backend creates/loads payment intent + purchase contract
   → contract-dependent widgets replace loading placeholders
 ```
+
+{% media type="video" src="/work/rewards-modal-preloading/rewards-modal-after.mp4" title="After: preview content renders immediately" caption="After: prefetched preview content rendered immediately while checkout-specific widgets hydrated." /%}
 
 ![Representative before/after timeline of the modal load](/work/rewards-modal-preloading/prefetch_timeline.svg)
 
