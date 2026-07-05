@@ -1,8 +1,8 @@
-# Portfolio — Chris Cho
+# [christopher-cho.dev](https://www.christopher-cho.dev/)
 
-Personal portfolio site for Chris Cho, a full-stack engineer working on high-traffic checkout and loyalty systems. It presents work experience, resume highlights, and long-form case studies behind selected projects.
+<img width="1240" height="632" alt="Screenshot 2026-07-05 at 5 14 25 PM" src="https://github.com/user-attachments/assets/bce663b2-6729-4d54-a38e-64b214ff170a" />
+<img width="1251" height="936" alt="Screenshot 2026-07-05 at 5 13 17 PM" src="https://github.com/user-attachments/assets/3effb7cc-a0ec-4261-ab71-1242591d34b4" />
 
-Live site: https://www.christopher-cho.dev/
 
 ## Tech stack
 
