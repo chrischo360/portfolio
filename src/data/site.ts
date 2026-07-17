@@ -1,10 +1,9 @@
 export const siteConfig = {
   name: "Chris Cho",
   initials: "CC",
-  title: "Chris Cho - Software Engineer",
+  title: "hey, I'm chris",
   description:
     "Chris Cho is a full-stack engineer working on high-traffic checkout and loyalty systems at Wayfair — frontend performance, production reliability, and clearer product systems.",
-  role: "Full-Stack Engineer · High-Traffic Checkout & Loyalty Systems",
   location: "New York, NY",
   email: "christopher.cho.dev@gmail.com",
   resumeHref: "/resume.pdf",

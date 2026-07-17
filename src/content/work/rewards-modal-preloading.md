@@ -1,9 +1,9 @@
 ---
 slug: rewards-modal-preloading
 collection: work
-order: 2
+order: 3
 eyebrow: Wayfair · Checkout performance
-title: Making a Checkout Rewards Modal Feel Immediate
+title: "Wayfair: Making a Checkout Rewards Modal Feel Immediate"
 summary: "I replaced a blank-spinner checkout modal with a two-phase GraphQL flow: prefetch lightweight CMS preview content while the modal was closed, then create the real checkout contract only when the customer opened it."
 impact: "Replaced a risky full-checkout prefetch with a safe GraphQL preview path that separated CMS readiness from purchase-contract creation."
 hero:

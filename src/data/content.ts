@@ -1,11 +1,10 @@
 const currentRoleTitle =
-  "Software Engineer, Fintech & Loyalty Rewards at Wayfair";
+  "Software Engineer, Fintech & Loyalty Rewards";
 
 export const homeContent = {
   hero: {
-    kicker: "Full-Stack Engineer · High-Traffic Checkout & Loyalty Systems",
-    heading: "Obsessed with building great products and the systems behind them",
-    lead: "I'm currently at Wayfair working on checkout, loyalty, and rewards. I like problems where technical quality directly affects user experience, business outcomes, and team velocity — especially performance, production reliability, and clearer product systems.",
+    heading: "Hey, I'm Chris!",
+    lead: "I'm currently at Wayfair working on checkout, loyalty, and rewards. I'm obsessed with building great products and understanding the systems behind them.",
   },
   profile: {
     subtitle: currentRoleTitle,
@@ -20,13 +19,13 @@ export const homeContent = {
       {
         org: "Wayfair",
         period: "2025 — Present",
-        role: "Software Engineer — checkout, loyalty & rewards",
+        role: "Software Engineer",
         logo: { src: "/logos/wayfair-gem.webp", width: 256, height: 256 },
       },
       {
         org: "Lacuna Mentors",
         period: "2025",
-        role: "Co-founder — mentorship marketplace",
+        role: "Co-founder",
         logo: { src: "/logos/lacuna.png", width: 3130, height: 1565 },
       },
       {
@@ -36,8 +35,6 @@ export const homeContent = {
         logo: { src: "/logos/bu.png", width: 225, height: 225 },
       },
     ],
-    tagline:
-      "From zero-to-one products to high-traffic systems — I like building things people actually use.",
   },
   resume: {
     heading: {

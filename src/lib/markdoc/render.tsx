@@ -2,12 +2,14 @@ import React from "react";
 import Markdoc from "@markdoc/markdoc";
 import { ArticleCallout } from "@/components/ArticleCallout";
 import { ArticleCode } from "@/components/ArticleCode";
+import { ArticleFileLink } from "@/components/ArticleFileLink";
 import { ArticleMedia } from "@/components/ArticleMedia";
 import { markdocConfig } from "./schema";
 
 const components = {
   ArticleCallout,
   ArticleCode,
+  ArticleFileLink,
   ArticleMedia,
 };
 

@@ -1,7 +1,7 @@
 ---
 slug: inventory-reorder-design
 collection: work
-order: 0
+order: 7
 eyebrow: Airgoods · Product systems design
 title: "Case Study: Designing Airgoods’ Reorder Center"
 summary: Designed a Reorder Center that turns POS inventory signals into Airgoods reorder actions.

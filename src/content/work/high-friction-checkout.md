@@ -1,9 +1,9 @@
 ---
 slug: high-friction-checkout
 collection: work
-order: 1
+order: 2
 eyebrow: Wayfair · Checkout architecture
-title: High Friction Checkout
+title: "Wayfair: High Friction Checkout"
 summary: I turned a hardcoded checkout loyalty banner into a GraphQL-backed, schema-driven mini-flow that product could configure without making checkout more fragile.
 impact: Moved checkout content into CMS configuration while keeping purchase-critical state and failure handling safely in code.
 hero:

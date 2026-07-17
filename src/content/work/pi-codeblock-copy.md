@@ -1,9 +1,9 @@
 ---
 slug: pi-codeblock-copy
 collection: work
-order: -1
+order: 1
 eyebrow: Pi · Developer tooling
-title: "pi-cc: Copy Code Blocks From Pi Without Fighting the Terminal"
+title: "pi-cc: Copy Code Blocks Without Fighting the Terminal"
 summary: A Pi extension that detects code blocks in the latest assistant response and lets you copy the exact one you want, without wrapped lines and mangled line breaks.
 hero:
   src: /work/pi-codeblock-copy/hero.png

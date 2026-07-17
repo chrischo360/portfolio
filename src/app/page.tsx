@@ -15,7 +15,6 @@ export default function Home() {
     <>
       <section className="hero" aria-labelledby="hero-title">
         <div>
-          <p className="eyebrow">{homeContent.hero.kicker}</p>
           <h1 id="hero-title">{homeContent.hero.heading}</h1>
           <p className="lead">{homeContent.hero.lead}</p>
           <div className="cta-row" aria-label="Primary actions">
@@ -35,7 +34,6 @@ export default function Home() {
               priority
             />
             <div>
-              <h2>{siteConfig.name}</h2>
               <p>{homeContent.profile.subtitle}</p>
             </div>
           </div>
@@ -58,8 +56,37 @@ export default function Home() {
               </li>
             ))}
           </ol>
-          <div className="snapshot-note">{homeContent.timeline.tagline}</div>
         </aside>
+      </section>
+
+      <section id="work" className="section-pad" aria-labelledby="work-title">
+        <SectionHeading id="work-title" title="Selected work" />
+        <ul className="work-list">
+          {workArticles.map((article) => (
+            <li key={article.slug}>
+              <Link className="work-item" href={article.href}>
+                {article.hero && (
+                  <div className="work-item-image">
+                    <Image
+                      src={article.hero.src}
+                      alt={article.hero.alt ?? ""}
+                      width={200}
+                      height={124}
+                      style={{ width: "100%", height: "82px", objectFit: "cover" }}
+                    />
+                  </div>
+                )}
+                <div className="work-item-body">
+                  <h3>{article.title}</h3>
+                  <p>{article.summary}</p>
+                  <span className="work-item-cta">
+                    Read story <span aria-hidden="true">→</span>
+                  </span>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section id="resume" className="section-pad" aria-labelledby="resume-title">
@@ -87,39 +114,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
-
-      <section id="work" className="section-pad" aria-labelledby="work-title">
-        <SectionHeading id="work-title" title="Selected work">
-          Write-ups behind selected resume points: the problem, approach,
-          tradeoffs, and outcome behind each claim.
-        </SectionHeading>
-        <ul className="work-list">
-          {workArticles.map((article) => (
-            <li key={article.slug}>
-              <Link className="work-item" href={article.href}>
-                {article.hero && (
-                  <div className="work-item-image">
-                    <Image
-                      src={article.hero.src}
-                      alt={article.hero.alt ?? ""}
-                      width={200}
-                      height={124}
-                      style={{ width: "100%", height: "82px", objectFit: "cover" }}
-                    />
-                  </div>
-                )}
-                <div className="work-item-body">
-                  <h3>{article.title}</h3>
-                  <p>{article.summary}</p>
-                  <span className="work-item-cta">
-                    Read story <span aria-hidden="true">→</span>
-                  </span>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
 
       <section id="about" className="section-pad" aria-labelledby="about-title">

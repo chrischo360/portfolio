@@ -3,6 +3,22 @@ import { getNodeText, slugify } from "./toc";
 
 export const markdocConfig: Config = {
   nodes: {
+    link: {
+      attributes: {
+        href: { type: String },
+        title: { type: String },
+      },
+      transform(node, config) {
+        const attrs = node.transformAttributes(config);
+        const children = node.transformChildren(config);
+        const isExternal = attrs.href?.startsWith("http");
+        if (isExternal) {
+          attrs.target = "_blank";
+          attrs.rel = "noopener noreferrer";
+        }
+        return new Markdoc.Tag("a", attrs, children);
+      },
+    },
     heading: {
       attributes: {
         level: {
@@ -31,6 +47,15 @@ export const markdocConfig: Config = {
     },
   },
   tags: {
+    filelink: {
+      render: "ArticleFileLink",
+      selfClosing: true,
+      attributes: {
+        src: { type: String, required: true },
+        label: { type: String, required: true },
+        lang: { type: String, default: "bash" },
+      },
+    },
     callout: {
       render: "ArticleCallout",
       attributes: {

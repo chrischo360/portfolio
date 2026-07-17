@@ -1,9 +1,13 @@
 import { ImageResponse } from "next/og";
+import { loadGoogleFont } from "@/lib/og-font";
 
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-export default function Icon() {
+export default async function Icon() {
+  const text = "cc";
+  const fontData = await loadGoogleFont("Source Serif 4", text, true, 600);
+
   return new ImageResponse(
     (
       <div
@@ -13,17 +17,28 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#6a513b",
+          background: "#4a3829",
           color: "#fbfaf7",
-          fontSize: 17,
-          fontWeight: 700,
-          letterSpacing: -1,
-          borderRadius: 7,
+          fontFamily: "Source Serif 4",
+          fontSize: 18,
+          fontWeight: 600,
+          letterSpacing: -0.5,
+          borderRadius: "25%",
         }}
       >
-        CC
+        {text}
       </div>
     ),
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Source Serif 4",
+          data: fontData,
+          style: "italic",
+          weight: 600,
+        },
+      ],
+    },
   );
 }

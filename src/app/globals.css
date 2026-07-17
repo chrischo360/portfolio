@@ -182,12 +182,12 @@ section {
 }
 
 .hero {
-  padding: 56px 0 48px;
+  position: relative;
+  padding: 128px 0 24px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 408px;
   gap: 56px;
   align-items: start;
-  border-bottom: 1px solid var(--border);
 }
 
 .eyebrow {
@@ -331,12 +331,18 @@ h1 {
 }
 
 .resume-card {
-  position: relative;
+  position: absolute;
+  top: 92px;
+  right: 0;
+  z-index: 3;
+  width: 408px;
   padding: 18px;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
   border-radius: calc(var(--radius) + 8px);
-  box-shadow: 0 10px 34px rgba(30, 35, 32, 0.055);
+  box-shadow:
+    0 12px 26px -16px rgba(35, 26, 16, 0.18),
+    0 5px 10px -4px rgba(35, 26, 16, 0.08);
   overflow: hidden;
 }
 
@@ -357,7 +363,9 @@ h1 {
   object-fit: cover;
   display: block;
   background: var(--fg);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 10px 20px -8px rgba(35, 26, 16, 0.35);
 }
 
 .profile-row h2 {
@@ -454,7 +462,11 @@ h1 {
 }
 
 .section-pad {
-  padding: 56px 0;
+  padding: 32px 0;
+}
+
+#work {
+  padding-top: 72px;
 }
 
 .section-head {
@@ -1445,6 +1457,133 @@ h1 {
   letter-spacing: 0.01em;
 }
 
+/* ── File link modal ───────────────────────────────────────────── */
+
+.filelink-trigger {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.filelink-trigger code {
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-style: dashed;
+  transition: opacity 0.1s ease;
+}
+
+.filelink-trigger:hover code {
+  opacity: 0.75;
+}
+
+.filelink-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.filelink-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 18, 14, 0.55);
+  backdrop-filter: blur(10px);
+}
+
+.filelink-panel {
+  position: relative;
+  width: min(1020px, 100%);
+  height: min(820px, calc(100vh - 48px));
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(30, 25, 18, 0.22);
+}
+
+.filelink-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.filelink-filename {
+  font-size: 13px;
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.filelink-github-link {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.1s ease;
+}
+
+.filelink-github-link:hover {
+  opacity: 0.7;
+}
+
+.filelink-content {
+  overflow-y: auto;
+  background: #f8f8f8;
+}
+
+.filelink-status {
+  padding: 24px;
+  color: #727169;
+  font-size: 14px;
+  font-family: var(--font-ui);
+}
+
+.filelink-error {
+  color: #e05c5c;
+}
+
+.filelink-code > pre {
+  margin: 0 !important;
+  padding: 20px 24px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  min-height: 100%;
+  background: transparent !important;
+}
+
+.filelink-code code {
+  counter-reset: line;
+}
+
+.filelink-code .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 2ch;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: #aaa;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Resume modal ───────────────────────────────────────────────── */
+
 .resume-modal {
   position: fixed;
   inset: 0;
@@ -1560,18 +1699,16 @@ h1 {
 .contact-pill {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 9px 16px;
+  gap: 7px;
+  padding: 2px 0;
   color: var(--fg);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 999px;
   font-family: var(--font-ui);
   font-size: 14px;
   font-weight: 600;
-  text-decoration: none;
-  transition: color 0.18s ease, border-color 0.18s ease,
-    background 0.18s ease, transform 0.18s ease;
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 3px;
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
 }
 
 .contact-pill svg {
@@ -1582,9 +1719,7 @@ h1 {
 .contact-pill:hover,
 .contact-pill:focus-visible {
   color: var(--accent-ink);
-  border-color: var(--accent-ink);
-  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
-  transform: translateY(-1px);
+  text-decoration-color: var(--accent-ink);
   outline: none;
 }
 
@@ -1664,14 +1799,21 @@ h1 {
     padding: 72px 0 54px;
     grid-template-columns: 1fr;
     gap: 34px;
+    border-bottom: 1px solid var(--border);
   }
 
   .resume-card {
+    position: static;
+    width: auto;
     max-width: none;
   }
 
   .section-pad {
     padding: 58px 0;
+  }
+
+  #work {
+    padding-top: 58px;
   }
 
   .section-head {

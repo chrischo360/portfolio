@@ -1,6 +1,7 @@
 ---
 slug: checkout-performance
 collection: work
+order: 4
 hidden: true
 eyebrow: Wayfair · Checkout performance
 title: Cutting Checkout Latency 43% by Deleting Code, Not Adding It

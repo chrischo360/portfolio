@@ -1,6 +1,7 @@
 ---
 slug: sale-rate-limit-incident
 collection: work
+order: 6
 hidden: true
 eyebrow: Wayfair · Production incident
 title: Keeping a Sale's Signature Feature Alive Under Load

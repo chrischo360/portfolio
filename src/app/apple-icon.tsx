@@ -1,9 +1,13 @@
 import { ImageResponse } from "next/og";
+import { loadGoogleFont } from "@/lib/og-font";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-export default function AppleIcon() {
+export default async function AppleIcon() {
+  const text = "cc";
+  const fontData = await loadGoogleFont("Source Serif 4", text, true, 600);
+
   return new ImageResponse(
     (
       <div
@@ -13,16 +17,27 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#6a513b",
+          background: "#4a3829",
           color: "#fbfaf7",
-          fontSize: 96,
-          fontWeight: 700,
-          letterSpacing: -6,
+          fontFamily: "Source Serif 4",
+          fontSize: 92,
+          fontWeight: 600,
+          letterSpacing: -3,
         }}
       >
-        CC
+        {text}
       </div>
     ),
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Source Serif 4",
+          data: fontData,
+          style: "italic",
+          weight: 600,
+        },
+      ],
+    },
   );
 }

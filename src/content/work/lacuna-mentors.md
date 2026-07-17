@@ -1,9 +1,9 @@
 ---
 slug: lacuna-mentors
 collection: work
-order: 3
+order: 8
 eyebrow: Lacuna Mentors · Zero-to-one marketplace
-title: "Lacuna - Building a Mentorship Marketplace"
+title: "Lacuna: Building a Mentorship Marketplace"
 summary: I co-founded and built a marketplace where high schoolers book time with college mentors on the spot, shipping it end-to-end to 60+ mentors and real bookings.
 impact: Built a custom scheduling system on the mentor's own calendar, replacing per-seat tools and saving ~$900/month as supply grew.
 hero:

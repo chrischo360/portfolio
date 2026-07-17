@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Source_Serif_4 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 import { siteConfig } from "@/data/site";
 import "./globals.css";
 
@@ -31,7 +30,6 @@ export default function RootLayout({
         <a className="skip-link" href="#top">
           Skip to content
         </a>
-        <Header />
         <main id="top" className="shell">
           {children}
         </main>

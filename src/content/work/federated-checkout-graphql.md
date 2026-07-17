@@ -1,6 +1,7 @@
 ---
 slug: federated-checkout-graphql
 collection: work
+order: 5
 hidden: true
 eyebrow: Wayfair · Checkout architecture
 title: Untangling a Checkout Monolith into Federated GraphQL Services
