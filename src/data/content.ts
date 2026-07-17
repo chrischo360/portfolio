@@ -38,7 +38,7 @@ export const homeContent = {
   },
   resume: {
     heading: {
-      title: "Resume points",
+      title: "Resume",
       description:
         "A systems-minded engineer comfortable moving from product requirements to shipped production software.",
     },
