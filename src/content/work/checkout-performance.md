@@ -9,12 +9,7 @@ impact: Cut checkout P75 page latency by 43% with a phased, measured cleanup —
 hero:
   src: /work/checkout-performance/checkout_latency_timeline.svg
   alt: Checkout latency climbing over a year, then dropping after the fix
-tags:
-  - Performance
-  - Checkout
-  - Observability
-  - Feature flags
-  - Production metrics
+tags: []
 ---
 
 # Cutting Checkout Latency 43% by Deleting Code, Not Adding It

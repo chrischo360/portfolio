@@ -3,18 +3,13 @@ slug: high-friction-checkout
 collection: work
 order: 1
 eyebrow: Wayfair · Checkout architecture
-title: Building Schema-Driven Checkout UI with GraphQL
+title: High Friction Checkout
 summary: I turned a hardcoded checkout loyalty banner into a GraphQL-backed, schema-driven mini-flow that product could configure without making checkout more fragile.
 impact: Moved checkout content into CMS configuration while keeping purchase-critical state and failure handling safely in code.
 hero:
   src: /work/high-friction-checkout/hfc-hero.png
   alt: Wayfair Rewards checkout enrollment component — "Earn $14.95 in Rewards today!"
-tags:
-  - React
-  - GraphQL
-  - Server-driven UI
-  - Checkout
-  - State management
+tags: []
 ---
 
 # Building Schema-Driven Checkout UI with GraphQL

@@ -9,12 +9,7 @@ impact: "Replaced a risky full-checkout prefetch with a safe GraphQL preview pat
 hero:
   src: /work/rewards-modal-preloading/rewards-modal-hero.png
   alt: Wayfair Rewards standalone purchase modal preview mock
-tags:
-  - React
-  - GraphQL
-  - Performance
-  - Checkout
-  - Payments
+tags: []
 ---
 
 # Making a Checkout Rewards Modal Feel Immediate

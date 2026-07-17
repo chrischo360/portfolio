@@ -4,7 +4,7 @@ const currentRoleTitle =
 export const homeContent = {
   hero: {
     kicker: "Full-Stack Engineer · High-Traffic Checkout & Loyalty Systems",
-    heading: "Product-minded software engineer focused on reliable user-facing systems.",
+    heading: "Obsessed with building great products and the systems behind them",
     lead: "I'm currently at Wayfair working on checkout, loyalty, and rewards. I like problems where technical quality directly affects user experience, business outcomes, and team velocity — especially performance, production reliability, and clearer product systems.",
   },
   profile: {
@@ -79,16 +79,25 @@ export const homeContent = {
         question: "Most useful business-related book you've read?",
         answer:
           "Poor Charlie's Almanack. It changed how I think about problems: instead of judging behavior as simply good or bad, I look for the incentives, constraints, and feedback loops shaping the outcome — especially in product and team decisions.",
+        link: {
+          text: "Poor Charlie's Almanack",
+          href: "https://en.wikipedia.org/wiki/Poor_Charlie%27s_Almanack",
+        },
       },
       {
         question: "Favorite non-business book?",
         answer:
           "The Inner Game of Tennis. It changed how I think about performance: improvement often comes less from forcing perfection and more from quieting self-judgment, paying attention, and letting learning happen through feedback.",
+        link: {
+          text: "The Inner Game of Tennis",
+          href: "https://www.amazon.com/dp/0679778314?lv=shuf&channelId=500&plpRedirect=mhFallback",
+        },
       },
       {
         question: "Advice to your younger self?",
         answer:
           "Be less black-and-white with myself. Not every mistake is a verdict. Growth comes from small steps and feedback, not from getting each decision perfect.",
+        hidden: true,
       },
     ],
   },

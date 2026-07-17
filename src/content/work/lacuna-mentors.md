@@ -3,24 +3,18 @@ slug: lacuna-mentors
 collection: work
 order: 3
 eyebrow: Lacuna Mentors · Zero-to-one marketplace
-title: Building a Mentorship Marketplace from Zero to 60+ Mentors
+title: "Lacuna - Building a Mentorship Marketplace"
 summary: I co-founded and built a marketplace where high schoolers book time with college mentors on the spot, shipping it end-to-end to 60+ mentors and real bookings.
 impact: Built a custom scheduling system on the mentor's own calendar, replacing per-seat tools and saving ~$900/month as supply grew.
 hero:
   src: /work/lacuna-mentors/lacuna-hero.png
   alt: Lacuna Mentors landing page — "Discover the mentors you need"
-tags:
-  - Next.js
-  - React
-  - TypeScript
-  - Supabase
-  - Marketplace
-  - Scheduling
+tags: []
 ---
 
 # Building a Mentorship Marketplace from Zero to 60+ Mentors
 
-I co-founded and built Lacuna Mentors, a marketplace where high school students discover college mentors and book time with them on the spot, and I shipped it end-to-end to 60+ mentors and real bookings.
+I co-founded and built [Lacuna Mentors](https://lacuna-six.vercel.app/), a marketplace where high school students discover college mentors and book time with them on the spot, and I shipped it end-to-end to 60+ mentors and real bookings.
 
 ## About
 

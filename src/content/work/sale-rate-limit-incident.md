@@ -9,12 +9,7 @@ impact: Restored a live sale's signature feature within ~18 hours by removing re
 hero:
   src: /work/sale-rate-limit-incident/rate_limit_dataflow.svg
   alt: Redundant per-card price calls versus reusing existing pricing data
-tags:
-  - Incident response
-  - Performance
-  - React
-  - Production safety
-  - GraphQL
+tags: []
 ---
 
 # Keeping a Sale's Signature Feature Alive Under Load

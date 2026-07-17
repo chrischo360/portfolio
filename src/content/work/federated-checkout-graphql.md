@@ -9,12 +9,7 @@ impact: Moved shared checkout behavior out of a monolith into domain-owned Graph
 hero:
   src: /work/federated-checkout-graphql/federated_checkout_architecture.svg
   alt: A checkout monolith decomposed into federated GraphQL subgraphs
-tags:
-  - GraphQL
-  - Architecture
-  - Checkout
-  - Migration
-  - Server-driven UI
+tags: []
 ---
 
 # Untangling a Checkout Monolith into Federated GraphQL Services

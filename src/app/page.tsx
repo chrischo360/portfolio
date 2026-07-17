@@ -20,7 +20,7 @@ export default function Home() {
           <p className="lead">{homeContent.hero.lead}</p>
           <div className="cta-row" aria-label="Primary actions">
             <Link className="text-link" href="#work">
-              Read selected work <span aria-hidden="true">→</span>
+              Read more about my work below <span aria-hidden="true">↓</span>
             </Link>
           </div>
         </div>
@@ -98,11 +98,24 @@ export default function Home() {
           {workArticles.map((article) => (
             <li key={article.slug}>
               <Link className="work-item" href={article.href}>
-                <h3>{article.title}</h3>
-                <p>{article.summary}</p>
-                <span className="work-item-cta">
-                  Read story <span aria-hidden="true">→</span>
-                </span>
+                {article.hero && (
+                  <div className="work-item-image">
+                    <Image
+                      src={article.hero.src}
+                      alt={article.hero.alt ?? ""}
+                      width={200}
+                      height={124}
+                      style={{ width: "100%", height: "82px", objectFit: "cover" }}
+                    />
+                  </div>
+                )}
+                <div className="work-item-body">
+                  <h3>{article.title}</h3>
+                  <p>{article.summary}</p>
+                  <span className="work-item-cta">
+                    Read story <span aria-hidden="true">→</span>
+                  </span>
+                </div>
               </Link>
             </li>
           ))}
@@ -112,12 +125,22 @@ export default function Home() {
       <section id="about" className="section-pad" aria-labelledby="about-title">
         <SectionHeading id="about-title" title={homeContent.about.heading.title} />
         <ul className="about-list">
-          {homeContent.about.items.map((item) => (
-            <li className="about-item" key={item.question}>
-              <h3>{item.question}</h3>
-              <p>{item.answer}</p>
-            </li>
-          ))}
+          {homeContent.about.items.filter((item) => !("hidden" in item && item.hidden)).map((item) => {
+            const link = "link" in item ? item.link : undefined;
+            const parts = link ? item.answer.split(link.text) : null;
+            return (
+              <li className="about-item" key={item.question}>
+                <h3>{item.question}</h3>
+                <p>
+                  {parts && link ? (
+                    <>{parts[0]}<a href={link.href} target="_blank" rel="noreferrer" style={{ color: "var(--accent-ink)", textDecoration: "underline", textDecorationColor: "var(--accent-line)", textUnderlineOffset: "3px" }}>{link.text}</a>{parts[1]}</>
+                  ) : (
+                    item.answer
+                  )}
+                </p>
+              </li>
+            );
+          })}
         </ul>
       </section>
 

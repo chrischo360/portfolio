@@ -6,6 +6,9 @@ eyebrow: Airgoods · Product systems design
 title: "Case Study: Designing Airgoods’ Reorder Center"
 summary: Designed a Reorder Center that turns POS inventory signals into Airgoods reorder actions.
 impact: Created a focused technical/design spec with API, data model, async sync flow, and interactive HTML mocks.
+hero:
+  src: /work/inventory-reorder-design/hero.png
+  alt: Airgoods Reorder Center — POS-powered replenishment dashboard
 tags: []
 ---
 

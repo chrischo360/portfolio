@@ -820,11 +820,31 @@ h1 {
 }
 
 .work-item {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
   padding: 28px 4px;
   color: inherit;
   text-decoration: none;
   transition: opacity 0.15s ease;
+}
+
+.work-item-image {
+  flex: 0 0 130px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.work-item-image img {
+  display: block;
+}
+
+.work-item-body {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .work-item:hover {
@@ -1711,6 +1731,12 @@ h1 {
 
   .footer {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .work-item-image {
+    display: none;
   }
 }
 
