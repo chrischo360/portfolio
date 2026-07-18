@@ -81,12 +81,7 @@ export default function Home() {
       </section>
 
       <section id="work" className="section-pad" aria-labelledby="work-title">
-        <SectionHeading id="work-title" title="Selected work">
-          <em>
-            Some writing on how I work, projects I’m proud of, and highlights
-            from my time at Wayfair.
-          </em>
-        </SectionHeading>
+        <SectionHeading id="work-title" title="Selected work" />
         <ul className="work-list">
           {workArticles.map((article) => (
             <li key={article.slug}>
@@ -116,7 +111,7 @@ export default function Home() {
         </ul>
       </section>
 
-      <section id="resume" className="section-pad" aria-labelledby="resume-title">
+      <section hidden id="resume" className="section-pad" aria-labelledby="resume-title">
         <SectionHeading
           id="resume-title"
           title={homeContent.resume.heading.title}
@@ -147,7 +142,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="section-pad" aria-labelledby="about-title">
+      <section hidden id="about" className="section-pad" aria-labelledby="about-title">
         <SectionHeading id="about-title" title={homeContent.about.heading.title} />
         <ul className="about-list">
           {homeContent.about.items.filter((item) => !("hidden" in item && item.hidden)).map((item) => {

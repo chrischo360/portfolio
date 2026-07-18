@@ -12,8 +12,8 @@ export const siteConfig = {
   },
   navigation: [
     { label: "Work", href: "/#work", enabled: true },
-    { label: "Resume", href: "/#resume", enabled: true },
-    { label: "About", href: "/#about", enabled: true },
+    { label: "Resume", href: "/#resume", enabled: false },
+    { label: "About", href: "/#about", enabled: false },
     { label: "Contact", href: "/#contact", enabled: true },
     { label: "Blog", href: "/blog", enabled: false },
   ],
