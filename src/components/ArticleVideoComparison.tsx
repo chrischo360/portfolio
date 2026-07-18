@@ -113,7 +113,6 @@ export function ArticleVideoComparison({
         }
 
         startedRef.current = true;
-        scrollElementIntoView(beforePanelRef.current);
         void beforeVideo.play();
         observer.disconnect();
       },

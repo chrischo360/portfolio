@@ -46,7 +46,9 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
   }
 
   const headings = getHeadings(article.content);
-  const showHeaderDetails = article.headerDisplay !== "minimal";
+  const showHero = article.headerDisplay !== "minimal";
+  const showHeaderCopy =
+    article.headerDisplay !== "minimal" && article.headerDisplay !== "hero-only";
 
   return (
     <article className="section-pad article-page">
@@ -56,11 +58,15 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
 
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_220px] lg:items-start lg:gap-16">
         <div className="min-w-0">
-          <header className="mx-auto mt-[28px] max-w-[860px] border-b border-border pt-0 pb-[42px]">
+          <header
+            className={`mx-auto mt-[28px] max-w-[860px] border-b border-border pt-0 ${
+              showHeaderCopy ? "pb-[42px]" : "pb-[24px]"
+            }`}
+          >
             <h1 className="m-0 max-w-[780px] font-heading text-[clamp(46px,8vw,82px)] font-medium leading-[0.95] tracking-[-0.065em]">
               {article.title}
             </h1>
-            {showHeaderDetails && article.hero && (
+            {showHero && article.hero && (
               <figure className="mt-[34px] overflow-hidden rounded-card border border-border bg-surface shadow-[0_18px_46px_rgba(30,35,32,0.08)]">
                 <Image
                   className="block h-auto max-h-[460px] w-full object-cover"
@@ -74,7 +80,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
                 />
               </figure>
             )}
-            {showHeaderDetails && (
+            {showHeaderCopy && (
               <p
                 className={`max-w-[680px] text-[clamp(21px,2.5vw,28px)] leading-[1.35] text-fg ${
                   article.hero ? "mt-[34px]" : "mt-[26px]"
@@ -83,7 +89,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
                 {article.summary}
               </p>
             )}
-            {showHeaderDetails && article.impact && (
+            {showHeaderCopy && article.impact && (
               <p className="mt-[18px] max-w-[680px] text-[17px] leading-[1.6] text-muted">
                 {article.impact}
               </p>
@@ -102,7 +108,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
             )}
           </header>
 
-          <div className="mt-[54px]">
+          <div className={showHeaderCopy ? "mt-[54px]" : "mt-[28px]"}>
             <div className="prose prose-neutral max-w-none prose-headings:max-w-[680px] prose-p:max-w-[680px] prose-ul:max-w-[680px] prose-ol:max-w-[680px] prose-blockquote:max-w-[780px] prose-pre:m-0 prose-pre:rounded-none prose-pre:p-[22px] prose-pre:!bg-transparent">
               {renderArticle(article.content, {
                 title: article.title,

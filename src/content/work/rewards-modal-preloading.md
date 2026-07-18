@@ -15,8 +15,6 @@ tags: []
 
 ## Before vs. after
 
-I replaced a blank-spinner checkout modal with a two-phase GraphQL flow.
-
 {% videocomparison beforeSrc="/work/rewards-modal-preloading/rewards-modal-before.mp4" afterSrc="/work/rewards-modal-preloading/rewards-modal-after.mp4" beforeLabel="Before: blank spinner" afterLabel="After: preview content" /%}
 
 ## Making a Checkout Rewards Modal Feel Immediate

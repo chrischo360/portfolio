@@ -1407,6 +1407,10 @@ h1 {
   line-height: 1.72;
 }
 
+.prose > :first-child {
+  margin-top: 0;
+}
+
 .prose :is(h1, h2, h3, h4) {
   font-family: var(--font-heading);
   font-weight: 500;

@@ -139,6 +139,48 @@
       color: #bff4d0;
     }
 
+    .screen-switcher {
+      background: #eeeaf0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      display: grid;
+      gap: 4px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 14px;
+      padding: 4px;
+    }
+
+    .screen-tab {
+      background: transparent;
+      border: 0;
+      border-radius: 8px;
+      color: var(--muted);
+      cursor: pointer;
+      display: grid;
+      font-size: 9px;
+      font-weight: 750;
+      gap: 2px;
+      padding: 7px 9px;
+      text-align: left;
+    }
+
+    .screen-tab strong {
+      color: inherit;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 10px;
+    }
+
+    .screen-tab:hover {
+      background: rgba(255, 255, 255, 0.62);
+      color: var(--ink);
+    }
+
+    .screen-tab[aria-selected="true"] {
+      background: #fff;
+      box-shadow: 0 2px 7px rgba(42, 32, 47, 0.1);
+      color: var(--purple);
+    }
+
     .challenge-mode {
       background: rgba(255, 255, 255, 0.12);
       border-radius: 999px;
@@ -315,9 +357,36 @@
       color: #334e62;
     }
 
-    .field-lock {
+    .field-lock,
+    .optional-field-action {
       margin-left: auto;
+    }
+
+    .field-lock {
       opacity: 0.66;
+    }
+
+    .optional-field-action {
+      background: #fff;
+      border: 1px solid #c8d9e7;
+      border-radius: 6px;
+      color: #334e62;
+      cursor: pointer;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 4px 7px;
+    }
+
+    .optional-field-action:hover {
+      background: var(--blue-soft);
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .optional-field-action.remove:hover {
+      background: #feecee;
+      border-color: #e6b8bd;
+      color: #b4232f;
     }
 
     .item-list {
@@ -899,41 +968,11 @@
     }
 
     .rewards-gem {
-      position: relative;
+      display: block;
       width: 100%;
       height: 100%;
-    }
-
-    .rewards-gem span {
-      position: absolute;
-      display: block;
-    }
-
-    .gem-top {
-      top: 5px;
-      left: 13px;
-      width: 50px;
-      height: 39px;
-      background: #ad52dd;
-      clip-path: polygon(50% 0, 100% 48%, 50% 100%, 0 48%);
-    }
-
-    .gem-left {
-      top: 31px;
-      left: 4px;
-      width: 36px;
-      height: 44px;
-      background: #4f2b5f;
-      clip-path: polygon(0 0, 100% 28%, 100% 100%, 0 69%);
-    }
-
-    .gem-right {
-      top: 31px;
-      right: 4px;
-      width: 36px;
-      height: 44px;
-      background: #861cb5;
-      clip-path: polygon(0 28%, 100% 0, 100% 69%, 0 100%);
+      background: url('/logos/wayfair-gem.webp') center / 132% 132% no-repeat;
+      filter: drop-shadow(0 5px 7px rgba(75, 20, 96, 0.16));
     }
 
     .header-promo {
@@ -1237,6 +1276,8 @@
 
     <div class="challenge" id="challenge"></div>
 
+    <div class="screen-switcher" id="screen-switcher" role="tablist" aria-label="Checkout screen"></div>
+
     <div class="workspace">
       <section class="panel" aria-labelledby="builder-title">
         <div class="panel-header">
@@ -1252,7 +1293,7 @@
           <span class="mode-pill" id="mode-pill"><span class="mode-indicator"></span><span id="mode-value">addToCart</span></span>
         </div>
         <div class="preview-wrap">
-          <p class="preview-tip">Try the choices and terms. Click any region to find it in the builder.</p>
+          <p class="preview-tip" id="preview-tip">Try the choices and terms. Click any region to find it in the builder.</p>
           <div class="checkout-shell">
             <div class="checkout-heading"></div>
             <div class="veil"></div>
@@ -1297,6 +1338,8 @@
 
     const builderElement = document.querySelector('#builder');
     const previewElement = document.querySelector('#preview');
+    const previewTip = document.querySelector('#preview-tip');
+    const screenSwitcherElement = document.querySelector('#screen-switcher');
     const modePill = document.querySelector('#mode-pill');
     const modeValue = document.querySelector('#mode-value');
     const modeNote = document.querySelector('#mode-note');
@@ -1304,15 +1347,16 @@
     const developerToggle = document.querySelector('#developer-toggle');
     let idCounter = 0;
     let schema;
-    let selectedId = 'content';
+    let activeScreenType = 'DEFAULT';
+    let selectedId = 'default-content';
     let openAddFor = null;
     let activeDrag = null;
     let previousMode = 'addToCart';
     let selectedChoice = 'choice1';
     let termsAccepted = false;
 
-    function createBlock(type) {
-      const node = { id: `node-${++idCounter}`, type, kind: definitions[type].container ? 'container' : 'block' };
+    function createBlock(type, values = {}) {
+      const node = { id: `node-${++idCounter}`, type, kind: definitions[type].container ? 'container' : 'block', ...values };
       if (definitions[type].container) {
         node.accepts = 'content';
         node.props = { gap: 'SPACE_1000', paddingX: 'SPACE_0', paddingY: 'SPACE_0' };
@@ -1332,33 +1376,84 @@
       };
     }
 
-    function createInitialSchema() {
-      idCounter = 0;
-      const header = createSection('Header', 'header', 'header');
-      const content = createSection('Content', 'content', 'container');
-      const footer = createSection('Footer', 'footer', 'container');
-      content.hasGem = true;
+    function createScreen(screenType, prefix, title, subtitle, hasGem) {
+      const header = createSection('Header', `${prefix}-header`, 'header');
+      const content = createSection('Content', `${prefix}-content`, 'container');
+      const footer = createSection('Footer', `${prefix}-footer`, 'container');
+      content.title = title;
+      content.subtitle = subtitle;
+      content.hasGem = hasGem;
       header.children = [createBlock('HeaderLogo')];
-      const contentColumn = createBlock('Column');
-      contentColumn.children = [createBlock('ChoiceOptions')];
-      content.children = [contentColumn];
-      const footerRow = createBlock('Row');
-      footerRow.props.gap = 'SPACE_4000';
-      footerRow.children = [createBlock('TermsAndConditions'), createBlock('DefaultAction')];
-      const footerColumn = createBlock('Column');
-      footerColumn.children = [createBlock('DeclineAction')];
-      footer.children = [footerRow, footerColumn];
       return {
-        id: 'screen',
+        id: `${prefix}-screen`,
         type: 'Screen',
         kind: 'screen',
-        screenType: 'DEFAULT',
+        screenType,
         children: [header, content, footer]
       };
     }
 
+    function createInitialSchema() {
+      idCounter = 0;
+      const defaultScreen = createScreen(
+        'DEFAULT',
+        'default',
+        'Earn [PotentialRewards] in Rewards today!',
+        'With 5% rewards on every item, plus free shipping and more! Learn More',
+        true
+      );
+      const [, defaultContent, defaultFooter] = defaultScreen.children;
+      const choiceColumn = createBlock('Column');
+      choiceColumn.children = [createBlock('ChoiceOptions')];
+      defaultContent.children = [choiceColumn];
+      const enrollmentRow = createBlock('Row');
+      enrollmentRow.props.gap = 'SPACE_4000';
+      enrollmentRow.children = [createBlock('TermsAndConditions'), createBlock('DefaultAction')];
+      const declineColumn = createBlock('Column');
+      declineColumn.children = [createBlock('DeclineAction')];
+      defaultFooter.children = [enrollmentRow, declineColumn];
+
+      const addedScreen = createScreen(
+        'REWARDS_ADDED',
+        'added',
+        'Welcome to Wayfair Rewards!',
+        'Your membership was added to this order.',
+        true
+      );
+      const [, addedContent, addedFooter] = addedScreen.children;
+      const addedMessageColumn = createBlock('Column');
+      addedMessageColumn.children = [createBlock('RichText', { copy: 'Your [PotentialRewards] in Rewards will be available after this order ships.' })];
+      addedContent.children = [addedMessageColumn];
+      const addedActionColumn = createBlock('Column');
+      addedActionColumn.children = [createBlock('DefaultAction')];
+      addedFooter.children = [addedActionColumn];
+
+      const declinedScreen = createScreen(
+        'REWARDS_DECLINED',
+        'declined',
+        'No problem—you can still join Rewards.',
+        'Continue checkout or go back to review the offer.',
+        false
+      );
+      const [, declinedContent, declinedFooter] = declinedScreen.children;
+      const declinedMessageColumn = createBlock('Column');
+      declinedMessageColumn.children = [createBlock('RichText', { copy: 'You will continue without a Rewards membership on this order.' })];
+      declinedContent.children = [declinedMessageColumn];
+      const declinedActionRow = createBlock('Row');
+      declinedActionRow.props.gap = 'SPACE_4000';
+      declinedActionRow.children = [createBlock('DefaultAction'), createBlock('DeclineAction')];
+      declinedFooter.children = [declinedActionRow];
+
+      return {
+        id: 'experience',
+        type: 'Experience',
+        kind: 'experience',
+        children: [defaultScreen, addedScreen, declinedScreen]
+      };
+    }
+
     function hasChildren(node) {
-      return node.kind === 'screen' || node.kind === 'section' || node.kind === 'container';
+      return node.kind === 'experience' || node.kind === 'screen' || node.kind === 'section' || node.kind === 'container';
     }
 
     function findNode(node, id) {
@@ -1380,6 +1475,14 @@
         if (match) return match;
       }
       return null;
+    }
+
+    function getScreen(screenType) {
+      return schema.children.find((screen) => screen.screenType === screenType);
+    }
+
+    function getActiveScreen() {
+      return getScreen(activeScreenType);
     }
 
     function isCompatible(category, target) {
@@ -1475,7 +1578,10 @@
       const icons = { Header: 'H', Content: 'C', Footer: 'F' };
       let fields = '';
       if (section.type === 'Content') {
-        fields = `<div class="fixed-fields"><div class="fixed-field"><strong>Title</strong> Earn [PotentialRewards] today <span class="field-lock">fixed field</span></div><div class="fixed-field"><strong>Subtitle</strong> Rewards benefits and Learn More <span class="field-lock">fixed field</span></div><div class="fixed-field"><strong>Gem</strong> Rewards decoration · bottom <span class="field-lock">optional field</span></div></div>`;
+        const gemField = section.hasGem
+          ? '<div class="fixed-field"><strong>Gem</strong> Rewards decoration · bottom <button class="optional-field-action remove" type="button" data-toggle-gem>Remove</button></div>'
+          : '<div class="fixed-field"><strong>Gem</strong> Not configured <button class="optional-field-action" type="button" data-toggle-gem>Add</button></div>';
+        fields = `<div class="fixed-fields"><div class="fixed-field"><strong>Title</strong> ${section.title} <span class="field-lock">fixed field</span></div><div class="fixed-field"><strong>Subtitle</strong> ${section.subtitle} <span class="field-lock">fixed field</span></div>${gemField}</div>`;
       }
       const items = section.children.map((child, index) => {
         const rendered = child.kind === 'container' ? renderLayoutCard(child, section, index) : renderBlockCard(child, section, index);
@@ -1498,13 +1604,17 @@
       </div>`;
     }
 
-    function previewBlock(node) {
+    function resolvePreviewCopy(copy) {
+      return copy.replaceAll('[PotentialRewards]', '$14.95').replace('Learn More', '<span class="inline-link">Learn More</span>');
+    }
+
+    function previewBlock(node, screenType) {
       const selected = node.id === selectedId ? ' preview-selected' : '';
       if (node.kind === 'container') {
         const gap = spacingTokens[node.props.gap];
         const paddingX = spacingTokens[node.props.paddingX];
         const paddingY = Math.max(spacingTokens[node.props.paddingY], 3);
-        const renderedChildren = node.children.map(previewBlock).filter(Boolean);
+        const renderedChildren = node.children.map((child) => previewBlock(child, screenType)).filter(Boolean);
         const conditionallyEmpty = renderedChildren.length === 0;
         const content = conditionallyEmpty ? '<div class="preview-empty">No visible blocks in this state</div>' : renderedChildren.join('');
         const humanLabel = node.type === 'Row' ? 'Side by side' : 'Stack';
@@ -1514,25 +1624,34 @@
         return `<div class="preview-node header-logo${selected}" data-preview-id="${node.id}"><span class="wayfair-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span><span class="wayfair-name">wayfair</span><span class="rewards-name">REWARDS</span></div>`;
       }
       if (node.type === 'HeaderGem') {
-        return `<div class="preview-node header-gem${selected}" data-preview-id="${node.id}"><span class="rewards-gem"><span class="gem-top"></span><span class="gem-left"></span><span class="gem-right"></span></span></div>`;
+        return `<div class="preview-node header-gem${selected}" data-preview-id="${node.id}"><span class="rewards-gem" aria-hidden="true"></span></div>`;
       }
       if (node.type === 'HeaderPromoBanner') return `<div class="preview-node header-promo${selected}" data-preview-id="${node.id}">Wayfair Rewards · free shipping and 5% back</div>`;
-      if (node.type === 'FormattedMessage') return `<div class="preview-node preview-block formatted-block${selected}" data-preview-id="${node.id}">Your cart can earn <strong>$14.95</strong> in Rewards today.</div>`;
-      if (node.type === 'RichText') return `<div class="preview-node preview-block rich-text-block${selected}" data-preview-id="${node.id}">Rewards can be redeemed on a future order.</div>`;
+      if (node.type === 'FormattedMessage') return `<div class="preview-node preview-block formatted-block${selected}" data-preview-id="${node.id}">${resolvePreviewCopy(node.copy || 'Your cart can earn [PotentialRewards] in Rewards today.')}</div>`;
+      if (node.type === 'RichText') return `<div class="preview-node preview-block rich-text-block${selected}" data-preview-id="${node.id}">${resolvePreviewCopy(node.copy || 'Rewards can be redeemed on a future order.')}</div>`;
       if (node.type === 'ChoiceOptions') {
         return `<div class="preview-node preview-block choices-block${selected}" data-preview-id="${node.id}" role="radiogroup" aria-label="Choose your rewards preference"><button class="choice-option${selectedChoice === 'choice1' ? ' is-selected' : ''}" type="button" role="radio" aria-checked="${String(selectedChoice === 'choice1')}" data-choice="choice1"><span class="radio"></span><span class="choice-copy"><strong>Yes, sign me up for Wayfair Rewards for $29/year</strong><small>That's less than $3/month!</small></span></button><button class="choice-option${selectedChoice === 'choice2' ? ' is-selected' : ''}" type="button" role="radio" aria-checked="${String(selectedChoice === 'choice2')}" data-choice="choice2"><span class="radio"></span><span class="choice-copy">No thanks, I don't want rewards at this time</span></button></div>`;
       }
       if (node.type === 'TermsAndConditions') {
-        if (selectedChoice !== 'choice1') return '';
+        if (screenType === 'DEFAULT' && selectedChoice !== 'choice1') return '';
         return `<div class="preview-node preview-block terms-block${selected}" data-preview-id="${node.id}"><button class="terms-toggle${termsAccepted ? ' is-checked' : ''}" type="button" role="checkbox" aria-checked="${String(termsAccepted)}" data-terms-toggle><span class="checkbox"></span><span class="terms-copy">I agree to Wayfair Rewards <span class="terms-link">Terms &amp; Conditions</span><small>Auto-renews annually. Cancel anytime in account settings.</small></span></button></div>`;
       }
       if (node.type === 'DefaultAction') {
-        if (selectedChoice !== 'choice1') return '';
-        const disabled = hasTerms() && !termsAccepted;
-        return `<div class="preview-node preview-block action-block default-action${selected}" data-preview-id="${node.id}"><button class="cta" type="button"${disabled ? ' disabled' : ''}>Join Wayfair Rewards</button></div>`;
+        if (screenType === 'DEFAULT') {
+          if (selectedChoice !== 'choice1') return '';
+          const disabled = hasTerms() && !termsAccepted;
+          return `<div class="preview-node preview-block action-block default-action${selected}" data-preview-id="${node.id}"><button class="cta" type="button" data-transition-screen="REWARDS_ADDED"${disabled ? ' disabled' : ''}>Join Wayfair Rewards</button></div>`;
+        }
+        if (screenType === 'REWARDS_DECLINED') {
+          return `<div class="preview-node preview-block action-block default-action${selected}" data-preview-id="${node.id}"><button class="cta" type="button" data-transition-screen="DEFAULT">Review Rewards offer</button></div>`;
+        }
+        return `<div class="preview-node preview-block action-block default-action${selected}" data-preview-id="${node.id}"><button class="cta" type="button">Continue checkout</button></div>`;
       }
-      if (selectedChoice !== 'choice2') return '';
-      return `<div class="preview-node preview-block action-block decline-action${selected}" data-preview-id="${node.id}"><button class="cta" type="button">Continue without Wayfair Rewards</button></div>`;
+      if (screenType === 'DEFAULT') {
+        if (selectedChoice !== 'choice2') return '';
+        return `<div class="preview-node preview-block action-block decline-action${selected}" data-preview-id="${node.id}"><button class="cta" type="button" data-transition-screen="REWARDS_DECLINED">Continue without Wayfair Rewards</button></div>`;
+      }
+      return `<div class="preview-node preview-block action-block decline-action${selected}" data-preview-id="${node.id}"><button class="cta" type="button">Continue checkout</button></div>`;
     }
 
     function sectionStyle(section) {
@@ -1542,14 +1661,14 @@
       return `padding:${paddingY}px ${paddingX + 10}px;text-align:${textAlign}`;
     }
 
-    function renderPreviewSection(section) {
+    function renderPreviewSection(section, screenType) {
       const selected = section.id === selectedId ? ' preview-selected' : '';
-      const content = section.children.length ? section.children.map(previewBlock).join('') : '<div class="preview-empty">No configured blocks</div>';
+      const content = section.children.length ? section.children.map((child) => previewBlock(child, screenType)).join('') : '<div class="preview-empty">No configured blocks</div>';
       if (section.type === 'Header') {
         return `<section class="preview-section header${selected}" data-preview-id="${section.id}" style="${sectionStyle(section)}"><span class="section-label">HEADER</span><div class="preview-header-blocks">${content}</div></section>`;
       }
       if (section.type === 'Content') {
-        return `<section class="preview-section content${selected}" data-preview-id="${section.id}" style="${sectionStyle(section)}"><span class="section-label">CONTENT</span><div class="fixed-message"><div class="message-title">Earn $14.95 in Rewards today!</div><div class="message-subtitle">With 5% rewards¹ on every item, plus free shipping² and more! <span class="inline-link">Learn More</span></div></div>${content}${section.hasGem ? '<div class="content-gem" aria-hidden="true"><span class="rewards-gem"><span class="gem-top"></span><span class="gem-left"></span><span class="gem-right"></span></span></div>' : ''}</section>`;
+        return `<section class="preview-section content${selected}" data-preview-id="${section.id}" style="${sectionStyle(section)}"><span class="section-label">CONTENT</span><div class="fixed-message"><div class="message-title">${resolvePreviewCopy(section.title)}</div><div class="message-subtitle">${resolvePreviewCopy(section.subtitle)}</div></div>${content}${section.hasGem ? '<div class="content-gem" aria-hidden="true"><span class="rewards-gem"></span></div>' : ''}</section>`;
       }
       return `<section class="preview-section footer${selected}" data-preview-id="${section.id}" style="${sectionStyle(section)}"><span class="section-label">FOOTER</span>${content}</section>`;
     }
@@ -1565,7 +1684,7 @@
           items: node.children.map(serializedBlock)
         };
       }
-      return { __typename: definition.typename };
+      return node.copy ? { __typename: definition.typename, text: node.copy } : { __typename: definition.typename };
     }
 
     function serializedSection(section) {
@@ -1579,8 +1698,8 @@
       if (section.type === 'Content') {
         return {
           ...base,
-          titleOne: { __typename: 'FormattedFinancingMessage', text: 'Earn [PotentialRewards] in Rewards today!' },
-          subtitle: { __typename: 'FormattedFinancingMessage', text: 'With 5% rewards on every item, plus free shipping and more!' },
+          titleOne: { __typename: 'FormattedFinancingMessage', text: section.title },
+          subtitle: { __typename: 'FormattedFinancingMessage', text: section.subtitle },
           gem: section.hasGem ? { __typename: 'BlockBuilderLoyaltyHeaderGem', gemAlignment: 'BOTTOM' } : null,
           contentBlocks: section.children.map(serializedBlock)
         };
@@ -1589,8 +1708,7 @@
     }
 
     function hasTerms() {
-      const content = findNode(schema, 'content');
-      const footer = findNode(schema, 'footer');
+      const [, content, footer] = getScreen('DEFAULT').children;
       return [...content.children, ...footer.children].some((container) => container.children.some((item) => item.type === 'TermsAndConditions'));
     }
 
@@ -1604,7 +1722,7 @@
         : 'No Terms block is present, so the component safely falls back to standalone.';
       challengeElement.className = `challenge${termsPresent ? '' : ' success'}`;
       challengeElement.innerHTML = termsPresent
-        ? '<span><strong>Try it:</strong> remove the Terms checkbox from Footer and watch the interaction mode change.</span><span class="challenge-mode">addToCart → ?</span>'
+        ? '<span><strong>Try it:</strong> remove the Terms checkbox from the DEFAULT Footer and watch the interaction mode change.</span><span class="challenge-mode">addToCart → ?</span>'
         : '<span><strong>That changed behavior.</strong> Without interactive terms, the schema no longer describes a gated enrollment flow.</span><span class="challenge-mode">addToCart → standalone</span>';
       if (mode !== previousMode) {
         modePill.classList.remove('pulse');
@@ -1614,22 +1732,42 @@
       previousMode = mode;
     }
 
+    function renderScreenSwitcher() {
+      const descriptions = {
+        DEFAULT: 'Enrollment offer',
+        REWARDS_ADDED: 'Enrollment succeeded',
+        REWARDS_DECLINED: 'Offer declined'
+      };
+      screenSwitcherElement.innerHTML = schema.children.map((screen) => `<button class="screen-tab" type="button" role="tab" aria-selected="${String(screen.screenType === activeScreenType)}" data-screen-type="${screen.screenType}"><strong>${screen.screenType}</strong><span>${descriptions[screen.screenType]}</span></button>`).join('');
+    }
+
     function renderDeveloperPanel() {
-      const [header, content, footer] = schema.children;
+      const screens = schema.children.map((screen) => {
+        const [header, content, footer] = screen.children;
+        return {
+          __typename: 'BlockBuilderLoyaltyProgramHighFrictionCheckoutScreen',
+          screenType: screen.screenType,
+          header: serializedSection(header),
+          content: serializedSection(content),
+          footer: serializedSection(footer)
+        };
+      });
       const graph = {
-        __typename: 'BlockBuilderLoyaltyProgramHighFrictionCheckoutScreen',
-        screenType: 'DEFAULT',
-        header: serializedSection(header),
-        content: serializedSection(content),
-        footer: serializedSection(footer)
+        __typename: 'BlockBuilderLoyaltyProgramHighFrictionCheckout',
+        screens
       };
       return `<div class="developer-panel"><div class="developer-heading"><span>Generated content graph</span><span>typed GraphQL</span></div><pre>${JSON.stringify(graph, null, 2)}</pre></div>`;
     }
 
     function renderAll() {
-      if (!findNode(schema, selectedId)) selectedId = 'content';
-      builderElement.innerHTML = `${schema.children.map(renderSection).join('')}${renderDeveloperPanel()}`;
-      previewElement.innerHTML = schema.children.map(renderPreviewSection).join('');
+      const activeScreen = getActiveScreen();
+      if (!findNode(activeScreen, selectedId)) selectedId = activeScreen.children[1].id;
+      builderElement.innerHTML = `${activeScreen.children.map(renderSection).join('')}${renderDeveloperPanel()}`;
+      previewElement.innerHTML = activeScreen.children.map((section) => renderPreviewSection(section, activeScreenType)).join('');
+      previewTip.textContent = activeScreenType === 'DEFAULT'
+        ? 'Try the choices and terms, then continue to see the resulting screen.'
+        : 'This screen has its own configurable header, content, and footer.';
+      renderScreenSwitcher();
       updateMode();
     }
 
@@ -1680,6 +1818,15 @@
       renderAll();
     }
 
+    function activateScreen(screenType) {
+      const screen = getScreen(screenType);
+      if (!screen) return;
+      activeScreenType = screenType;
+      selectedId = screen.children[1].id;
+      openAddFor = null;
+      renderAll();
+    }
+
     function clearDragState() {
       document.body.classList.remove('is-dragging');
       document.querySelectorAll('.is-active, .compatible, .accepts-drag, .blocked-drag, .is-dragging').forEach((element) => {
@@ -1698,6 +1845,16 @@
     }
 
     builderElement.addEventListener('click', (event) => {
+      const gemToggle = event.target.closest('[data-toggle-gem]');
+      if (gemToggle) {
+        const contentElement = gemToggle.closest('[data-node-id]');
+        const content = findNode(schema, contentElement.dataset.nodeId);
+        content.hasGem = !content.hasGem;
+        selectedId = content.id;
+        renderAll();
+        return;
+      }
+
       const addOption = event.target.closest('[data-add-type]');
       if (addOption) {
         addNode(addOption.dataset.addType, addOption.dataset.targetId);
@@ -1784,7 +1941,22 @@
       clearDragState();
     });
 
+    screenSwitcherElement.addEventListener('click', (event) => {
+      const screenTab = event.target.closest('[data-screen-type]');
+      if (screenTab) activateScreen(screenTab.dataset.screenType);
+    });
+
     previewElement.addEventListener('click', (event) => {
+      const transition = event.target.closest('[data-transition-screen]');
+      if (transition) {
+        if (transition.dataset.transitionScreen === 'DEFAULT') {
+          selectedChoice = 'choice1';
+          termsAccepted = false;
+        }
+        activateScreen(transition.dataset.transitionScreen);
+        return;
+      }
+
       const choice = event.target.closest('[data-choice]');
       if (choice) {
         selectedChoice = choice.dataset.choice;
@@ -1821,7 +1993,8 @@
 
     document.querySelector('#reset').addEventListener('click', () => {
       schema = createInitialSchema();
-      selectedId = 'content';
+      activeScreenType = 'DEFAULT';
+      selectedId = 'default-content';
       openAddFor = null;
       previousMode = 'addToCart';
       selectedChoice = 'choice1';
