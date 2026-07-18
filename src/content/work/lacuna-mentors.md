@@ -27,13 +27,6 @@ I was the sole engineer. My co-founder ran the business and recruited mentors. M
 - let students book a real session on the spot
 - do all of this without paying per-seat pricing for every mentor
 
-{% callout title="Helpful references" %}
-- [Two-sided marketplace](https://en.wikipedia.org/wiki/Two-sided_market)
-- [Next.js](https://nextjs.org/)
-- [Supabase](https://supabase.com/docs)
-- [Microsoft Graph calendar API](https://learn.microsoft.com/en-us/graph/api/resources/calendar)
-{% /callout %}
-
 ## Why this existed
 
 Neither my co-founder nor I had access to college mentorship growing up. We figured students applying to college would pay to talk to someone who had actually been through it recently, not a generic counselor.

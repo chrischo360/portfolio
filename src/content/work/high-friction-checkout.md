@@ -16,8 +16,6 @@ tags: []
 
 I turned a hardcoded checkout loyalty banner into a GraphQL-backed, schema-driven mini-flow that product could configure without making checkout more fragile.
 
-_A representative mock of the checkout enrollment component. The real component appeared above checkout sections and used a veil — a semi-transparent overlay — to focus the customer on the decision._
-
 ## The short version
 
 At first glance, this was a banner. In checkout, though, a banner is never just a banner.
@@ -26,14 +24,6 @@ At first glance, this was a banner. In checkout, though, a banner is never just 
 - use live checkout data like cart total and potential rewards
 - manage its own enrollment interaction
 - fail safely if anything went wrong
-
-{% callout title="Helpful references" %}
-- [Content management system](https://en.wikipedia.org/wiki/Content_management_system)
-- [Server-driven UI](https://www.infoq.com/articles/server-driven-ui/)
-- [GraphQL](https://graphql.org/learn/)
-- [React reducer state](https://react.dev/reference/react/useReducer)
-- [React context](https://react.dev/reference/react/useContext)
-{% /callout %}
 
 ## Why this existed
 

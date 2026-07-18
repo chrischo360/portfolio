@@ -39,7 +39,7 @@ I try to follow the same principles with package management
 I use [AeroSpace](https://nikitabobko.github.io/AeroSpace/guide) for window layout and [tmux](https://github.com/tmux/tmux) for project sessions. 
 Both are configured in plain text files — {% filelink src="https://raw.githubusercontent.com/chrischo360/dotfiles/main/aerospace/aerospace.toml" label="aerospace.toml" lang="toml" /%} and {% filelink src="https://raw.githubusercontent.com/chrischo360/dotfiles/main/tmux/tmux.conf" label="tmux.conf" lang="bash" /%}.
 
-AeroSpace, an `i-3` like tiling window manager, makes moving between windows quick with my keyboard.
+AeroSpace, an i3-like tiling window manager, makes moving between windows quick with my keyboard.
 
 tmux handles the project layer. I switch between sessions/repos with [fzf](https://github.com/junegunn/fzf).
 

@@ -16,8 +16,6 @@ tags: []
 
 I replaced a blank-spinner checkout modal with a two-phase GraphQL flow: prefetch lightweight CMS preview content while the modal was closed, then create the real checkout contract only when the customer opened it.
 
-_A representative mock of the standalone Rewards purchase modal. The real modal let customers join Wayfair Rewards from high-intent surfaces like PDP and Hot Deals._
-
 ## The short version
 
 At first glance, this was a modal performance problem. The customer clicked “Join Rewards” and waited while the modal loaded.
@@ -28,13 +26,6 @@ In checkout-adjacent systems, though, loading a modal is not always just loading
 - it needed eligibility and membership state
 - it needed checkout data like payment, promo, terms, and totals
 - some checkout data could create payment or purchase state
-
-{% callout title="Helpful references" %}
-- [Prefetching](https://developer.mozilla.org/en-US/docs/Glossary/Prefetch)
-- [GraphQL](https://graphql.org/learn/)
-- [Apollo Client queries](https://www.apollographql.com/docs/react/data/queries)
-- [Critical rendering path](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path)
-{% /callout %}
 
 ## Why this existed
 
