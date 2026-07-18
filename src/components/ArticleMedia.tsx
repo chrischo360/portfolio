@@ -24,6 +24,8 @@ type ArticleMediaProps =
       title?: string;
       caption?: string;
       expandable?: boolean;
+      openLabel?: string;
+      description?: string;
     };
 
 export function ArticleMedia(props: ArticleMediaProps) {
@@ -75,7 +77,12 @@ export function ArticleMedia(props: ArticleMediaProps) {
       return (
         <figure className="my-[38px] w-full">
           {props.expandable ? (
-            <ArticleEmbed src={props.src} title={props.title ?? "Interactive demo"} />
+            <ArticleEmbed
+              src={props.src}
+              title={props.title ?? "Interactive demo"}
+              openLabel={props.openLabel}
+              description={props.description}
+            />
           ) : (
             <iframe
               className="aspect-[16/9] w-full rounded-card border-0 bg-surface"

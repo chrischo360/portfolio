@@ -4,6 +4,7 @@ import { ArticleCallout } from "@/components/ArticleCallout";
 import { ArticleCode } from "@/components/ArticleCode";
 import { ArticleFileLink } from "@/components/ArticleFileLink";
 import { ArticleMedia } from "@/components/ArticleMedia";
+import { ArticleVideoComparison } from "@/components/ArticleVideoComparison";
 import { markdocConfig } from "./schema";
 
 const components = {
@@ -11,6 +12,7 @@ const components = {
   ArticleCode,
   ArticleFileLink,
   ArticleMedia,
+  ArticleVideoComparison,
 };
 
 type RenderArticleOptions = {

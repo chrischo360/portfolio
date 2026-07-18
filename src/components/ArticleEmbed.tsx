@@ -1,14 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 type ArticleEmbedProps = {
   src: string;
   title: string;
+  openLabel?: string;
+  description?: string;
 };
 
-export function ArticleEmbed({ src, title }: ArticleEmbedProps) {
+export function ArticleEmbed({
+  src,
+  title,
+  openLabel = "Open interactive demo",
+  description = "Explore the demo in a larger view.",
+}: ArticleEmbedProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const titleId = useId();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -49,8 +57,8 @@ export function ArticleEmbed({ src, title }: ArticleEmbedProps) {
           <span className="article-demo-expand" aria-hidden="true">↗</span>
           <span className="article-demo-open-card">
             <span className="article-demo-kicker">Interactive demo</span>
-            <strong>Open the visual builder</strong>
-            <span>Drag blocks, change layouts, and inspect the GraphQL structure.</span>
+            <strong>{openLabel}</strong>
+            <span>{description}</span>
           </span>
         </button>
       </div>
@@ -58,7 +66,7 @@ export function ArticleEmbed({ src, title }: ArticleEmbedProps) {
       <dialog
         ref={dialogRef}
         className="article-demo-dialog"
-        aria-labelledby="article-demo-title"
+        aria-labelledby={titleId}
         onCancel={(event) => {
           event.preventDefault();
           setIsOpen(false);
@@ -71,8 +79,8 @@ export function ArticleEmbed({ src, title }: ArticleEmbedProps) {
           <header className="article-demo-modal-header">
             <div>
               <span className="article-demo-kicker">Interactive demo</span>
-              <h2 id="article-demo-title">{title}</h2>
-              <p>Build a checkout screen within the same typed boundaries as the production component.</p>
+              <h2 id={titleId}>{title}</h2>
+              <p>{description}</p>
             </div>
             <div className="article-demo-modal-actions">
               <a href={src} target="_blank" rel="noopener noreferrer">

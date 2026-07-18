@@ -70,6 +70,22 @@ export const markdocConfig: Config = {
         },
       },
     },
+    videocomparison: {
+      render: "ArticleVideoComparison",
+      selfClosing: true,
+      attributes: {
+        status: {
+          type: String,
+          default: "ready",
+          matches: ["ready", "planned"],
+        },
+        beforeSrc: { type: String },
+        afterSrc: { type: String },
+        beforeLabel: { type: String, default: "Before" },
+        afterLabel: { type: String, default: "After" },
+        caption: { type: String },
+      },
+    },
     media: {
       render: "ArticleMedia",
       selfClosing: true,
@@ -102,6 +118,12 @@ export const markdocConfig: Config = {
         expandable: {
           type: Boolean,
           default: false,
+        },
+        openLabel: {
+          type: String,
+        },
+        description: {
+          type: String,
         },
       },
     },
