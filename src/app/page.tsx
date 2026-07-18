@@ -23,12 +23,17 @@ export default function Home() {
         <div>
           <h1 id="hero-title">{homeContent.hero.heading}</h1>
           <p className="lead">{homeContent.hero.lead}</p>
-          <div className="cta-row" aria-label="Primary actions">
-            <ResumeModal
-              href={resumeActionHref}
-              label={resumeActionLabel}
-              articles={resumeArticles}
-            />
+          <div className="resume-prompt">
+            <h2>{homeContent.resume.prompt.heading}</h2>
+            <p>{homeContent.resume.prompt.description}</p>
+            <div className="resume-prompt-action">
+              <ResumeModal
+                href={resumeActionHref}
+                label={resumeActionLabel}
+                articles={resumeArticles}
+                icons={["◔ ◔", "☞"]}
+              />
+            </div>
           </div>
         </div>
         <aside className="resume-card" aria-label="Chris profile summary">

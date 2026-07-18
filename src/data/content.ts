@@ -57,8 +57,13 @@ export const homeContent = {
       "Prevented revenue loss on-call with a hotfix that unblocked checkout for all non-US stores.",
       "Decomposed legacy checkout flows into federated GraphQL services across purchase surfaces.",
     ],
+    prompt: {
+      heading: "Or don’t.",
+      description:
+        "If you don’t have time to read allat, open my interactive resume, pick whatever catches your eye, and jump straight to the story behind it.",
+    },
     actions: {
-      open: "View full resume",
+      open: "Fine, show me the resume",
       download: "Download PDF",
     },
   },

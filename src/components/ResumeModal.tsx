@@ -10,9 +10,19 @@ type ResumeModalProps = {
   href: string;
   label: string;
   articles: ResumeArticle[];
+  className?: string;
+  icon?: string;
+  icons?: string[];
 };
 
-export function ResumeModal({ href, label, articles }: ResumeModalProps) {
+export function ResumeModal({
+  href,
+  label,
+  articles,
+  className = "text-link",
+  icon,
+  icons,
+}: ResumeModalProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -33,8 +43,19 @@ export function ResumeModal({ href, label, articles }: ResumeModalProps) {
 
   return (
     <>
-      <button className="text-link" type="button" onClick={() => setIsOpen(true)}>
-        {label} <span aria-hidden="true">→</span>
+      <button className={className} type="button" onClick={() => setIsOpen(true)}>
+        {(icon || icons?.length) && (
+          <span className="resume-link-icon" aria-hidden="true">
+            {icons?.length
+              ? icons.map((symbol) => (
+                  <span className="resume-link-icon-symbol" key={symbol}>
+                    {symbol}
+                  </span>
+                ))
+              : icon}
+          </span>
+        )}
+        {label} <span className="text-link-arrow" aria-hidden="true">→</span>
       </button>
       {isOpen && (
         <div

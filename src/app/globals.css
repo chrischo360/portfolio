@@ -254,11 +254,33 @@ h1 {
   letter-spacing: -0.006em;
 }
 
-.cta-row {
+.resume-prompt {
+  max-width: 640px;
   margin-top: 26px;
+}
+
+.resume-prompt h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.resume-prompt > p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.resume-prompt-action {
+  margin-top: 16px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  align-items: center;
+  gap: 14px 16px;
 }
 
 .button {
@@ -339,13 +361,74 @@ h1 {
   text-underline-offset: 3px;
 }
 
-.text-link span {
+.text-link-arrow {
   text-decoration: none;
   transition: transform 0.15s ease;
 }
 
-.text-link:hover span {
+.text-link:hover .text-link-arrow {
   transform: translateX(3px);
+}
+
+.resume-prompt-action .text-link {
+  gap: 5px;
+  font-size: 16px;
+}
+
+.resume-link-icon {
+  position: relative;
+  width: 1.9em;
+  height: 1em;
+  flex: 0 0 1.9em;
+  display: inline-grid;
+  place-items: center;
+  font-family: var(--font-heading);
+  font-size: 21px;
+  line-height: 1;
+  text-decoration: none;
+  transform-origin: center;
+  transition: transform 0.15s ease;
+}
+
+.resume-link-icon-symbol {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  white-space: nowrap;
+  animation: resume-icon-cycle 3.5s ease-in-out infinite;
+}
+
+.resume-link-icon-symbol:nth-child(2) {
+  animation-delay: -1.75s;
+}
+
+.resume-prompt-action .text-link:hover .resume-link-icon {
+  transform: translateX(3px) rotate(-5deg);
+}
+
+@keyframes resume-icon-cycle {
+  0%,
+  45% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  50%,
+  94% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  95% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .text-link:focus-visible {
@@ -2336,6 +2419,16 @@ h1 {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
   }
+
+  .resume-link-icon-symbol {
+    display: none;
+    animation: none;
+  }
+
+  .resume-link-icon-symbol:last-child {
+    display: grid;
+    opacity: 1;
+  }
 }
 
 @media (max-width: 980px) {
@@ -2456,8 +2549,9 @@ h1 {
     letter-spacing: -0.028em;
   }
 
-  .cta-row .button {
-    width: 100%;
+  .resume-prompt-action {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .profile-row {
