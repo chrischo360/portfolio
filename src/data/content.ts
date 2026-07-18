@@ -4,7 +4,7 @@ const currentRoleTitle =
 export const homeContent = {
   hero: {
     heading: "Hey, I'm Chris!",
-    lead: "I'm currently at Wayfair working on checkout, loyalty, and rewards. I'm obsessed with building great products and understanding the systems behind them.",
+    lead: "Read about the projects I’ve worked on, the decisions behind them, and a few things that shape how I think.",
   },
   profile: {
     subtitle: currentRoleTitle,
@@ -20,18 +20,21 @@ export const homeContent = {
         org: "Wayfair",
         period: "2025 — Present",
         role: "Software Engineer",
+        href: "https://www.wayfair.com/wayfair-rewards",
         logo: { src: "/logos/wayfair-gem.webp", width: 256, height: 256 },
       },
       {
         org: "Lacuna Mentors",
         period: "2025",
         role: "Co-founder",
+        href: "https://lacuna-six.vercel.app/",
         logo: { src: "/logos/lacuna.png", width: 3130, height: 1565 },
       },
       {
         org: "Boston University",
         period: "2020 — 2024",
         role: "B.S. Computer Science",
+        href: null,
         logo: { src: "/logos/bu.png", width: 225, height: 225 },
       },
     ],

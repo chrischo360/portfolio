@@ -49,7 +49,7 @@ Block Builder returns a typed GraphQL graph for the full experience. Each screen
 
 Those containers accept a bounded set of content blocks: formatted messages, rich text, choices, terms, and enrollment actions. Containers cannot contain other containers. Editors can change ordering, direction, spacing, padding, and section alignment through Homebase design tokens, but the schema prevents a payment action from being dropped into the header or arbitrary CSS from entering checkout.
 
-{% media type="embed" src="/work/high-friction-checkout/composable_layout_demo.html" title="Representative Block Builder visual playground" caption="Build the screen with contextual Add menus, drag blocks to reorder them, and switch on Developer view to inspect the typed GraphQL structure underneath." expandable=true /%}
+{% media type="embed" src="/work/high-friction-checkout/composable_layout_demo.html" title="Representative Block Builder visual playground" caption="Build the screen with contextual Add menus, drag blocks to reorder them, and switch on Developer view to inspect the typed GraphQL structure underneath." expandable=true openLabel="Open the visual builder" description="Drag blocks, change layouts, and inspect the GraphQL structure." /%}
 
 The same component serves five storefront locales: US, Canadian English, Canadian French, UK, and Ireland. It selects one of four reward bands from the customer's potential rewards, membership fee, and a configurable minimum. A customer with a $50 cart can see a different message from one with a $5 cart without adding conditional copy to the frontend.
 

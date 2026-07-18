@@ -16,6 +16,10 @@ tags: []
 2. Everything is version-controlled
 3. Everything needs to work natively with AI agents.
 
+{% callout title="Fun fact: this portfolio is text too" %}
+Inspired by [Stripe's documentation](https://docs.stripe.com/), every project writeup—including the page you're reading—is a Markdown file. [Markdoc](https://markdoc.dev/) supports custom tags for adding things like videos, code previews, and callouts.
+{% /callout %}
+
 ## Dotfiles Repo
 Everything lives in my [`~/dotfiles`](https://github.com/chrischo360/dotfiles) repo. 
 - One {% filelink src="https://raw.githubusercontent.com/chrischo360/dotfiles/main/install.sh" label="install.sh" lang="bash" /%} bootstraps a fresh machine

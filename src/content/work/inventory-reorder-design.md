@@ -2,32 +2,29 @@
 slug: inventory-reorder-design
 collection: work
 order: 7
-eyebrow: Airgoods · Product systems design
+eyebrow: Airgoods · Technical interview case study
 title: "Case Study: Designing Airgoods’ Reorder Center"
-summary: Designed a Reorder Center that turns POS inventory signals into Airgoods reorder actions.
-impact: Created a focused technical/design spec with API, data model, async sync flow, and interactive HTML mocks.
 hero:
   src: /work/inventory-reorder-design/hero.png
   alt: Airgoods Reorder Center — POS-powered replenishment dashboard
 tags: []
 ---
 
-{% callout title="Artifacts" %}
-- [Airgoods Reorder Center - Mock](/work/inventory-reorder-design/mock_page.html)
-- [Airgoods Reorder Center - Component Library](/work/inventory-reorder-design/component_sketches.html)
-{% /callout %}
-
 ## Airgoods Reorder Center - Mock
 
-{% media type="embed" src="/work/inventory-reorder-design/mock_page.html" title="Airgoods Reorder Center - Mock" caption="Standalone HTML mock of the Reorder Center." /%}
+{% callout title="Fun fact" %}
+I used [context.dev (YC-26)](https://www.context.dev/) to extract the colors, typography, and shadows from Airgoods’ site, then used those design tokens to make the mock feel consistent with the existing product.
+{% /callout %}
+
+{% media type="embed" src="/work/inventory-reorder-design/mock_page.html" title="Airgoods Reorder Center - Mock" caption="Standalone HTML mock of the Reorder Center." expandable=true openLabel="Open the Reorder Center mock" description="Explore how a retailer reviews low inventory and adds recommended products to cart." /%}
 
 ## Airgoods Reorder Center - Component Library
 
-{% media type="embed" src="/work/inventory-reorder-design/component_sketches.html" title="Airgoods Reorder Center - Component Library" caption="Standalone HTML component library for the Reorder Center." /%}
+{% media type="embed" src="/work/inventory-reorder-design/component_sketches.html" title="Airgoods Reorder Center - Component Library" caption="Standalone HTML component library for the Reorder Center." expandable=true openLabel="Open the component library" description="Explore the UI components and states used throughout the Reorder Center." /%}
 
-Standalone pages:
-- [Airgoods Reorder Center - Mock](/work/inventory-reorder-design/mock_page.html)
-- [Airgoods Reorder Center - Component Library](/work/inventory-reorder-design/component_sketches.html)
+## My approach
+
+I started by defining the product boundary: the POS remains the source of truth, while Airgoods makes it easier to act on that inventory data. From there, I designed the data model, APIs, asynchronous sync flow, failure states, frontend components, and interactive mocks.
 
 ## Requirements
 

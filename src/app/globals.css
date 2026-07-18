@@ -535,6 +535,7 @@ h1 {
 #work .section-head p {
   max-width: 680px;
   margin-top: 12px;
+  font-size: 14px;
 }
 
 .resume-panel {
