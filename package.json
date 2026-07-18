@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "resume:sync": "node scripts/sync-resume.mjs"
   },
   "dependencies": {
     "@markdoc/markdoc": "^0.5.7",

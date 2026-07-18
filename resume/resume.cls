@@ -15,6 +15,10 @@
 \usepackage{hyperref}
 \usepackage{enumitem}
 
+\newcommand{\relatedwork}[2][Related work]{%
+  \hspace{0.2em}\href{https://www.christopher-cho.dev/work/#2}{\footnotesize #1 $\nearrow$}%
+}
+
 \pagestyle{empty}               % no page numbers
 
 % ---- Name / Header ----

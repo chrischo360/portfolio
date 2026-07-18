@@ -163,12 +163,14 @@ export function ResumeDocument({ articles }: { articles: ResumeArticle[] }) {
               </div>
             ))}
           </dl>
-          <div className="resume-how-i-work">
-            <RelatedWorkLink
-              work={resumeData.howIWork}
-              articles={articles}
-            />
-          </div>
+          {resumeData.howIWork && (
+            <div className="resume-how-i-work">
+              <RelatedWorkLink
+                work={resumeData.howIWork}
+                articles={articles}
+              />
+            </div>
+          )}
         </ResumeSection>
       </article>
     </div>

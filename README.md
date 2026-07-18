@@ -32,10 +32,13 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 | `yarn build` | Create a production build          |
 | `yarn start` | Serve the production build         |
 | `yarn lint`  | Run ESLint                         |
+| `yarn resume:sync [file]` | Generate the HTML resume and PDF from LaTeX |
 
 ## Project structure
 
 ```
+resume/                 # Canonical LaTeX resume and class
+scripts/                # Content generation scripts
 src/
 ├── app/                # App Router routes, layout, and global styles
 │   ├── page.tsx        # Home page
@@ -43,7 +46,7 @@ src/
 │   └── blog/           # Blog (currently disabled via site config)
 ├── components/         # Reusable UI components
 ├── content/work/       # Markdoc case-study source files
-├── data/               # Site config, home content, and project data
+├── data/               # Site config, home content, and generated resume data
 └── lib/markdoc/        # Markdoc schema, parsing, and rendering helpers
 ```
 
@@ -55,6 +58,42 @@ Most of the site is data-driven. Update these files to change what's shown:
 - `src/data/content.ts` — home page copy (hero, timeline, resume, about)
 - `src/data/projects.ts` — featured and compact project cards
 - `src/content/work/*.md` — Markdoc case studies rendered at `/work/[slug]`
+
+## Resume sync
+
+`resume/resume.tex` is the canonical resume source. After editing it, generate the interactive HTML data and public PDF:
+
+```bash
+yarn resume:sync
+```
+
+To import another resume, pass its path. The source is copied to `resume/resume.tex` only after parsing and PDF compilation succeed:
+
+```bash
+yarn resume:sync ~/notes/resumes/resume-product-fullstack.tex
+```
+
+The command requires `pdflatex` and updates:
+
+- `resume/resume.tex`
+- `src/data/resume.generated.json`
+- `public/resume.pdf`
+
+The parser supports the `rSection` and `rSubsection` structure in `resume/resume.cls`. Keep the `Experience`, `Projects`, `Education`, and `Skills` sections.
+
+Associate a bullet with a portfolio article using its slug:
+
+```tex
+\item Decoupled CMS preview from checkout creation \relatedwork{rewards-modal-preloading}
+```
+
+Use an optional label outside a bullet:
+
+```tex
+\relatedwork[How I work]{dev-environment}
+```
+
+Related-work links are included only when the matching article does not have `hidden: true` in its frontmatter.
 
 ## Analytics
 
