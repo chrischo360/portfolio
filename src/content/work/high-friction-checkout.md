@@ -29,7 +29,7 @@ _The product visuals below are representative recreations. They contain no custo
 Block Builder could describe the experience and express its intent. Checkout code kept control of purchase mutations, gating, and recovery.
 {% /callout %}
 
-## The migration I could have done
+## Before the migration
 
 The legacy component received one PHP data blob containing everything it needed: live checkout facts such as `potentialRewards` and `isLoyaltySkuAdded`, alongside titles, button labels, image IDs, and screen content. React consumed the whole shape as one unit.
 
@@ -43,7 +43,7 @@ Instead, I split the flow by ownership:
 
 ![Before and after ownership boundaries for the HFC migration](/work/high-friction-checkout/state_separation.svg)
 
-## What Product can change without a deploy
+## CMS configuration
 
 Block Builder returns a typed GraphQL graph for the full experience. Each screen has three distinct regions rather than one open canvas. The header accepts an ordered set of logo, gem, and promotional-image blocks. Content has dedicated title and subtitle fields, followed by `Row` or `Column` containers. The footer has its own `Row` and `Column` containers.
 
@@ -55,7 +55,7 @@ The same component serves five storefront locales: US, Canadian English, Canadia
 
 CMS-authored strings can also include placeholders such as `[PotentialRewards]`, `[MembershipFee]`, and `[CartTotal]`. The component resolves those against live checkout data at render time. Product writes the message; checkout supplies the facts.
 
-## Structure, not another flag
+## Interaction modes
 
 HFC runs in two modes. In `addToCart` mode, the enrollment action requires terms acceptance before it can add the membership SKU. In `standalone` mode, that terms gate and purchase path are absent.
 
@@ -74,7 +74,7 @@ The CMS expresses intent by including the structure that makes the behavior vali
 
 A malformed configuration therefore fails toward the less consequential mode instead of silently bypassing the terms gate.
 
-## The screens are configurable; the transitions are not
+## Screen transitions
 
 The CMS describes three screens: `DEFAULT`, `REWARDS_ADDED`, and `REWARDS_DECLINED`. It controls what each one looks like, but not when the component moves between them.
 
@@ -89,7 +89,7 @@ DEFAULT
 
 The membership SKU mutation also stays in code. Content editors can change the call-to-action label or move it within the layout, but they cannot configure what gets added to the purchase contract.
 
-## Checkout owns the escape hatch
+## Failure handling
 
 The HFC component does not enable the overlay directly. It emits `onVeilChange`; the surrounding checkout section translates that request into `enableVeil` and `disableVeil` actions in global checkout state.
 
@@ -106,7 +106,7 @@ HFC asks checkout to enable the veil
 
 The fallback behavior follows the same rule. If Block Builder omits a message for one reward band, the component uses default content and logs the missing tier with the block ID. A content mistake can produce generic copy; it should not make the payment page unusable.
 
-## What changed
+## After the migration
 
 Before the migration, changing HFC copy, layout, or screen content meant changing a checkout-specific payload and shipping code. Live checkout facts and presentation were part of the same contract.
 
