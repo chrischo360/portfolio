@@ -9,14 +9,15 @@ type ArticlePreviewCardProps = {
 export function ArticlePreviewCard({ article }: ArticlePreviewCardProps) {
   return (
     <article className="article-preview-card">
-      {article.hero && (
+      {article.cardImage && (
         <figure className="article-preview-media">
           <Image
-            src={article.hero.src}
-            alt={article.hero.alt ?? ""}
+            src={article.cardImage.src}
+            alt={article.cardImage.alt ?? ""}
             width={900}
             height={480}
             sizes="(max-width: 900px) 100vw, 460px"
+            unoptimized={article.cardImage.type === "gif"}
           />
         </figure>
       )}

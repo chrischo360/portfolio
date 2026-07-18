@@ -5,6 +5,12 @@ import yaml from "yaml";
 
 export type ArticleCollection = "work" | "blog";
 
+type ArticleImage = {
+  type?: "image" | "gif";
+  src: string;
+  alt?: string;
+};
+
 export type Article = {
   slug: string;
   collection: ArticleCollection;
@@ -14,10 +20,8 @@ export type Article = {
   impact?: string;
   hidden?: boolean;
   order?: number;
-  hero?: {
-    src: string;
-    alt?: string;
-  };
+  hero?: ArticleImage;
+  cardImage?: ArticleImage;
   tags: string[];
   href: string;
   content: string;
@@ -66,6 +70,7 @@ function readArticle(filePath: string): Article {
 
   return {
     ...frontmatter,
+    cardImage: frontmatter.cardImage ?? frontmatter.hero,
     href: `/${frontmatter.collection}/${frontmatter.slug}`,
     content,
   } as Article;

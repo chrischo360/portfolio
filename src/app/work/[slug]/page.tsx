@@ -69,6 +69,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
                   height={720}
                   priority
                   sizes="(max-width: 900px) 100vw, 720px"
+                  unoptimized={article.hero.type === "gif"}
                 />
               </figure>
             )}
