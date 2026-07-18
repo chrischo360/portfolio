@@ -46,6 +46,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
   }
 
   const headings = getHeadings(article.content);
+  const showHeaderDetails = article.headerDisplay !== "minimal";
 
   return (
     <article className="section-pad article-page">
@@ -59,7 +60,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
             <h1 className="m-0 max-w-[780px] font-heading text-[clamp(46px,8vw,82px)] font-medium leading-[0.95] tracking-[-0.065em]">
               {article.title}
             </h1>
-            {article.hero && (
+            {showHeaderDetails && article.hero && (
               <figure className="mt-[34px] overflow-hidden rounded-card border border-border bg-surface shadow-[0_18px_46px_rgba(30,35,32,0.08)]">
                 <Image
                   className="block h-auto max-h-[460px] w-full object-cover"
@@ -73,28 +74,32 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
                 />
               </figure>
             )}
-            <p
-              className={`max-w-[680px] text-[clamp(21px,2.5vw,28px)] leading-[1.35] text-fg ${
-                article.hero ? "mt-[34px]" : "mt-[26px]"
-              }`}
-            >
-              {article.summary}
-            </p>
-            {article.impact && (
+            {showHeaderDetails && (
+              <p
+                className={`max-w-[680px] text-[clamp(21px,2.5vw,28px)] leading-[1.35] text-fg ${
+                  article.hero ? "mt-[34px]" : "mt-[26px]"
+                }`}
+              >
+                {article.summary}
+              </p>
+            )}
+            {showHeaderDetails && article.impact && (
               <p className="mt-[18px] max-w-[680px] text-[17px] leading-[1.6] text-muted">
                 {article.impact}
               </p>
             )}
-            <div className="mt-7 flex flex-wrap gap-[10px]" aria-label="Article topics">
-              {article.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-border bg-[rgba(255,254,250,0.72)] px-[11px] py-[7px] font-ui text-xs font-bold text-muted"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+            {article.tags.length > 0 && (
+              <div className="mt-7 flex flex-wrap gap-[10px]" aria-label="Article topics">
+                {article.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-border bg-[rgba(255,254,250,0.72)] px-[11px] py-[7px] font-ui text-xs font-bold text-muted"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </header>
 
           <div className="mt-[54px]">

@@ -1,31 +1,89 @@
-<svg width="1200" height="620" viewBox="0 0 1200 620" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="620" rx="36" fill="#FBF7F2"/>
-  <text x="70" y="86" fill="#221A14" font-family="Inter, Arial" font-size="42" font-weight="850">Modal load: before vs. after</text>
-  <text x="70" y="124" fill="#6B625C" font-family="Inter, Arial" font-size="22">Moving the work off the click made the modal feel instant.</text>
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="36" fill="#FBF7F2"/>
 
-  <!-- BEFORE row -->
-  <text x="70" y="215" fill="#B91C1C" font-family="Inter, Arial" font-size="27" font-weight="900">Before</text>
-  <text x="70" y="248" fill="#6B625C" font-family="Inter, Arial" font-size="20">everything happens after the click</text>
-  <rect x="300" y="188" width="120" height="54" rx="14" fill="#FFF9EC" stroke="#F2D8A7" stroke-width="2"/>
-  <text x="360" y="221" fill="#B45309" font-family="Inter, Arial" font-size="19" font-weight="800" text-anchor="middle">click</text>
-  <rect x="440" y="188" width="620" height="54" rx="14" fill="#FDE7E7" stroke="#F3B4B4" stroke-width="2"/>
-  <text x="750" y="221" fill="#B91C1C" font-family="Inter, Arial" font-size="19" font-weight="800" text-anchor="middle">fetch data + load code + wait</text>
-  <rect x="1080" y="188" width="70" height="54" rx="14" fill="#EAF6FF" stroke="#B8DFFF" stroke-width="2"/>
-  <text x="1115" y="221" fill="#2563EB" font-family="Inter, Arial" font-size="18" font-weight="800" text-anchor="middle">show</text>
-  <text x="1010" y="288" fill="#B91C1C" font-family="Inter, Arial" font-size="24" font-weight="900" text-anchor="end">≈ 3.8s</text>
+  <text x="64" y="72" fill="#221A14" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="800">The modal load: before and after</text>
+  <text x="64" y="108" fill="#6B625C" font-family="Inter, Arial, sans-serif" font-size="21">The old flow waited for checkout state. The new flow shows safe preview content first.</text>
 
-  <!-- AFTER row -->
-  <text x="70" y="400" fill="#047857" font-family="Inter, Arial" font-size="27" font-weight="900">After</text>
-  <text x="70" y="433" fill="#6B625C" font-family="Inter, Arial" font-size="20">readiness prepared during idle time</text>
-  <rect x="300" y="373" width="500" height="54" rx="14" fill="#E9F7EF" stroke="#B7E3C8" stroke-width="2"/>
-  <text x="550" y="406" fill="#047857" font-family="Inter, Arial" font-size="19" font-weight="800" text-anchor="middle">idle: prefetch data + lazy-load code</text>
-  <rect x="820" y="373" width="120" height="54" rx="14" fill="#FFF9EC" stroke="#F2D8A7" stroke-width="2"/>
-  <text x="880" y="406" fill="#B45309" font-family="Inter, Arial" font-size="19" font-weight="800" text-anchor="middle">click</text>
-  <rect x="960" y="373" width="190" height="54" rx="14" fill="#EAF6FF" stroke="#B8DFFF" stroke-width="2"/>
-  <text x="1055" y="406" fill="#2563EB" font-family="Inter, Arial" font-size="18" font-weight="800" text-anchor="middle">render (warm)</text>
-  <text x="1150" y="473" fill="#047857" font-family="Inter, Arial" font-size="24" font-weight="900" text-anchor="end">≈ 0.5s</text>
+  <rect x="64" y="146" width="516" height="550" rx="28" fill="#FFFDFC" stroke="#E8DCD3" stroke-width="2"/>
+  <rect x="64" y="146" width="516" height="76" rx="28" fill="#FDE7E7"/>
+  <path d="M64 194C64 178.536 76.536 166 92 166H552C567.464 166 580 178.536 580 194V222H64V194Z" fill="#FDE7E7"/>
+  <text x="94" y="185" fill="#B91C1C" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="800">Before</text>
+  <text x="94" y="210" fill="#7F1D1D" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600">CONTENT AND CHECKOUT STATE WERE COUPLED</text>
 
-  <rect x="235" y="525" width="730" height="64" rx="18" fill="white" stroke="#EADFD4"/>
-  <text x="600" y="558" fill="#221A14" font-family="Inter, Arial" font-size="21" font-weight="800" text-anchor="middle">Same result at the click — but the expensive work already happened.</text>
-  <text x="600" y="582" fill="#6B625C" font-family="Inter, Arial" font-size="18" text-anchor="middle">Purchase creation still waits for the user to confirm.</text>
+  <rect x="96" y="250" width="452" height="58" rx="14" fill="#FFF9EC" stroke="#EBCB92" stroke-width="2"/>
+  <circle cx="124" cy="279" r="15" fill="#F59E0B"/>
+  <text x="124" y="285" fill="white" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" text-anchor="middle">1</text>
+  <text x="153" y="286" fill="#3D342D" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Customer opens the modal</text>
+
+  <path d="M322 308V331" stroke="#BBAEA4" stroke-width="3" stroke-linecap="round"/>
+  <path d="M314 324L322 332L330 324" stroke="#BBAEA4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="96" y="332" width="452" height="76" rx="14" fill="#FDECEC" stroke="#EFBABA" stroke-width="2"/>
+  <circle cx="124" cy="370" r="15" fill="#C24141"/>
+  <text x="124" y="376" fill="white" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" text-anchor="middle">2</text>
+  <text x="153" y="362" fill="#3D342D" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700">A blank spinner appears</text>
+  <text x="153" y="389" fill="#6B625C" font-family="Inter, Arial, sans-serif" font-size="17">Nothing useful is visible while checkout loads</text>
+
+  <path d="M322 408V431" stroke="#BBAEA4" stroke-width="3" stroke-linecap="round"/>
+  <path d="M314 424L322 432L330 424" stroke="#BBAEA4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="96" y="432" width="452" height="106" rx="14" fill="#FDECEC" stroke="#EFBABA" stroke-width="2"/>
+  <circle cx="124" cy="470" r="15" fill="#C24141"/>
+  <text x="124" y="476" fill="white" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" text-anchor="middle">3</text>
+  <text x="153" y="462" fill="#3D342D" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700">One full query prepares everything</text>
+  <text x="153" y="490" fill="#6B625C" font-family="Inter, Arial, sans-serif" font-size="17">Eligibility + CMS content</text>
+  <text x="153" y="516" fill="#B91C1C" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700">Purchase contract + payment intent</text>
+
+  <path d="M322 538V561" stroke="#BBAEA4" stroke-width="3" stroke-linecap="round"/>
+  <path d="M314 554L322 562L330 554" stroke="#BBAEA4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="96" y="562" width="452" height="100" rx="16" fill="#221A14"/>
+  <circle cx="124" cy="600" r="15" fill="#75675D"/>
+  <text x="124" y="606" fill="white" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" text-anchor="middle">4</text>
+  <text x="153" y="594" fill="white" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="750">The complete modal finally renders</text>
+  <text x="153" y="622" fill="#D7CEC7" font-family="Inter, Arial, sans-serif" font-size="17">Content was blocked by checkout setup.</text>
+  <text x="153" y="647" fill="#F8C8C8" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700">Visible content and purchase state arrive together.</text>
+
+  <rect x="620" y="146" width="516" height="550" rx="28" fill="#FFFDFC" stroke="#D4E6DA" stroke-width="2"/>
+  <rect x="620" y="146" width="516" height="76" rx="28" fill="#E9F7EF"/>
+  <path d="M620 194C620 178.536 632.536 166 648 166H1108C1123.46 166 1136 178.536 1136 194V222H620V194Z" fill="#E9F7EF"/>
+  <text x="650" y="185" fill="#047857" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="800">After</text>
+  <text x="650" y="210" fill="#065F46" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600">READINESS AND CHECKOUT STATE ARE SEPARATE</text>
+
+  <text x="650" y="256" fill="#047857" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" letter-spacing="1.2">WHILE THE MODAL IS CLOSED</text>
+  <rect x="650" y="271" width="456" height="82" rx="14" fill="#EEF8F2" stroke="#B7DFC6" stroke-width="2"/>
+  <circle cx="678" cy="312" r="15" fill="#059669"/>
+  <text x="678" y="318" fill="white" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" text-anchor="middle">1</text>
+  <text x="707" y="303" fill="#3D342D" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700">Safe preview query runs early</text>
+  <text x="707" y="331" fill="#047857" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700">CMS content · no purchase contract</text>
+
+  <path d="M878 353V375" stroke="#86B99A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M870 368L878 376L886 368" stroke="#86B99A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="650" y="376" width="456" height="54" rx="14" fill="#FFF9EC" stroke="#EBCB92" stroke-width="2"/>
+  <circle cx="678" cy="403" r="15" fill="#F59E0B"/>
+  <text x="678" y="409" fill="white" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" text-anchor="middle">2</text>
+  <text x="707" y="410" fill="#3D342D" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Customer opens the modal</text>
+
+  <path d="M878 430V452" stroke="#86B99A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M870 445L878 453L886 445" stroke="#86B99A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="650" y="453" width="456" height="82" rx="14" fill="#E8F3FF" stroke="#B7D8F5" stroke-width="2"/>
+  <circle cx="678" cy="494" r="15" fill="#2563EB"/>
+  <text x="678" y="500" fill="white" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" text-anchor="middle">3</text>
+  <text x="707" y="485" fill="#3D342D" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700">Preview content appears immediately</text>
+  <text x="707" y="513" fill="#2563EB" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700">The full checkout query starts alongside it.</text>
+
+  <path d="M878 535V557" stroke="#86B99A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M870 550L878 558L886 550" stroke="#86B99A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="650" y="558" width="456" height="104" rx="14" fill="#EEF8F2" stroke="#B7DFC6" stroke-width="2"/>
+  <circle cx="678" cy="596" r="15" fill="#059669"/>
+  <text x="678" y="602" fill="white" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" text-anchor="middle">4</text>
+  <text x="707" y="588" fill="#3D342D" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="700">Checkout state arrives</text>
+  <text x="707" y="616" fill="#6B625C" font-family="Inter, Arial, sans-serif" font-size="17">Purchase contract + payment intent load</text>
+  <text x="707" y="642" fill="#047857" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700">Checkout controls fill in without blocking content.</text>
+
+  <rect x="226" y="718" width="748" height="30" rx="15" fill="#F1EAE4"/>
+  <text x="600" y="739" fill="#4E443C" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" text-anchor="middle">The customer sees content sooner, without creating purchase state before intent.</text>
 </svg>

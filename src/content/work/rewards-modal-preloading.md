@@ -6,21 +6,63 @@ eyebrow: Wayfair · Checkout performance
 title: "Wayfair: Making a Checkout Rewards Modal Feel Immediate"
 summary: "I replaced a blank-spinner checkout modal with a two-phase GraphQL flow: prefetch lightweight CMS preview content while the modal was closed, then create the real checkout contract only when the customer opened it."
 impact: "Replaced a risky full-checkout prefetch with a safe GraphQL preview path that separated CMS readiness from purchase-contract creation."
+headerDisplay: minimal
 hero:
   src: /work/rewards-modal-preloading/rewards-modal-hero.png
   alt: Wayfair Rewards standalone purchase modal preview mock
 tags: []
 ---
 
-# Making a Checkout Rewards Modal Feel Immediate
+## Before vs. after
 
-I replaced a blank-spinner checkout modal with a two-phase GraphQL flow: prefetch lightweight CMS preview content while the modal was closed, then create the real checkout contract only when the customer opened it.
+I replaced a blank-spinner checkout modal with a two-phase GraphQL flow.
+
+{% videocomparison beforeSrc="/work/rewards-modal-preloading/rewards-modal-before.mp4" afterSrc="/work/rewards-modal-preloading/rewards-modal-after.mp4" beforeLabel="Before: blank spinner" afterLabel="After: preview content" /%}
+
+## Making a Checkout Rewards Modal Feel Immediate
+
+Before, opening the modal required the full checkout experience.
+
+{% callout title="What to notice" %}
+The old flow coupled “show the modal content” with “create the checkout state.”
+{% /callout %}
+
+```text
+user opens modal
+  → frontend runs full loyalty checkout query
+  → backend checks eligibility
+  → backend creates payment intent / purchase contract
+  → frontend receives CMS content + checkout contract
+  → modal renders
+```
+
+After, the modal had a lightweight preview path.
+
+```text
+modal mounted but closed
+  → frontend runs preview query without purchaseContract
+  → backend returns CheckoutPreview screen content
+  → no payment intent / purchase contract created
+
+user opens modal
+  → modal renders preview content immediately
+  → frontend runs full checkout query with purchaseContract
+  → backend creates/loads payment intent + purchase contract
+  → contract-dependent widgets replace loading placeholders
+```
+
+![Representative before/after timeline of the modal load](/work/rewards-modal-preloading/prefetch_timeline.svg)
+
+```md
+Key shift:
+CMS/modal content → safe preview query
+Purchase/payment state → full query on open
+Contract-dependent UI → loading placeholders until checkout data arrives
+```
 
 ## The short version
 
-At first glance, this was a modal performance problem. The customer clicked “Join Rewards” and waited while the modal loaded.
-
-In checkout-adjacent systems, though, loading a modal is not always just loading UI.
+In checkout-adjacent systems, loading a modal is not always just loading UI.
 
 - the modal needed CMS content
 - it needed eligibility and membership state
@@ -59,50 +101,6 @@ page loads
 A safe prefetch should be cheap, reversible, and okay to run for many users. This one could create checkout/payment load for users who only saw a loyalty banner.
 
 
-## Before vs. after
-
-Before, opening the modal required the full checkout experience.
-
-{% callout title="What to notice" %}
-The old flow coupled “show the modal content” with “create the checkout state.”
-{% /callout %}
-
-```text
-user opens modal
-  → frontend runs full loyalty checkout query
-  → backend checks eligibility
-  → backend creates payment intent / purchase contract
-  → frontend receives CMS content + checkout contract
-  → modal renders
-```
-
-{% media type="video" src="/work/rewards-modal-preloading/rewards-modal-before.mp4" title="Before: blank spinner on modal open" caption="Before: opening the modal started the full checkout query, so customers waited on a blank loading state." /%}
-
-After, the modal had a lightweight preview path.
-
-```text
-modal mounted but closed
-  → frontend runs preview query without purchaseContract
-  → backend returns CheckoutPreview screen content
-  → no payment intent / purchase contract created
-
-user opens modal
-  → modal renders preview content immediately
-  → frontend runs full checkout query with purchaseContract
-  → backend creates/loads payment intent + purchase contract
-  → contract-dependent widgets replace loading placeholders
-```
-
-{% media type="video" src="/work/rewards-modal-preloading/rewards-modal-after.mp4" title="After: preview content renders immediately" caption="After: prefetched preview content rendered immediately while checkout-specific widgets hydrated." /%}
-
-![Representative before/after timeline of the modal load](/work/rewards-modal-preloading/prefetch_timeline.svg)
-
-```md
-Key shift:
-CMS/modal content → safe preview query
-Purchase/payment state → full query on open
-Contract-dependent UI → loading placeholders until checkout data arrives
-```
 
 ## Architecture
 
