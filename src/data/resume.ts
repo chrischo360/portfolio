@@ -1,0 +1,175 @@
+export type RelatedWork = {
+  slug: string;
+  label?: string;
+};
+
+export type ResumeBullet = {
+  text: string;
+  relatedWork?: RelatedWork;
+};
+
+export type ResumeEntry = {
+  organization: string;
+  location?: string;
+  role: string;
+  roleHref?: string;
+  period?: string;
+  bullets: ResumeBullet[];
+};
+
+const relatedWork = {
+  configurableCheckout: { slug: "high-friction-checkout" },
+  federatedCheckout: { slug: "federated-checkout-graphql" },
+  rewardsPreloading: { slug: "rewards-modal-preloading" },
+  saleIncident: { slug: "sale-rate-limit-incident" },
+  checkoutPerformance: { slug: "checkout-performance" },
+  lacuna: { slug: "lacuna-mentors" },
+  piCodeblockCopy: { slug: "pi-codeblock-copy" },
+  devEnvironment: { slug: "dev-environment", label: "How I work" },
+} satisfies Record<string, RelatedWork>;
+
+export const resumeData = {
+  name: "Christopher Cho",
+  contact: [
+    { label: "201-779-9417", href: "tel:+12017799417" },
+    {
+      label: "christopher.cho.dev@gmail.com",
+      href: "mailto:christopher.cho.dev@gmail.com",
+    },
+    { label: "New York, NY" },
+    {
+      label: "linkedin.com/in/chrischo360",
+      href: "https://linkedin.com/in/chrischo360",
+    },
+    {
+      label: "github.com/chrischo360",
+      href: "https://github.com/chrischo360",
+    },
+  ],
+  experience: [
+    {
+      organization: "Wayfair",
+      location: "Boston, MA",
+      role: "Software Engineer",
+      period: "March 2025 — Present",
+      bullets: [
+        {
+          text: "Shipped features end to end across checkout, cart, and browse pages serving 200M+ annual sessions, iterating quickly based on product and design feedback",
+          relatedWork: relatedWork.configurableCheckout,
+        },
+        {
+          text: "Ran A/B experiments on checkout loyalty enrollment modals, contributing to a +220% Membership Attach Rate lift projected to generate $2.2M in annual GRS",
+        },
+        {
+          text: "Drove migration of a high-traffic checkout page from a legacy monolith to a federated GraphQL and Java architecture",
+          relatedWork: relatedWork.federatedCheckout,
+        },
+        {
+          text: "Decoupled CMS preview from checkout contract creation, cutting modal load time from 3.8s to 0.5s",
+          relatedWork: relatedWork.rewardsPreloading,
+        },
+        {
+          text: "Designed a server-side API integration within a day of a rate limit issue at major sale launch, preventing customer impact",
+          relatedWork: relatedWork.saleIncident,
+        },
+        {
+          text: "Configured Datadog dashboards, alerts, and synthetics to monitor checkout errors, payment failures, and page latency",
+          relatedWork: relatedWork.checkoutPerformance,
+        },
+      ],
+    },
+    {
+      organization: "Lacuna Mentors",
+      role: "Co-Founder and Software Engineer",
+      period: "December 2023 — May 2024",
+      bullets: [
+        {
+          text: "Co-founded and led engineering from zero to one for a mentorship marketplace, growing to 60+ mentors and validating the concept through direct customer feedback",
+          relatedWork: relatedWork.lacuna,
+        },
+        {
+          text: "Owned product execution across onboarding, scheduling, and mentor discovery workflows, prioritizing high-leverage improvements from user conversations",
+        },
+        {
+          text: "Built a custom scheduling system, saving the business $900/month in costs",
+        },
+      ],
+    },
+    {
+      organization: "Hariri Software & Application Innovation Lab",
+      role: "Software Engineer",
+      period: "May 2021 — August 2023",
+      bullets: [
+        {
+          text: "Worked directly with university researchers to manage the full product lifecycle for a suite of full-stack applications — from requirements gathering and rapid iteration based on weekly demos to final deployment",
+        },
+        {
+          text: "Selected as one of only two students to receive the 2023 Hariri Student Excellence Award for exceptional skill, strong work ethic, and commitment to excellence",
+        },
+      ],
+    },
+  ] satisfies ResumeEntry[],
+  projects: [
+    {
+      organization: "Julius AI (YC W22)",
+      role: "Julius Sheets",
+      bullets: [
+        {
+          text: "Built an excel editor inside Julius AI's Data Explorer, enabling users to open, edit, and save .xlsx files directly within the product",
+        },
+        {
+          text: "Integrated SpreadJS for in-browser sheet rendering with backend changes to persist edits to the user's spreadsheet",
+        },
+        {
+          text: "Streamed agent-generated cell operations into the spreadsheet in real time as Julius AI planned and executed steps",
+        },
+        {
+          text: "Shipped to dev environment behind a feature flag within three days",
+        },
+      ],
+    },
+    {
+      organization: "Pi-cc",
+      role: "github.com/chrischo360/pi-cc",
+      roleHref: "https://github.com/chrischo360/pi-cc",
+      bullets: [
+        {
+          text: "Built an open-source extension for pi, an agent harness, that detects fenced code blocks and presents a numbered picker to copy them cleanly",
+          relatedWork: relatedWork.piCodeblockCopy,
+        },
+      ],
+    },
+  ] satisfies ResumeEntry[],
+  education: {
+    school: "Boston University",
+    degree: "Bachelor of Arts in Computer Science",
+    honors:
+      "Dean's List (Fall 2021, Spring 2022, Fall 2022, Spring 2023, Fall 2023)",
+  },
+  skills: [
+    {
+      label: "Languages",
+      value: "TypeScript, JavaScript, Python, Java, SQL, Bash",
+    },
+    {
+      label: "Frontend",
+      value:
+        "React, Next.js, Redux, Apollo Client, Tailwind, Styled Components",
+    },
+    {
+      label: "Backend",
+      value: "Node.js, Nest.js, FastAPI, GraphQL, Apollo, Prisma, REST APIs",
+    },
+    {
+      label: "Analytics",
+      value:
+        "BigQuery, Posthog, Google Analytics, Datadog, Datadog Synthetics",
+    },
+    {
+      label: "Cloud & DevOps",
+      value:
+        "Google Cloud Platform, Vercel, Docker, Terraform, Buildkite, Git, Playwright, Jest",
+    },
+  ],
+  howIWork: relatedWork.devEnvironment,
+};

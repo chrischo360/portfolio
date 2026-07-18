@@ -10,6 +10,12 @@ export default function Home() {
   const resumeActionHref = siteConfig.resumeHref;
   const resumeActionLabel = homeContent.resume.actions.open;
   const workArticles = getArticles("work");
+  const resumeArticles = workArticles.map(({ slug, title, summary, href }) => ({
+    slug,
+    title,
+    summary,
+    href,
+  }));
 
   return (
     <>
@@ -18,9 +24,11 @@ export default function Home() {
           <h1 id="hero-title">{homeContent.hero.heading}</h1>
           <p className="lead">{homeContent.hero.lead}</p>
           <div className="cta-row" aria-label="Primary actions">
-            <Link className="text-link" href="#work">
-              Read more about my work below <span aria-hidden="true">↓</span>
-            </Link>
+            <ResumeModal
+              href={resumeActionHref}
+              label={resumeActionLabel}
+              articles={resumeArticles}
+            />
           </div>
         </div>
         <aside className="resume-card" aria-label="Chris profile summary">
@@ -49,7 +57,20 @@ export default function Home() {
                   unoptimized
                 />
                 <span className="timeline-detail">
-                  <strong>{item.org}</strong>
+                  <strong>
+                    {item.href ? (
+                      <a
+                        className="timeline-org-link"
+                        href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {item.org}
+                      </a>
+                    ) : (
+                      item.org
+                    )}
+                  </strong>
                   <span className="timeline-role">{item.role}</span>
                   <span className="timeline-period">{item.period}</span>
                 </span>
@@ -60,19 +81,25 @@ export default function Home() {
       </section>
 
       <section id="work" className="section-pad" aria-labelledby="work-title">
-        <SectionHeading id="work-title" title="Selected work" />
+        <SectionHeading id="work-title" title="Selected work">
+          <em>
+            Some writing on how I work, projects I’m proud of, and highlights
+            from my time at Wayfair.
+          </em>
+        </SectionHeading>
         <ul className="work-list">
           {workArticles.map((article) => (
             <li key={article.slug}>
               <Link className="work-item" href={article.href}>
-                {article.hero && (
+                {article.cardImage && (
                   <div className="work-item-image">
                     <Image
-                      src={article.hero.src}
-                      alt={article.hero.alt ?? ""}
+                      src={article.cardImage.src}
+                      alt={article.cardImage.alt ?? ""}
                       width={200}
                       height={124}
                       style={{ width: "100%", height: "82px", objectFit: "cover" }}
+                      unoptimized={article.cardImage.type === "gif"}
                     />
                   </div>
                 )}
@@ -101,7 +128,11 @@ export default function Home() {
               <h3>{homeContent.resume.role.title}</h3>
               <p>{homeContent.resume.role.description}</p>
             </div>
-            <ResumeModal href={resumeActionHref} label={resumeActionLabel} />
+            <ResumeModal
+              href={resumeActionHref}
+              label={resumeActionLabel}
+              articles={resumeArticles}
+            />
           </aside>
           <div className="resume-detail">
             <div className="resume-items">

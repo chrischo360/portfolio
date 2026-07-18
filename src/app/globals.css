@@ -1,6 +1,30 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@font-face {
+  font-family: "Latin Modern Roman";
+  src: url("/fonts/lmroman10-regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Latin Modern Roman";
+  src: url("/fonts/lmroman10-bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Latin Modern Roman";
+  src: url("/fonts/lmroman10-italic.otf") format("opentype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --bg: #fbfaf6;
   --surface: #fffefa;
@@ -428,6 +452,17 @@ h1 {
   letter-spacing: -0.02em;
 }
 
+.timeline-org-link {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+  text-underline-offset: 3px;
+}
+
+.timeline-org-link:hover,
+.timeline-org-link:focus-visible {
+  color: var(--accent-ink);
+}
+
 .timeline-role {
   color: var(--muted);
   font-family: var(--font-ui);
@@ -491,6 +526,15 @@ h1 {
   margin: 0;
   color: var(--muted);
   font-size: 17px;
+}
+
+#work .section-head {
+  display: block;
+}
+
+#work .section-head p {
+  max-width: 680px;
+  margin-top: 12px;
 }
 
 .resume-panel {
@@ -1912,11 +1956,269 @@ h1 {
   transform: translateY(-1px);
 }
 
-.resume-frame {
-  width: 100%;
-  height: 100%;
-  border: 0;
+.resume-document-scroll {
+  min-height: 0;
+  overflow: auto;
+  padding: 32px;
   background: var(--surface-2);
+  overscroll-behavior: contain;
+}
+
+.resume-sheet {
+  width: min(8.5in, 100%);
+  min-height: 11in;
+  margin: 0 auto;
+  padding: 0.5in;
+  background: #fff;
+  color: #111;
+  font-family: "Latin Modern Roman", "Times New Roman", serif;
+  font-size: 10pt;
+  line-height: 1.18;
+  box-shadow: 0 8px 30px rgba(20, 20, 20, 0.12);
+}
+
+.resume-document-header {
+  margin-bottom: 6pt;
+  text-align: center;
+}
+
+.resume-document-header h1 {
+  max-width: none;
+  margin: 0 0 3pt;
+  font-family: inherit;
+  font-size: 20.74pt;
+  font-variant-caps: small-caps;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.resume-contact {
+  font-size: 9pt;
+  line-height: 1.3;
+}
+
+.resume-contact a,
+.resume-entry-meta a {
+  text-decoration: underline;
+  text-underline-offset: 1px;
+}
+
+.resume-document-section {
+  margin-top: 6pt;
+}
+
+.resume-document-section h2 {
+  margin: 0 0 5pt;
+  padding: 0 0 3pt;
+  border-bottom: 1px solid #111;
+  font-family: inherit;
+  font-size: 10pt;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.resume-section-body {
+  padding-left: 1.5em;
+}
+
+.resume-entry {
+  margin-bottom: 5pt;
+}
+
+.resume-entry-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.resume-entry-meta {
+  margin-top: 1pt;
+  font-style: italic;
+}
+
+.resume-bullets {
+  margin: 3pt 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resume-bullets li {
+  position: relative;
+  margin: 0;
+  padding-left: 1em;
+}
+
+.resume-bullets li::before {
+  position: absolute;
+  left: 0;
+  content: "·";
+  font-weight: 700;
+}
+
+.resume-related {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.resume-related-link {
+  color: var(--accent-ink);
+  font-family: var(--font-ui);
+  font-size: 0.72em;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--accent-line);
+  text-underline-offset: 3px;
+}
+
+.resume-related-link > span {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.resume-related-link:hover > span,
+.resume-related-link:focus-visible > span {
+  transform: translate(2px, -2px);
+}
+
+.resume-related-link:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.resume-related-preview {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 10;
+  width: 290px;
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.35;
+  white-space: normal;
+  text-align: left;
+  box-shadow: 0 16px 38px rgba(20, 20, 20, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.resume-related:hover .resume-related-preview,
+.resume-related:focus-within .resume-related-preview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.resume-related-eyebrow {
+  color: var(--muted-2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.resume-related-preview strong {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.resume-related-cta {
+  color: var(--accent-ink);
+  font-weight: 700;
+}
+
+.resume-education {
+  display: grid;
+  gap: 1pt;
+}
+
+.resume-skills {
+  margin: 0;
+}
+
+.resume-skills > div {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 8px;
+}
+
+.resume-skills dt {
+  font-weight: 700;
+}
+
+.resume-skills dd {
+  margin: 0;
+}
+
+.resume-how-i-work {
+  margin-top: 4pt;
+}
+
+@media (max-width: 700px) {
+  .resume-modal {
+    padding: 0;
+  }
+
+  .resume-modal-panel {
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .resume-modal-header {
+    padding: 12px;
+  }
+
+  .resume-modal-header h2 {
+    font-size: 24px;
+  }
+
+  .resume-document-scroll {
+    padding: 0;
+  }
+
+  .resume-sheet {
+    min-height: 100%;
+    padding: 24px 20px;
+    box-shadow: none;
+  }
+
+  .resume-contact {
+    line-height: 1.5;
+  }
+
+  .resume-entry-line {
+    display: block;
+  }
+
+  .resume-entry-line > span:last-child {
+    display: block;
+  }
+
+  .resume-skills > div {
+    display: block;
+    margin-bottom: 3pt;
+  }
+
+  .resume-related-preview {
+    display: none;
+  }
 }
 
 .contact {

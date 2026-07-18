@@ -1,0 +1,65 @@
+\documentclass{resume}
+
+\begin{document}
+
+\begin{center}
+  {\huge \scshape Christopher Cho} \\
+  \small
+  201-779-9417 $|$
+  \href{mailto:christopher.cho.dev@gmail.com}{christopher.cho.dev@gmail.com} $|$
+  New York, NY $|$
+  \href{https://linkedin.com/in/chrischo360}{linkedin.com/in/chrischo360} $|$
+  \href{https://github.com/chrischo360}{github.com/chrischo360}
+\end{center}
+
+\begin{rSection}{Experience}
+  \begin{rSubsection}{Wayfair}{Boston, MA}{Software Engineer}{March 2025 -- Present}
+    \item Shipped features end to end across checkout, cart, and browse pages serving 200M+ annual sessions, iterating quickly based on product and design feedback
+    \item Ran A/B experiments on checkout loyalty enrollment modals, contributing to a +220\% Membership Attach Rate lift projected to generate \$2.2M in annual GRS
+    \item Drove migration of a high-traffic checkout page from a legacy monolith to a federated GraphQL and Java architecture
+    \item Decoupled CMS preview from checkout contract creation, cutting modal load time from 3.8s to 0.5s (\href{https://www.christopher-cho.dev/work/rewards-modal-preloading}{case study here})
+    \item Designed a server-side API integration within a day of a rate limit issue at major sale launch, preventing customer impact
+    \item Configured Datadog dashboards, alerts, and synthetics to monitor checkout errors, payment failures, and page latency
+  \end{rSubsection}
+
+  \begin{rSubsection}{Lacuna Mentors}{}{Co-Founder and Software Engineer}{December 2023 -- May 2024}
+    \item Co-founded and led engineering from zero to one for a mentorship marketplace, growing to 60+ mentors and validating the concept through direct customer feedback
+    \item Owned product execution across onboarding, scheduling, and mentor discovery workflows, prioritizing high-leverage improvements from user conversations
+    \item Built a custom scheduling system, saving the business \$900/month in costs
+  \end{rSubsection}
+
+  \begin{rSubsection}{Hariri Software \& Application Innovation Lab}{}{Software Engineer}{May 2021 -- August 2023}
+    \item Worked directly with university researchers to manage the full product lifecycle for a suite of full-stack applications --- from requirements gathering and rapid iteration based on weekly demos to final deployment
+    \item Selected as one of only two students to receive the 2023 Hariri Student Excellence Award for exceptional skill, strong work ethic, and commitment to excellence
+  \end{rSubsection}
+\end{rSection}
+
+\begin{rSection}{Projects}
+  \begin{rSubsection}{Julius AI (YC W22)}{}{Julius Sheets}{}
+    \item Built an excel editor inside Julius AI's Data Explorer, enabling users to open, edit, and save \texttt{.xlsx} files directly within the product
+    \item Integrated SpreadJS for in-browser sheet rendering with backend changes to persist edits to the user's spreadsheet
+    \item Streamed agent-generated cell operations into the spreadsheet in real time as Julius AI planned and executed steps
+    \item Shipped to dev environment behind a feature flag within three days
+  \end{rSubsection}
+  \begin{rSubsection}{Pi-cc}{}{\href{https://github.com/chrischo360/pi-cc}{github.com/chrischo360/pi-cc}}{}
+    \item Built an open-source extension for pi, an agent harness, that detects fenced code blocks and presents a numbered picker to copy them cleanly
+  \end{rSubsection}
+\end{rSection}
+
+\begin{rSection}{Education}
+  {\bf Boston University} \\
+  {\em Bachelor of Arts in Computer Science} \\
+  Honors: Dean's List (Fall 2021, Spring 2022, Fall 2022, Spring 2023, Fall 2023)
+\end{rSection}
+
+\begin{rSection}{Skills}
+  \begin{tabular}{@{} l l}
+    \textbf{Languages:}        & TypeScript, JavaScript, Python, Java, SQL, Bash \\
+    \textbf{Frontend:}         & React, Next.js, Redux, Apollo Client, Tailwind, Styled Components \\
+    \textbf{Backend:}          & Node.js, Nest.js, FastAPI, GraphQL, Apollo, Prisma, REST APIs \\
+    \textbf{Analytics:}        & BigQuery, Posthog, Google Analytics, Datadog, Datadog Synthetics \\
+    \textbf{Cloud \& DevOps:}  & Google Cloud Platform, Vercel, Docker, Terraform, Buildkite, Git, Playwright, Jest \\
+  \end{tabular}
+\end{rSection}
+
+\end{document}
