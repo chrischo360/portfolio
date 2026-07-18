@@ -99,6 +99,10 @@ export const markdocConfig: Config = {
         poster: {
           type: String,
         },
+        expandable: {
+          type: Boolean,
+          default: false,
+        },
       },
     },
   },

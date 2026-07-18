@@ -1,0 +1,1836 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>High Friction Checkout visual builder</title>
+  <style>
+    :root {
+      --ink: #262127;
+      --muted: #706873;
+      --canvas: #f7f6f8;
+      --card: #ffffff;
+      --line: #ded9e2;
+      --purple: #7c2bad;
+      --purple-soft: #f7effb;
+      --blue: #27659d;
+      --blue-soft: #eef6ff;
+      --pink: #9b365f;
+      --pink-soft: #fff1f7;
+      --orange: #9b4b20;
+      --orange-soft: #fff4eb;
+      --green: #247248;
+      --green-soft: #edf8f1;
+      --shadow: 0 14px 34px rgba(42, 32, 47, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 24px;
+    }
+
+    button,
+    select {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    select:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 3px solid rgba(124, 43, 173, 0.28);
+      outline-offset: 2px;
+    }
+
+    .playground {
+      margin: 0 auto;
+      width: min(1160px, 100%);
+    }
+
+    .intro {
+      align-items: end;
+      display: flex;
+      gap: 24px;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow {
+      color: var(--purple);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 0.11em;
+      margin: 0 0 7px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(26px, 3.4vw, 38px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin: 0 0 7px;
+    }
+
+    .intro-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      margin: 0;
+      max-width: 700px;
+    }
+
+    .header-actions {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 8px;
+    }
+
+    .secondary-button {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 750;
+      padding: 9px 12px;
+    }
+
+    .secondary-button:hover {
+      background: #fbfafc;
+      border-color: #bcb4c0;
+    }
+
+    .secondary-button[aria-pressed="true"] {
+      background: #2b252e;
+      border-color: #2b252e;
+      color: #fff;
+    }
+
+    .challenge {
+      align-items: center;
+      background: linear-gradient(90deg, #2d2630, #443549);
+      border-radius: 12px;
+      color: #fff;
+      display: flex;
+      font-size: 12px;
+      gap: 10px;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding: 10px 13px;
+    }
+
+    .challenge strong {
+      color: #f0b8ff;
+    }
+
+    .challenge.success {
+      background: linear-gradient(90deg, #17472f, #23613f);
+    }
+
+    .challenge.success strong {
+      color: #bff4d0;
+    }
+
+    .challenge-mode {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      flex: 0 0 auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 10px;
+      font-weight: 750;
+      padding: 5px 8px;
+    }
+
+    .workspace {
+      align-items: start;
+      display: grid;
+      gap: 16px;
+      grid-template-columns: minmax(430px, 1fr) minmax(390px, 0.95fr);
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      min-height: 49px;
+      padding: 12px 15px;
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .panel-context {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 650;
+    }
+
+    .builder {
+      display: grid;
+      gap: 11px;
+      padding: 13px;
+    }
+
+    .section-card {
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      overflow: hidden;
+      transition: border-color 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+    }
+
+    .section-card.header-section {
+      background: #fffafd;
+      border-color: #e8cad7;
+    }
+
+    .section-card.content-section {
+      background: #fbfdff;
+      border-color: #c9dded;
+    }
+
+    .section-card.footer-section {
+      background: #fffdfa;
+      border-color: #ddd3ca;
+    }
+
+    .section-card.is-selected,
+    .layout-card.is-selected,
+    .block-card.is-selected {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(124, 43, 173, 0.12);
+    }
+
+    .target-card.accepts-drag {
+      box-shadow: 0 0 0 3px rgba(124, 43, 173, 0.13);
+    }
+
+    .target-card.blocked-drag {
+      opacity: 0.45;
+    }
+
+    .section-heading {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      gap: 9px;
+      padding: 10px 11px;
+    }
+
+    .section-icon {
+      align-items: center;
+      border-radius: 8px;
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 13px;
+      font-weight: 900;
+      height: 31px;
+      justify-content: center;
+      width: 31px;
+    }
+
+    .header-section .section-icon {
+      background: var(--pink-soft);
+      color: var(--pink);
+    }
+
+    .content-section .section-icon {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .footer-section .section-icon {
+      background: #f4eee8;
+      color: #765f4e;
+    }
+
+    .section-title {
+      display: block;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .section-description {
+      color: var(--muted);
+      display: block;
+      font-size: 9px;
+      margin-top: 2px;
+    }
+
+    .section-badge {
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 8px;
+      font-weight: 750;
+      margin-left: auto;
+      padding: 3px 6px;
+    }
+
+    .section-body {
+      border-top: 1px solid rgba(112, 104, 115, 0.12);
+      padding: 10px;
+    }
+
+    .fixed-fields {
+      display: grid;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .fixed-field {
+      align-items: center;
+      background: #f4f8fc;
+      border: 1px solid #d9e7f2;
+      border-radius: 8px;
+      color: #526777;
+      display: flex;
+      font-size: 9px;
+      gap: 7px;
+      min-height: 31px;
+      padding: 6px 8px;
+    }
+
+    .fixed-field strong {
+      color: #334e62;
+    }
+
+    .field-lock {
+      margin-left: auto;
+      opacity: 0.66;
+    }
+
+    .item-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .block-card,
+    .layout-card {
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      min-width: 0;
+    }
+
+    .block-card {
+      align-items: center;
+      cursor: grab;
+      display: flex;
+      gap: 8px;
+      min-height: 38px;
+      padding: 6px 7px;
+    }
+
+    .block-card.is-dragging,
+    .layout-card.is-dragging {
+      opacity: 0.42;
+    }
+
+    .drag-handle {
+      color: #a19aa4;
+      cursor: grab;
+      font-size: 14px;
+      letter-spacing: -2px;
+      width: 11px;
+    }
+
+    .block-icon {
+      align-items: center;
+      border-radius: 7px;
+      display: inline-flex;
+      flex: 0 0 auto;
+      font-size: 10px;
+      font-weight: 850;
+      height: 25px;
+      justify-content: center;
+      width: 25px;
+    }
+
+    .category-header .block-icon {
+      background: var(--pink-soft);
+      color: var(--pink);
+    }
+
+    .category-content .block-icon {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .block-copy {
+      min-width: 0;
+    }
+
+    .block-name {
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .technical-name {
+      color: var(--muted);
+      display: none;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 7px;
+      margin-top: 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .developer-mode .technical-name,
+    .developer-mode .developer-panel,
+    .developer-mode .token-controls {
+      display: block;
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 2px;
+      margin-left: auto;
+    }
+
+    .item-action {
+      align-items: center;
+      background: transparent;
+      border: 0;
+      border-radius: 6px;
+      color: #7b737e;
+      cursor: pointer;
+      display: inline-flex;
+      font-size: 11px;
+      height: 25px;
+      justify-content: center;
+      padding: 0;
+      width: 25px;
+    }
+
+    .item-action:hover:not(:disabled) {
+      background: #eeeaf0;
+      color: var(--ink);
+    }
+
+    .item-action:disabled {
+      cursor: default;
+      opacity: 0.22;
+    }
+
+    .item-action.remove:hover {
+      background: #feecee;
+      color: #b4232f;
+    }
+
+    .layout-card {
+      padding: 7px;
+    }
+
+    .layout-heading {
+      align-items: center;
+      cursor: grab;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .layout-icon {
+      background: #f1eff2;
+      border: 1px solid #d8d3da;
+      border-radius: 7px;
+      display: grid;
+      flex: 0 0 auto;
+      gap: 2px;
+      height: 27px;
+      padding: 5px;
+      width: 31px;
+    }
+
+    .layout-icon.row {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .layout-icon.column {
+      grid-template-rows: 1fr 1fr;
+    }
+
+    .layout-icon span {
+      background: #8d8590;
+      border-radius: 2px;
+    }
+
+    .layout-name {
+      display: block;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .layout-subtitle {
+      color: var(--muted);
+      display: block;
+      font-size: 8px;
+      margin-top: 1px;
+    }
+
+    .layout-items {
+      background: #f8f7f9;
+      border: 1px dashed #d3cdd6;
+      border-radius: 8px;
+      display: grid;
+      gap: 5px;
+      padding: 6px;
+    }
+
+    .layout-card.row-layout .layout-items {
+      grid-template-columns: 1fr;
+    }
+
+    .add-button {
+      align-items: center;
+      background: transparent;
+      border: 1px dashed #bdb5c0;
+      border-radius: 8px;
+      color: #675f6a;
+      cursor: pointer;
+      display: flex;
+      font-size: 9px;
+      font-weight: 750;
+      gap: 5px;
+      justify-content: center;
+      margin-top: 6px;
+      min-height: 32px;
+      width: 100%;
+    }
+
+    .add-button:hover {
+      background: var(--purple-soft);
+      border-color: var(--purple);
+      color: var(--purple);
+    }
+
+    .add-menu {
+      background: #fff;
+      border: 1px solid #d8d2db;
+      border-radius: 10px;
+      box-shadow: 0 12px 28px rgba(42, 32, 47, 0.13);
+      display: grid;
+      gap: 6px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 7px;
+      padding: 7px;
+    }
+
+    .add-option {
+      align-items: center;
+      background: #faf9fb;
+      border: 1px solid #e3dfe5;
+      border-radius: 8px;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      font-size: 9px;
+      font-weight: 750;
+      gap: 7px;
+      min-height: 38px;
+      padding: 7px;
+      text-align: left;
+    }
+
+    .add-option:hover {
+      background: var(--purple-soft);
+      border-color: #d7b8e5;
+    }
+
+    .layout-choice-icon {
+      display: grid;
+      flex: 0 0 auto;
+      gap: 2px;
+      height: 22px;
+      width: 25px;
+    }
+
+    .layout-choice-icon.row {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .layout-choice-icon.column {
+      grid-template-rows: 1fr 1fr;
+    }
+
+    .layout-choice-icon span {
+      background: #8c838f;
+      border-radius: 2px;
+    }
+
+    .drop-zone {
+      align-items: center;
+      border: 1px dashed transparent;
+      border-radius: 7px;
+      color: transparent;
+      display: flex;
+      font-size: 9px;
+      font-weight: 750;
+      height: 5px;
+      justify-content: center;
+      transition: height 120ms ease, background 120ms ease, border-color 120ms ease;
+    }
+
+    .drop-zone.empty {
+      border-color: #ccc5cf;
+      color: #827a85;
+      height: 34px;
+    }
+
+    .drop-zone.is-active,
+    body.is-dragging .drop-zone.compatible {
+      background: var(--purple-soft);
+      border-color: var(--purple);
+      color: var(--purple);
+      height: 28px;
+    }
+
+    .token-controls {
+      background: #f5f4f6;
+      border-radius: 8px;
+      display: none;
+      margin-top: 7px;
+      padding: 7px;
+    }
+
+    .token-title {
+      color: var(--muted);
+      font-size: 8px;
+      font-weight: 850;
+      letter-spacing: 0.06em;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .token-grid {
+      display: grid;
+      gap: 5px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .token-label {
+      color: var(--muted);
+      display: grid;
+      font-size: 8px;
+      font-weight: 700;
+      gap: 3px;
+    }
+
+    .token-select {
+      background: #fff;
+      border: 1px solid #d9d3dc;
+      border-radius: 6px;
+      color: var(--ink);
+      font-size: 8px;
+      min-width: 0;
+      padding: 5px 3px;
+      width: 100%;
+    }
+
+    .developer-panel {
+      background: #19161b;
+      border-radius: 12px;
+      display: none;
+      margin-top: 2px;
+      overflow: hidden;
+    }
+
+    .developer-heading {
+      align-items: center;
+      border-bottom: 1px solid #3e3742;
+      color: #fff;
+      display: flex;
+      font-size: 10px;
+      font-weight: 800;
+      justify-content: space-between;
+      padding: 9px 10px;
+    }
+
+    .developer-heading span:last-child {
+      color: #aaa1ad;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 8px;
+    }
+
+    pre {
+      color: #d9fbe4;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 9px;
+      line-height: 1.5;
+      margin: 0;
+      max-height: 360px;
+      overflow: auto;
+      padding: 10px;
+      white-space: pre-wrap;
+    }
+
+    .mode-pill {
+      align-items: center;
+      background: var(--green-soft);
+      border: 1px solid #bbdec8;
+      border-radius: 999px;
+      color: var(--green);
+      display: inline-flex;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 9px;
+      font-weight: 800;
+      gap: 5px;
+      padding: 5px 8px;
+    }
+
+    .mode-pill.standalone {
+      background: #f1f0f2;
+      border-color: #d4d0d6;
+      color: #5d5760;
+    }
+
+    .mode-pill.pulse {
+      animation: mode-pulse 650ms ease-out;
+    }
+
+    @keyframes mode-pulse {
+      0% { transform: scale(1); }
+      35% { box-shadow: 0 0 0 8px rgba(124, 43, 173, 0.18); transform: scale(1.08); }
+      100% { box-shadow: 0 0 0 0 rgba(124, 43, 173, 0); transform: scale(1); }
+    }
+
+    .mode-indicator {
+      background: currentColor;
+      border-radius: 50%;
+      height: 6px;
+      width: 6px;
+    }
+
+    .preview-wrap {
+      background: #f0eef1;
+      min-height: 630px;
+      padding: 16px;
+    }
+
+    .preview-tip {
+      color: var(--muted);
+      font-size: 9px;
+      margin: 0 0 8px;
+      text-align: center;
+    }
+
+    .checkout-shell {
+      background: #e5e1e6;
+      border: 1px solid #d2ccd5;
+      border-radius: 14px;
+      min-height: 580px;
+      overflow: hidden;
+      padding: 14px;
+      position: relative;
+    }
+
+    .checkout-heading {
+      background: #c7c0ca;
+      border-radius: 999px;
+      height: 9px;
+      margin-bottom: 11px;
+      width: 36%;
+    }
+
+    .ghost-section {
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid #d4ced6;
+      border-radius: 10px;
+      height: 43px;
+      margin-top: 8px;
+    }
+
+    .veil {
+      background: rgba(38, 32, 40, 0.23);
+      inset: 0;
+      position: absolute;
+    }
+
+    .hfc {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      padding: 15px;
+      overflow: hidden;
+      border: 1px solid #d7d4d8;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 13px 32px rgba(37, 27, 41, 0.16);
+    }
+
+    .preview-section {
+      position: relative;
+      min-height: 38px;
+      overflow: hidden;
+      background: #fff;
+      cursor: pointer;
+      transition: box-shadow 130ms ease;
+    }
+
+    .preview-section:hover,
+    .preview-node:hover {
+      box-shadow: inset 0 0 0 2px rgba(124, 43, 173, 0.18);
+    }
+
+    .preview-section.preview-selected,
+    .preview-node.preview-selected {
+      box-shadow: inset 0 0 0 2px var(--purple);
+      z-index: 2;
+    }
+
+    .preview-section.footer {
+      border-top: 1px solid #d9d6db;
+    }
+
+    .section-label {
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      z-index: 3;
+      padding: 2px 5px;
+      border: 1px solid #cfc9d2;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #766e79;
+      font-size: 7px;
+      font-weight: 850;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      transition: opacity 130ms ease;
+    }
+
+    .preview-section:hover > .section-label,
+    .preview-section.preview-selected > .section-label,
+    .developer-mode .section-label {
+      opacity: 1;
+    }
+
+    .preview-header-blocks {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .preview-node {
+      position: relative;
+      border-radius: 6px;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      min-height: 33px;
+      color: #7f187f;
+    }
+
+    .wayfair-mark {
+      position: relative;
+      width: 25px;
+      height: 25px;
+      margin-right: 6px;
+    }
+
+    .wayfair-mark span {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      background: #7f187f;
+      transform: rotate(45deg);
+    }
+
+    .wayfair-mark span:nth-child(1) { top: 1px; left: 8px; }
+    .wayfair-mark span:nth-child(2) { top: 8px; right: 1px; }
+    .wayfair-mark span:nth-child(3) { bottom: 1px; left: 8px; }
+    .wayfair-mark span:nth-child(4) { top: 8px; left: 1px; }
+
+    .wayfair-name {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.055em;
+    }
+
+    .rewards-name {
+      margin-left: 5px;
+      font-size: 15px;
+      font-weight: 850;
+      letter-spacing: -0.03em;
+    }
+
+    .header-gem,
+    .content-gem {
+      position: absolute;
+      z-index: 1;
+      width: 76px;
+      height: 88px;
+      pointer-events: none;
+    }
+
+    .header-gem {
+      right: 18px;
+      bottom: -43px;
+    }
+
+    .content-gem {
+      right: 17px;
+      bottom: -46px;
+    }
+
+    .rewards-gem {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .rewards-gem span {
+      position: absolute;
+      display: block;
+    }
+
+    .gem-top {
+      top: 5px;
+      left: 13px;
+      width: 50px;
+      height: 39px;
+      background: #ad52dd;
+      clip-path: polygon(50% 0, 100% 48%, 50% 100%, 0 48%);
+    }
+
+    .gem-left {
+      top: 31px;
+      left: 4px;
+      width: 36px;
+      height: 44px;
+      background: #4f2b5f;
+      clip-path: polygon(0 0, 100% 28%, 100% 100%, 0 69%);
+    }
+
+    .gem-right {
+      top: 31px;
+      right: 4px;
+      width: 36px;
+      height: 44px;
+      background: #861cb5;
+      clip-path: polygon(0 28%, 100% 0, 100% 69%, 0 100%);
+    }
+
+    .header-promo {
+      padding: 8px 10px;
+      border: 1px solid #ddc3e8;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #f4e8fb, #fff);
+      color: #682482;
+      font-size: 10px;
+      font-weight: 750;
+    }
+
+    .fixed-message {
+      position: relative;
+      z-index: 2;
+      max-width: calc(100% - 40px);
+      margin-bottom: 14px;
+    }
+
+    .message-title {
+      margin-bottom: 5px;
+      color: #2c292e;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.12;
+    }
+
+    .message-subtitle {
+      color: #4f4a51;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .inline-link,
+    .terms-link {
+      color: #7f187f;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .preview-container {
+      position: relative;
+      display: flex;
+      min-height: 0;
+      border: 1px dashed transparent;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .developer-mode .preview-container {
+      border-color: #aaa3ad;
+    }
+
+    .preview-container + .preview-container {
+      margin-top: 6px;
+    }
+
+    .preview-container.column { flex-direction: column; }
+    .preview-container.row { flex-direction: row; }
+
+    .preview-container.row > :not(.preview-layout-label) {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .preview-container.conditionally-empty {
+      display: none;
+    }
+
+    .developer-mode .preview-container.conditionally-empty {
+      display: flex;
+    }
+
+    .preview-layout-label {
+      position: absolute;
+      top: -7px;
+      left: 6px;
+      z-index: 2;
+      padding: 0 4px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 7px;
+      font-weight: 750;
+      opacity: 0;
+    }
+
+    .developer-mode .preview-layout-label {
+      opacity: 1;
+    }
+
+    .developer-mode .preview-layout-label::after {
+      content: attr(data-technical);
+      margin-left: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .preview-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 38px;
+      color: #8a828e;
+      font-size: 9px;
+    }
+
+    .preview-block {
+      min-width: 0;
+    }
+
+    .formatted-block,
+    .rich-text-block {
+      color: #3f3a42;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .choices-block {
+      display: grid;
+      gap: 10px;
+    }
+
+    .choice-option {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      gap: 9px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #2e2a30;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .radio {
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      margin-top: 1px;
+      border: 2px solid #5d5860;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .choice-option.is-selected .radio {
+      border: 6px solid #7f187f;
+    }
+
+    .choice-copy {
+      display: grid;
+      gap: 2px;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .choice-copy strong {
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .choice-copy small {
+      color: #625d64;
+      font-size: 10px;
+    }
+
+    .terms-block {
+      max-width: 440px;
+    }
+
+    .terms-toggle {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      gap: 9px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #312d33;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .checkbox {
+      position: relative;
+      flex: 0 0 auto;
+      width: 21px;
+      height: 21px;
+      border: 2px solid #5c575e;
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    .terms-toggle.is-checked .checkbox {
+      border-color: #7f187f;
+      background: #7f187f;
+    }
+
+    .terms-toggle.is-checked .checkbox::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 6px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .terms-copy {
+      display: grid;
+      gap: 3px;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .terms-copy small {
+      color: #6b666d;
+      font-size: 9px;
+    }
+
+    .action-block {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .cta {
+      width: 100%;
+      min-height: 38px;
+      padding: 8px 13px;
+      border: 1.5px solid #7f187f;
+      border-radius: 999px;
+      background: #fff;
+      color: #7f187f;
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .cta:disabled {
+      border-color: #a7a3aa;
+      color: #9b979f;
+      cursor: not-allowed;
+    }
+
+    .decline-action .cta {
+      border-color: #5f5962;
+      color: #474149;
+    }
+
+    .preview-mode-note {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid #d4ced7;
+      border-radius: 9px;
+      color: var(--muted);
+      font-size: 8px;
+      line-height: 1.4;
+      margin-top: 9px;
+      padding: 7px 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 900px) {
+      body { padding: 16px; }
+      .workspace { grid-template-columns: 1fr; }
+      .preview-wrap { min-height: 0; }
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 11px; }
+      .intro { align-items: flex-start; flex-direction: column; gap: 11px; }
+      .challenge { align-items: flex-start; flex-direction: column; }
+      .add-menu { grid-template-columns: 1fr; }
+      .preview-container.row { flex-direction: column; }
+      .layout-card.row-layout .layout-items { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .section-card,
+      .drop-zone,
+      .mode-pill { animation: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="playground">
+    <header class="intro">
+      <div>
+        <p class="eyebrow">Representative Block Builder playground</p>
+        <h1>Build the checkout screen.</h1>
+        <p class="intro-copy">Use each region’s Add button, drag cards to reorder them, or click the preview to jump to that part of the schema.</p>
+      </div>
+      <div class="header-actions">
+        <button class="secondary-button" id="developer-toggle" type="button" aria-pressed="false">Developer view</button>
+        <button class="secondary-button" id="reset" type="button">Reset</button>
+      </div>
+    </header>
+
+    <div class="challenge" id="challenge"></div>
+
+    <div class="workspace">
+      <section class="panel" aria-labelledby="builder-title">
+        <div class="panel-header">
+          <span class="panel-title" id="builder-title">Visual builder</span>
+          <span class="panel-context">Only valid blocks appear</span>
+        </div>
+        <div class="builder" id="builder"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="preview-title">
+        <div class="panel-header">
+          <span class="panel-title" id="preview-title">Live checkout preview</span>
+          <span class="mode-pill" id="mode-pill"><span class="mode-indicator"></span><span id="mode-value">addToCart</span></span>
+        </div>
+        <div class="preview-wrap">
+          <p class="preview-tip">Try the choices and terms. Click any region to find it in the builder.</p>
+          <div class="checkout-shell">
+            <div class="checkout-heading"></div>
+            <div class="veil"></div>
+            <div class="hfc" id="preview"></div>
+            <div class="preview-mode-note" id="mode-note"></div>
+            <div class="ghost-section"></div>
+            <div class="ghost-section"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const definitions = {
+      HeaderLogo: { label: 'Logo', short: 'L', icon: 'W', category: 'header', typename: 'BlockBuilderLoyaltyHeaderLogo' },
+      HeaderGem: { label: 'Rewards gem', short: 'G', icon: '$', category: 'header', typename: 'BlockBuilderLoyaltyHeaderGem' },
+      HeaderPromoBanner: { label: 'Promo banner', short: 'P', icon: '★', category: 'header', typename: 'BlockBuilderLoyaltyHeaderPromoBanner' },
+      Row: { label: 'Place side by side', short: 'R', category: 'container', typename: 'BlockBuilderLoyaltyRow', container: true },
+      Column: { label: 'Stack vertically', short: 'C', category: 'container', typename: 'BlockBuilderLoyaltyColumn', container: true },
+      FormattedMessage: { label: 'Formatted message', short: 'M', icon: 'Aa', category: 'content', typename: 'FormattedFinancingMessage' },
+      RichText: { label: 'Rich text', short: 'T', icon: '¶', category: 'content', typename: 'BlockBuilderRichText' },
+      ChoiceOptions: { label: 'Yes / no choices', short: 'O', icon: '◉', category: 'content', typename: 'BlockBuilderLoyaltyChoiceOptions' },
+      TermsAndConditions: { label: 'Terms checkbox', short: 'T', icon: '✓', category: 'content', typename: 'BlockBuilderLoyaltyTermsAndConditions' },
+      DefaultAction: { label: 'Primary button', short: 'A', icon: '→', category: 'content', typename: 'BlockBuilderLoyaltyDefaultAction' },
+      DeclineAction: { label: 'Decline button', short: 'D', icon: '–', category: 'content', typename: 'BlockBuilderLoyaltyDeclineAction' }
+    };
+
+    const menuTypes = {
+      header: ['HeaderLogo', 'HeaderGem', 'HeaderPromoBanner'],
+      container: ['Column', 'Row'],
+      content: ['FormattedMessage', 'RichText', 'ChoiceOptions', 'TermsAndConditions', 'DefaultAction', 'DeclineAction']
+    };
+
+    const spacingTokens = {
+      SPACE_0: 0,
+      SPACE_500: 4,
+      SPACE_1000: 8,
+      SPACE_1500: 12,
+      SPACE_4000: 26
+    };
+
+    const builderElement = document.querySelector('#builder');
+    const previewElement = document.querySelector('#preview');
+    const modePill = document.querySelector('#mode-pill');
+    const modeValue = document.querySelector('#mode-value');
+    const modeNote = document.querySelector('#mode-note');
+    const challengeElement = document.querySelector('#challenge');
+    const developerToggle = document.querySelector('#developer-toggle');
+    let idCounter = 0;
+    let schema;
+    let selectedId = 'content';
+    let openAddFor = null;
+    let activeDrag = null;
+    let previousMode = 'addToCart';
+    let selectedChoice = 'choice1';
+    let termsAccepted = false;
+
+    function createBlock(type) {
+      const node = { id: `node-${++idCounter}`, type, kind: definitions[type].container ? 'container' : 'block' };
+      if (definitions[type].container) {
+        node.accepts = 'content';
+        node.props = { gap: 'SPACE_1000', paddingX: 'SPACE_0', paddingY: 'SPACE_0' };
+        node.children = [];
+      }
+      return node;
+    }
+
+    function createSection(type, id, accepts) {
+      return {
+        id,
+        type,
+        kind: 'section',
+        accepts,
+        props: { contentAlignment: 'START', paddingX: 'SPACE_0', paddingY: 'SPACE_0' },
+        children: []
+      };
+    }
+
+    function createInitialSchema() {
+      idCounter = 0;
+      const header = createSection('Header', 'header', 'header');
+      const content = createSection('Content', 'content', 'container');
+      const footer = createSection('Footer', 'footer', 'container');
+      content.hasGem = true;
+      header.children = [createBlock('HeaderLogo')];
+      const contentColumn = createBlock('Column');
+      contentColumn.children = [createBlock('ChoiceOptions')];
+      content.children = [contentColumn];
+      const footerRow = createBlock('Row');
+      footerRow.props.gap = 'SPACE_4000';
+      footerRow.children = [createBlock('TermsAndConditions'), createBlock('DefaultAction')];
+      const footerColumn = createBlock('Column');
+      footerColumn.children = [createBlock('DeclineAction')];
+      footer.children = [footerRow, footerColumn];
+      return {
+        id: 'screen',
+        type: 'Screen',
+        kind: 'screen',
+        screenType: 'DEFAULT',
+        children: [header, content, footer]
+      };
+    }
+
+    function hasChildren(node) {
+      return node.kind === 'screen' || node.kind === 'section' || node.kind === 'container';
+    }
+
+    function findNode(node, id) {
+      if (node.id === id) return node;
+      if (!hasChildren(node)) return null;
+      for (const child of node.children) {
+        const match = findNode(child, id);
+        if (match) return match;
+      }
+      return null;
+    }
+
+    function findParent(node, id) {
+      if (!hasChildren(node)) return null;
+      const index = node.children.findIndex((child) => child.id === id);
+      if (index >= 0) return { parent: node, index, node: node.children[index] };
+      for (const child of node.children) {
+        const match = findParent(child, id);
+        if (match) return match;
+      }
+      return null;
+    }
+
+    function isCompatible(category, target) {
+      return Boolean(target && target.accepts === category);
+    }
+
+    function spacingOptions(value) {
+      const names = { SPACE_0: 'None', SPACE_500: 'Tight', SPACE_1000: 'Standard', SPACE_1500: 'Roomy', SPACE_4000: 'Wide' };
+      return Object.keys(spacingTokens).map((token) => `<option value="${token}"${value === token ? ' selected' : ''}>${names[token]} · ${token.replace('SPACE_', '$')}</option>`).join('');
+    }
+
+    function itemAction(action, symbol, label, disabled = false, extraClass = '') {
+      return `<button class="item-action ${extraClass}" type="button" data-action="${action}" title="${label}" aria-label="${label}"${disabled ? ' disabled' : ''}>${symbol}</button>`;
+    }
+
+    function dropZone(parent, index, empty = false) {
+      return `<div class="drop-zone${empty ? ' empty' : ''}" data-parent-id="${parent.id}" data-index="${index}" data-accepts="${parent.accepts}">${empty ? 'Drop here or use Add' : 'Drop here'}</div>`;
+    }
+
+    function renderBlockCard(node, parent, index) {
+      const definition = definitions[node.type];
+      const selected = node.id === selectedId ? ' is-selected' : '';
+      return `<div class="block-card category-${definition.category}${selected}" draggable="true" tabindex="0" data-node-id="${node.id}">
+        <span class="drag-handle" aria-hidden="true">⠿</span>
+        <span class="block-icon">${definition.icon}</span>
+        <span class="block-copy"><span class="block-name">${definition.label}</span><span class="technical-name">${definition.typename}</span></span>
+        <span class="item-actions">
+          ${itemAction('up', '↑', `Move ${definition.label} up`, index === 0)}
+          ${itemAction('down', '↓', `Move ${definition.label} down`, index === parent.children.length - 1)}
+          ${itemAction('remove', '×', `Remove ${definition.label}`, false, 'remove')}
+        </span>
+      </div>`;
+    }
+
+    function renderAddMenu(target) {
+      if (openAddFor !== target.id) return '';
+      const options = menuTypes[target.accepts].map((type) => {
+        const definition = definitions[type];
+        if (definition.container) {
+          return `<button class="add-option" type="button" data-add-type="${type}" data-target-id="${target.id}"><span class="layout-choice-icon ${type.toLowerCase()}"><span></span><span></span></span><span>${definition.label}<span class="technical-name">${definition.typename}</span></span></button>`;
+        }
+        return `<button class="add-option" type="button" data-add-type="${type}" data-target-id="${target.id}"><span class="block-icon">${definition.icon}</span><span>${definition.label}<span class="technical-name">${definition.typename}</span></span></button>`;
+      }).join('');
+      return `<div class="add-menu">${options}</div>`;
+    }
+
+    function renderTokenControls(node) {
+      if (node.kind === 'section') {
+        return `<div class="token-controls"><div class="token-title">Section design tokens</div><div class="token-grid">
+          <label class="token-label">Padding X<select class="token-select" data-node-prop="paddingX" data-node-id="${node.id}">${spacingOptions(node.props.paddingX)}</select></label>
+          <label class="token-label">Padding Y<select class="token-select" data-node-prop="paddingY" data-node-id="${node.id}">${spacingOptions(node.props.paddingY)}</select></label>
+          <label class="token-label">Alignment<select class="token-select" data-node-prop="contentAlignment" data-node-id="${node.id}"><option value="START"${node.props.contentAlignment === 'START' ? ' selected' : ''}>Start</option><option value="CENTER"${node.props.contentAlignment === 'CENTER' ? ' selected' : ''}>Center</option><option value="END"${node.props.contentAlignment === 'END' ? ' selected' : ''}>End</option></select></label>
+        </div></div>`;
+      }
+      return `<div class="token-controls"><div class="token-title">Layout design tokens</div><div class="token-grid">
+        <label class="token-label">Gap<select class="token-select" data-node-prop="gap" data-node-id="${node.id}">${spacingOptions(node.props.gap)}</select></label>
+        <label class="token-label">Padding X<select class="token-select" data-node-prop="paddingX" data-node-id="${node.id}">${spacingOptions(node.props.paddingX)}</select></label>
+        <label class="token-label">Padding Y<select class="token-select" data-node-prop="paddingY" data-node-id="${node.id}">${spacingOptions(node.props.paddingY)}</select></label>
+      </div></div>`;
+    }
+
+    function renderLayoutCard(node, parent, index) {
+      const definition = definitions[node.type];
+      const selected = node.id === selectedId ? ' is-selected' : '';
+      const items = node.children.map((child, childIndex) => `${dropZone(node, childIndex)}${renderBlockCard(child, node, childIndex)}`).join('');
+      const empty = node.children.length === 0;
+      return `<div class="layout-card target-card ${node.type === 'Row' ? 'row-layout' : 'column-layout'}${selected}" style="--item-count:${Math.max(node.children.length, 1)}" data-node-id="${node.id}" data-accepts="content">
+        <div class="layout-heading" draggable="true" tabindex="0" data-drag-id="${node.id}">
+          <span class="drag-handle" aria-hidden="true">⠿</span>
+          <span class="layout-icon ${node.type.toLowerCase()}"><span></span><span></span></span>
+          <span><span class="layout-name">${definition.label}</span><span class="layout-subtitle">${node.type}</span><span class="technical-name">${definition.typename}</span></span>
+          <span class="item-actions">
+            ${itemAction('up', '↑', `Move ${node.type} up`, index === 0)}
+            ${itemAction('down', '↓', `Move ${node.type} down`, index === parent.children.length - 1)}
+            ${itemAction('remove', '×', `Remove ${node.type}`, false, 'remove')}
+          </span>
+        </div>
+        <div class="layout-items">${items}${dropZone(node, node.children.length, empty)}</div>
+        <button class="add-button" type="button" data-open-add="${node.id}">＋ Add inside ${node.type === 'Row' ? 'side-by-side layout' : 'stack'}</button>
+        ${renderAddMenu(node)}
+        ${renderTokenControls(node)}
+      </div>`;
+    }
+
+    function renderSection(section) {
+      const sectionClass = section.type.toLowerCase();
+      const selected = section.id === selectedId ? ' is-selected' : '';
+      const descriptions = {
+        Header: 'Logo, gem, and promotional imagery',
+        Content: 'Message fields and configurable layouts',
+        Footer: 'Legal text and enrollment actions'
+      };
+      const icons = { Header: 'H', Content: 'C', Footer: 'F' };
+      let fields = '';
+      if (section.type === 'Content') {
+        fields = `<div class="fixed-fields"><div class="fixed-field"><strong>Title</strong> Earn [PotentialRewards] today <span class="field-lock">fixed field</span></div><div class="fixed-field"><strong>Subtitle</strong> Rewards benefits and Learn More <span class="field-lock">fixed field</span></div><div class="fixed-field"><strong>Gem</strong> Rewards decoration · bottom <span class="field-lock">optional field</span></div></div>`;
+      }
+      const items = section.children.map((child, index) => {
+        const rendered = child.kind === 'container' ? renderLayoutCard(child, section, index) : renderBlockCard(child, section, index);
+        return `${dropZone(section, index)}${rendered}`;
+      }).join('');
+      const addLabel = section.type === 'Header' ? 'Add header block' : `Add ${section.type.toLowerCase()} layout`;
+      return `<div class="section-card target-card ${sectionClass}-section${selected}" data-node-id="${section.id}" data-accepts="${section.accepts}">
+        <div class="section-heading" tabindex="0">
+          <span class="section-icon">${icons[section.type]}</span>
+          <span><span class="section-title">${section.type}</span><span class="section-description">${descriptions[section.type]}</span><span class="technical-name">BlockBuilderLoyaltyProgramHighFrictionCheckout${section.type}</span></span>
+          <span class="section-badge">${section.accepts === 'header' ? 'Header blocks' : 'Row / Column'}</span>
+        </div>
+        <div class="section-body">
+          ${fields}
+          <div class="item-list">${items}${dropZone(section, section.children.length, section.children.length === 0)}</div>
+          <button class="add-button" type="button" data-open-add="${section.id}">＋ ${addLabel}</button>
+          ${renderAddMenu(section)}
+          ${renderTokenControls(section)}
+        </div>
+      </div>`;
+    }
+
+    function previewBlock(node) {
+      const selected = node.id === selectedId ? ' preview-selected' : '';
+      if (node.kind === 'container') {
+        const gap = spacingTokens[node.props.gap];
+        const paddingX = spacingTokens[node.props.paddingX];
+        const paddingY = Math.max(spacingTokens[node.props.paddingY], 3);
+        const renderedChildren = node.children.map(previewBlock).filter(Boolean);
+        const conditionallyEmpty = renderedChildren.length === 0;
+        const content = conditionallyEmpty ? '<div class="preview-empty">No visible blocks in this state</div>' : renderedChildren.join('');
+        const humanLabel = node.type === 'Row' ? 'Side by side' : 'Stack';
+        return `<div class="preview-container preview-node ${node.type.toLowerCase()}${conditionallyEmpty ? ' conditionally-empty' : ''}${selected}" data-preview-id="${node.id}" style="gap:${gap}px;padding:${paddingY}px ${paddingX}px"><span class="preview-layout-label" data-technical="${definitions[node.type].typename}">${humanLabel}</span>${content}</div>`;
+      }
+      if (node.type === 'HeaderLogo') {
+        return `<div class="preview-node header-logo${selected}" data-preview-id="${node.id}"><span class="wayfair-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span><span class="wayfair-name">wayfair</span><span class="rewards-name">REWARDS</span></div>`;
+      }
+      if (node.type === 'HeaderGem') {
+        return `<div class="preview-node header-gem${selected}" data-preview-id="${node.id}"><span class="rewards-gem"><span class="gem-top"></span><span class="gem-left"></span><span class="gem-right"></span></span></div>`;
+      }
+      if (node.type === 'HeaderPromoBanner') return `<div class="preview-node header-promo${selected}" data-preview-id="${node.id}">Wayfair Rewards · free shipping and 5% back</div>`;
+      if (node.type === 'FormattedMessage') return `<div class="preview-node preview-block formatted-block${selected}" data-preview-id="${node.id}">Your cart can earn <strong>$14.95</strong> in Rewards today.</div>`;
+      if (node.type === 'RichText') return `<div class="preview-node preview-block rich-text-block${selected}" data-preview-id="${node.id}">Rewards can be redeemed on a future order.</div>`;
+      if (node.type === 'ChoiceOptions') {
+        return `<div class="preview-node preview-block choices-block${selected}" data-preview-id="${node.id}" role="radiogroup" aria-label="Choose your rewards preference"><button class="choice-option${selectedChoice === 'choice1' ? ' is-selected' : ''}" type="button" role="radio" aria-checked="${String(selectedChoice === 'choice1')}" data-choice="choice1"><span class="radio"></span><span class="choice-copy"><strong>Yes, sign me up for Wayfair Rewards for $29/year</strong><small>That's less than $3/month!</small></span></button><button class="choice-option${selectedChoice === 'choice2' ? ' is-selected' : ''}" type="button" role="radio" aria-checked="${String(selectedChoice === 'choice2')}" data-choice="choice2"><span class="radio"></span><span class="choice-copy">No thanks, I don't want rewards at this time</span></button></div>`;
+      }
+      if (node.type === 'TermsAndConditions') {
+        if (selectedChoice !== 'choice1') return '';
+        return `<div class="preview-node preview-block terms-block${selected}" data-preview-id="${node.id}"><button class="terms-toggle${termsAccepted ? ' is-checked' : ''}" type="button" role="checkbox" aria-checked="${String(termsAccepted)}" data-terms-toggle><span class="checkbox"></span><span class="terms-copy">I agree to Wayfair Rewards <span class="terms-link">Terms &amp; Conditions</span><small>Auto-renews annually. Cancel anytime in account settings.</small></span></button></div>`;
+      }
+      if (node.type === 'DefaultAction') {
+        if (selectedChoice !== 'choice1') return '';
+        const disabled = hasTerms() && !termsAccepted;
+        return `<div class="preview-node preview-block action-block default-action${selected}" data-preview-id="${node.id}"><button class="cta" type="button"${disabled ? ' disabled' : ''}>Join Wayfair Rewards</button></div>`;
+      }
+      if (selectedChoice !== 'choice2') return '';
+      return `<div class="preview-node preview-block action-block decline-action${selected}" data-preview-id="${node.id}"><button class="cta" type="button">Continue without Wayfair Rewards</button></div>`;
+    }
+
+    function sectionStyle(section) {
+      const paddingX = spacingTokens[section.props.paddingX];
+      const paddingY = Math.max(spacingTokens[section.props.paddingY], 12);
+      const textAlign = section.props.contentAlignment === 'START' ? 'left' : section.props.contentAlignment === 'END' ? 'right' : 'center';
+      return `padding:${paddingY}px ${paddingX + 10}px;text-align:${textAlign}`;
+    }
+
+    function renderPreviewSection(section) {
+      const selected = section.id === selectedId ? ' preview-selected' : '';
+      const content = section.children.length ? section.children.map(previewBlock).join('') : '<div class="preview-empty">No configured blocks</div>';
+      if (section.type === 'Header') {
+        return `<section class="preview-section header${selected}" data-preview-id="${section.id}" style="${sectionStyle(section)}"><span class="section-label">HEADER</span><div class="preview-header-blocks">${content}</div></section>`;
+      }
+      if (section.type === 'Content') {
+        return `<section class="preview-section content${selected}" data-preview-id="${section.id}" style="${sectionStyle(section)}"><span class="section-label">CONTENT</span><div class="fixed-message"><div class="message-title">Earn $14.95 in Rewards today!</div><div class="message-subtitle">With 5% rewards¹ on every item, plus free shipping² and more! <span class="inline-link">Learn More</span></div></div>${content}${section.hasGem ? '<div class="content-gem" aria-hidden="true"><span class="rewards-gem"><span class="gem-top"></span><span class="gem-left"></span><span class="gem-right"></span></span></div>' : ''}</section>`;
+      }
+      return `<section class="preview-section footer${selected}" data-preview-id="${section.id}" style="${sectionStyle(section)}"><span class="section-label">FOOTER</span>${content}</section>`;
+    }
+
+    function serializedBlock(node) {
+      const definition = definitions[node.type];
+      if (node.kind === 'container') {
+        return {
+          __typename: definition.typename,
+          gap: node.props.gap,
+          paddingX: node.props.paddingX,
+          paddingY: node.props.paddingY,
+          items: node.children.map(serializedBlock)
+        };
+      }
+      return { __typename: definition.typename };
+    }
+
+    function serializedSection(section) {
+      const base = {
+        __typename: `BlockBuilderLoyaltyProgramHighFrictionCheckout${section.type}`,
+        contentAlignment: section.props.contentAlignment,
+        paddingX: section.props.paddingX,
+        paddingY: section.props.paddingY
+      };
+      if (section.type === 'Header') return { ...base, headerBlocks: section.children.map(serializedBlock) };
+      if (section.type === 'Content') {
+        return {
+          ...base,
+          titleOne: { __typename: 'FormattedFinancingMessage', text: 'Earn [PotentialRewards] in Rewards today!' },
+          subtitle: { __typename: 'FormattedFinancingMessage', text: 'With 5% rewards on every item, plus free shipping and more!' },
+          gem: section.hasGem ? { __typename: 'BlockBuilderLoyaltyHeaderGem', gemAlignment: 'BOTTOM' } : null,
+          contentBlocks: section.children.map(serializedBlock)
+        };
+      }
+      return { ...base, contentBlocks: section.children.map(serializedBlock) };
+    }
+
+    function hasTerms() {
+      const content = findNode(schema, 'content');
+      const footer = findNode(schema, 'footer');
+      return [...content.children, ...footer.children].some((container) => container.children.some((item) => item.type === 'TermsAndConditions'));
+    }
+
+    function updateMode() {
+      const termsPresent = hasTerms();
+      const mode = termsPresent ? 'addToCart' : 'standalone';
+      modeValue.textContent = mode;
+      modePill.classList.toggle('standalone', !termsPresent);
+      modeNote.textContent = termsPresent
+        ? 'Terms are present in the DEFAULT screen, so the component derives addToCart.'
+        : 'No Terms block is present, so the component safely falls back to standalone.';
+      challengeElement.className = `challenge${termsPresent ? '' : ' success'}`;
+      challengeElement.innerHTML = termsPresent
+        ? '<span><strong>Try it:</strong> remove the Terms checkbox from Footer and watch the interaction mode change.</span><span class="challenge-mode">addToCart → ?</span>'
+        : '<span><strong>That changed behavior.</strong> Without interactive terms, the schema no longer describes a gated enrollment flow.</span><span class="challenge-mode">addToCart → standalone</span>';
+      if (mode !== previousMode) {
+        modePill.classList.remove('pulse');
+        void modePill.offsetWidth;
+        modePill.classList.add('pulse');
+      }
+      previousMode = mode;
+    }
+
+    function renderDeveloperPanel() {
+      const [header, content, footer] = schema.children;
+      const graph = {
+        __typename: 'BlockBuilderLoyaltyProgramHighFrictionCheckoutScreen',
+        screenType: 'DEFAULT',
+        header: serializedSection(header),
+        content: serializedSection(content),
+        footer: serializedSection(footer)
+      };
+      return `<div class="developer-panel"><div class="developer-heading"><span>Generated content graph</span><span>typed GraphQL</span></div><pre>${JSON.stringify(graph, null, 2)}</pre></div>`;
+    }
+
+    function renderAll() {
+      if (!findNode(schema, selectedId)) selectedId = 'content';
+      builderElement.innerHTML = `${schema.children.map(renderSection).join('')}${renderDeveloperPanel()}`;
+      previewElement.innerHTML = schema.children.map(renderPreviewSection).join('');
+      updateMode();
+    }
+
+    function addNode(type, targetId) {
+      const target = findNode(schema, targetId);
+      const definition = definitions[type];
+      if (!isCompatible(definition.category, target)) return;
+      const node = createBlock(type);
+      target.children.push(node);
+      selectedId = node.id;
+      openAddFor = null;
+      renderAll();
+    }
+
+    function moveNode(id, targetParentId, targetIndex) {
+      const source = findParent(schema, id);
+      const target = findNode(schema, targetParentId);
+      if (!source || !target) return;
+      const definition = definitions[source.node.type];
+      if (!isCompatible(definition.category, target)) return;
+      let adjustedIndex = targetIndex;
+      if (source.parent.id === targetParentId && source.index < targetIndex) adjustedIndex -= 1;
+      source.parent.children.splice(source.index, 1);
+      target.children.splice(Math.max(0, adjustedIndex), 0, source.node);
+      selectedId = id;
+      openAddFor = null;
+      renderAll();
+    }
+
+    function moveWithinParent(id, offset) {
+      const source = findParent(schema, id);
+      if (!source) return;
+      const targetIndex = source.index + offset;
+      if (targetIndex < 0 || targetIndex >= source.parent.children.length) return;
+      const [node] = source.parent.children.splice(source.index, 1);
+      source.parent.children.splice(targetIndex, 0, node);
+      selectedId = id;
+      renderAll();
+    }
+
+    function removeNode(id) {
+      const source = findParent(schema, id);
+      if (!source || source.node.kind === 'section') return;
+      if (source.node.type === 'TermsAndConditions') termsAccepted = false;
+      source.parent.children.splice(source.index, 1);
+      selectedId = source.parent.id;
+      openAddFor = null;
+      renderAll();
+    }
+
+    function clearDragState() {
+      document.body.classList.remove('is-dragging');
+      document.querySelectorAll('.is-active, .compatible, .accepts-drag, .blocked-drag, .is-dragging').forEach((element) => {
+        element.classList.remove('is-active', 'compatible', 'accepts-drag', 'blocked-drag', 'is-dragging');
+      });
+      activeDrag = null;
+    }
+
+    function showCompatibleTargets(category) {
+      document.body.classList.add('is-dragging');
+      document.querySelectorAll('[data-accepts]').forEach((target) => {
+        target.classList.toggle('accepts-drag', target.dataset.accepts === category);
+        target.classList.toggle('blocked-drag', target.dataset.accepts !== category);
+      });
+      document.querySelectorAll('.drop-zone').forEach((zone) => zone.classList.toggle('compatible', zone.dataset.accepts === category));
+    }
+
+    builderElement.addEventListener('click', (event) => {
+      const addOption = event.target.closest('[data-add-type]');
+      if (addOption) {
+        addNode(addOption.dataset.addType, addOption.dataset.targetId);
+        return;
+      }
+
+      const openButton = event.target.closest('[data-open-add]');
+      if (openButton) {
+        const targetId = openButton.dataset.openAdd;
+        selectedId = targetId;
+        openAddFor = openAddFor === targetId ? null : targetId;
+        renderAll();
+        return;
+      }
+
+      const action = event.target.closest('[data-action]');
+      const nodeElement = event.target.closest('[data-node-id]');
+      if (action && nodeElement) {
+        if (action.dataset.action === 'up') moveWithinParent(nodeElement.dataset.nodeId, -1);
+        if (action.dataset.action === 'down') moveWithinParent(nodeElement.dataset.nodeId, 1);
+        if (action.dataset.action === 'remove') removeNode(nodeElement.dataset.nodeId);
+        return;
+      }
+
+      if (nodeElement) {
+        selectedId = nodeElement.dataset.nodeId;
+        openAddFor = null;
+        renderAll();
+      }
+    });
+
+    builderElement.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      const nodeElement = event.target.closest('[data-node-id]');
+      if (!nodeElement || event.target.closest('button, select')) return;
+      event.preventDefault();
+      selectedId = nodeElement.dataset.nodeId;
+      openAddFor = null;
+      renderAll();
+    });
+
+    builderElement.addEventListener('change', (event) => {
+      const select = event.target.closest('[data-node-prop]');
+      if (!select) return;
+      const node = findNode(schema, select.dataset.nodeId);
+      node.props[select.dataset.nodeProp] = select.value;
+      selectedId = node.id;
+      renderAll();
+    });
+
+    builderElement.addEventListener('dragstart', (event) => {
+      const directBlock = event.target.closest('.block-card[draggable="true"]');
+      const layoutHandle = event.target.closest('[data-drag-id]');
+      const nodeElement = directBlock || layoutHandle?.closest('[data-node-id]');
+      if (!nodeElement) return;
+      const node = findNode(schema, nodeElement.dataset.nodeId);
+      const definition = definitions[node.type];
+      activeDrag = { id: node.id, category: definition.category };
+      nodeElement.classList.add('is-dragging');
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', node.id);
+      showCompatibleTargets(definition.category);
+    });
+
+    builderElement.addEventListener('dragover', (event) => {
+      const zone = event.target.closest('.drop-zone');
+      if (!zone || !activeDrag || zone.dataset.accepts !== activeDrag.category) return;
+      event.preventDefault();
+      event.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('.drop-zone.is-active').forEach((element) => element.classList.remove('is-active'));
+      zone.classList.add('is-active');
+    });
+
+    builderElement.addEventListener('dragleave', (event) => {
+      const zone = event.target.closest('.drop-zone');
+      if (zone && !zone.contains(event.relatedTarget)) zone.classList.remove('is-active');
+    });
+
+    builderElement.addEventListener('drop', (event) => {
+      const zone = event.target.closest('.drop-zone');
+      if (!zone || !activeDrag || zone.dataset.accepts !== activeDrag.category) return;
+      event.preventDefault();
+      moveNode(activeDrag.id, zone.dataset.parentId, Number(zone.dataset.index));
+      clearDragState();
+    });
+
+    previewElement.addEventListener('click', (event) => {
+      const choice = event.target.closest('[data-choice]');
+      if (choice) {
+        selectedChoice = choice.dataset.choice;
+        renderAll();
+        return;
+      }
+
+      const termsToggle = event.target.closest('[data-terms-toggle]');
+      if (termsToggle) {
+        termsAccepted = !termsAccepted;
+        renderAll();
+        return;
+      }
+
+      const previewNode = event.target.closest('[data-preview-id]');
+      if (!previewNode) return;
+      selectedId = previewNode.dataset.previewId;
+      openAddFor = null;
+      renderAll();
+      requestAnimationFrame(() => {
+        const builderNode = builderElement.querySelector(`[data-node-id="${selectedId}"]`);
+        builderNode?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+
+    document.addEventListener('dragend', clearDragState);
+
+    developerToggle.addEventListener('click', () => {
+      const enabled = !document.body.classList.contains('developer-mode');
+      document.body.classList.toggle('developer-mode', enabled);
+      developerToggle.setAttribute('aria-pressed', String(enabled));
+      developerToggle.textContent = enabled ? 'Developer view: On' : 'Developer view';
+    });
+
+    document.querySelector('#reset').addEventListener('click', () => {
+      schema = createInitialSchema();
+      selectedId = 'content';
+      openAddFor = null;
+      previousMode = 'addToCart';
+      selectedChoice = 'choice1';
+      termsAccepted = false;
+      renderAll();
+    });
+
+    schema = createInitialSchema();
+    renderAll();
+  </script>
+</body>
+</html>

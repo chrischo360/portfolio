@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ArticleEmbed } from "@/components/ArticleEmbed";
 
 type ArticleMediaProps =
   | {
@@ -9,12 +10,20 @@ type ArticleMediaProps =
       caption?: string;
     }
   | {
-      type: "video" | "embed";
+      type: "video";
       status?: "ready" | "planned";
       src?: string;
       title?: string;
       caption?: string;
       poster?: string;
+    }
+  | {
+      type: "embed";
+      status?: "ready" | "planned";
+      src?: string;
+      title?: string;
+      caption?: string;
+      expandable?: boolean;
     };
 
 export function ArticleMedia(props: ArticleMediaProps) {
@@ -65,11 +74,15 @@ export function ArticleMedia(props: ArticleMediaProps) {
     case "embed":
       return (
         <figure className="my-[38px] w-full">
-          <iframe
-            className="aspect-[16/9] w-full rounded-card border-0 bg-surface"
-            src={props.src}
-            title={props.title}
-          />
+          {props.expandable ? (
+            <ArticleEmbed src={props.src} title={props.title ?? "Interactive demo"} />
+          ) : (
+            <iframe
+              className="aspect-[16/9] w-full rounded-card border-0 bg-surface"
+              src={props.src}
+              title={props.title}
+            />
+          )}
           {props.caption && <figcaption className={captionClass}>{props.caption}</figcaption>}
         </figure>
       );

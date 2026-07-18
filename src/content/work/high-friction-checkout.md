@@ -3,131 +3,113 @@ slug: high-friction-checkout
 collection: work
 order: 2
 eyebrow: Wayfair · Checkout architecture
-title: "Wayfair: High Friction Checkout"
-summary: I turned a hardcoded checkout loyalty banner into a GraphQL-backed, schema-driven mini-flow that product could configure without making checkout more fragile.
-impact: Moved checkout content into CMS configuration while keeping purchase-critical state and failure handling safely in code.
+title: "How Much Should a CMS Own in Checkout?"
+summary: "Migrating a loyalty enrollment flow forced a harder architecture question: how much control should a CMS have inside a revenue-critical checkout?"
+impact: Product can change copy, layout, reward tiers, and interaction intent across five storefront locales without a code deploy, while purchase mutations and checkout recovery stay in code.
 hero:
   src: /work/high-friction-checkout/hfc-hero.png
-  alt: Wayfair Rewards checkout enrollment component — "Earn $14.95 in Rewards today!"
+  alt: Representative Wayfair Rewards checkout enrollment component showing reward value, enrollment choices, terms, and CTA
+
 tags: []
 ---
 
-# Building Schema-Driven Checkout UI with GraphQL
+Wayfair's [Block Builder](https://www.youtube.com/watch?v=m0WXGOSiMQU) is a server-driven UI platform. Instead of hardcoding what a page renders, the frontend asks Block Builder for a typed content graph and renders whatever comes back. Content editors configure it in a CMS. No code deploy required.
 
-I turned a hardcoded checkout loyalty banner into a GraphQL-backed, schema-driven mini-flow that product could configure without making checkout more fragile.
+That model works well for marketing surfaces. For checkout, it raises a harder question: **what should the CMS actually own?**
 
-## The short version
+Too little, and every copy tweak needs an engineer in a revenue-critical path. Too much, and a content editor can accidentally trap a customer behind an overlay that blocks the payment page.
 
-At first glance, this was a banner. In checkout, though, a banner is never just a banner.
+The name High Friction Checkout (HFC) is literal. The Rewards enrollment flow asks the customer to accept or decline before the rest of checkout becomes interactive. An overlay failure is not just a visual bug; it can stop someone from paying.
 
-- render configurable content from a CMS
-- use live checkout data like cart total and potential rewards
-- manage its own enrollment interaction
-- fail safely if anything went wrong
+When I migrated that existing flow from Wayfair's legacy PHP checkout stack to Block Builder, I had to decide where configurability ended and checkout control began.
 
-## Why this existed
+_The product visuals below are representative recreations. They contain no customer or internal production data._
 
-Wayfair wanted to increase Rewards enrollment during checkout.
-
-The first version lived in the legacy checkout stack. PHP prepared eligibility, reward values, feature flags, localized copy, and images. React rendered a checkout-specific component.
-
-As checkout moved toward a newer schema-driven architecture during Wayfair’s broader [tech replatforming](https://www.constellationr.com/insights/news/wayfair-starts-reap-rewards-optimization-tech-replatforming-efforts), the same flow needed to exist in the new Block Builder checkout.
-
-{% callout title="Migration goal" %}
-The goal was not just parity. I wanted the content to move into configuration, while checkout behavior stayed in code where it could be tested and safely recovered.
+{% callout title="The boundary" %}
+Block Builder could describe the experience and express its intent. Checkout code kept control of purchase mutations, gating, and recovery.
 {% /callout %}
 
-## The problem: checkout cannot break
+## The migration I could have done
 
-A normal marketing banner can fail quietly. A checkout banner cannot.
+The legacy component received one PHP data blob containing everything it needed: live checkout facts such as `potentialRewards` and `isLoyaltySkuAdded`, alongside titles, button labels, image IDs, and screen content. React consumed the whole shape as one unit.
 
-If it traps the user behind a veil, breaks payment, or blocks the page, it can directly hurt conversion.
+I could have recreated that payload in GraphQL and called the migration finished. That would have changed the stack without changing the design. Copy, layout, checkout state, and behavior would still be tangled together.
 
-- PHP owned content and reward logic.
-- React owned UI rendering.
-- Checkout owned purchase-critical state and veil behavior.
-- Product owned copy, layout, and screen variants.
+Instead, I split the flow by ownership:
 
-That made the flow harder to evolve. A change to copy, layout, reward messaging, or screen structure could require code changes in a revenue-critical checkout path.
+- **Block Builder owns the description:** screens, copy, terms, calls to action, layout, and styling tokens.
+- **The HFC component owns the interaction:** selected choice, terms acceptance, loading and error state, and the current screen.
+- **Checkout owns the consequences:** cart facts, the membership SKU mutation, and the global overlay that can block the page.
 
-## Before vs. after
+![Before and after ownership boundaries for the HFC migration](/work/high-friction-checkout/state_separation.svg)
 
-Before, the frontend received one checkout-specific data blob.
+## What Product can change without a deploy
 
-{% callout title="What to notice" %}
-The old shape mixes live checkout facts with content, images, and UI states.
-{% /callout %}
+Block Builder returns a typed GraphQL graph for the full experience. Each screen has three distinct regions rather than one open canvas. The header accepts an ordered set of logo, gem, and promotional-image blocks. Content has dedicated title and subtitle fields, followed by `Row` or `Column` containers. The footer has its own `Row` and `Column` containers.
 
-```json
-// Before: legacy response
-{
-  "potentialRewards": "$18.42",
-  "isLoyaltySkuAdded": false,
-  "isInSuppressionPeriod": false,
-  "logoImageId": "...",
-  "default": {
-    "title": "Earn rewards today",
-    "choice1": "Yes, enroll me",
-    "choice2": "No thanks",
-    "cta": "Join Rewards"
-  },
-  "added": { "...": "..." },
-  "declined": { "...": "..." }
-}
+Those containers accept a bounded set of content blocks: formatted messages, rich text, choices, terms, and enrollment actions. Containers cannot contain other containers. Editors can change ordering, direction, spacing, padding, and section alignment through Homebase design tokens, but the schema prevents a payment action from being dropped into the header or arbitrary CSS from entering checkout.
+
+{% media type="embed" src="/work/high-friction-checkout/composable_layout_demo.html" title="Representative Block Builder visual playground" caption="Build the screen with contextual Add menus, drag blocks to reorder them, and switch on Developer view to inspect the typed GraphQL structure underneath." expandable=true /%}
+
+The same component serves five storefront locales: US, Canadian English, Canadian French, UK, and Ireland. It selects one of four reward bands from the customer's potential rewards, membership fee, and a configurable minimum. A customer with a $50 cart can see a different message from one with a $5 cart without adding conditional copy to the frontend.
+
+CMS-authored strings can also include placeholders such as `[PotentialRewards]`, `[MembershipFee]`, and `[CartTotal]`. The component resolves those against live checkout data at render time. Product writes the message; checkout supplies the facts.
+
+## Structure, not another flag
+
+HFC runs in two modes. In `addToCart` mode, the enrollment action requires terms acceptance before it can add the membership SKU. In `standalone` mode, that terms gate and purchase path are absent.
+
+The obvious schema design was a `mode` field. I chose not to add one because it could disagree with the content around it: a screen could claim to be `addToCart` while omitting the required terms block.
+
+Instead, `deriveExperienceType()` reads the DEFAULT screen. A valid `BlockBuilderLoyaltyTermsAndConditions` block means `addToCart`; without one, the component uses `standalone`.
+
+```text
+DEFAULT screen
+  → contains a valid terms block?
+      yes → addToCart → require acceptance before the membership mutation
+      no  → standalone → do not enter the gated enrollment path
 ```
 
-```json
-// After: schema-driven content
-{
-  "__typename": "BlockBuilderLoyaltyProgramHighFrictionCheckoutExperience",
-  "screens": [
-    {
-      "screenType": "DEFAULT",
-      "header": { "logo": "..." },
-      "content": {
-        "titleOne": "Earn [PotentialRewards]",
-        "contentBlocks": ["Choices", "Terms", "CTA"]
-      },
-      "footer": { "contentBlocks": [] }
-    },
-    { "screenType": "REWARDS_ADDED" },
-    { "screenType": "REWARDS_DECLINED" }
-  ]
-}
+The CMS expresses intent by including the structure that makes the behavior valid. There is no second flag for an editor to keep in sync.
+
+A malformed configuration therefore fails toward the less consequential mode instead of silently bypassing the terms gate.
+
+## The screens are configurable; the transitions are not
+
+The CMS describes three screens: `DEFAULT`, `REWARDS_ADDED`, and `REWARDS_DECLINED`. It controls what each one looks like, but not when the component moves between them.
+
+Those transitions stay in a `useReducer` with discriminated union actions:
+
+```text
+DEFAULT
+  → customer accepts terms and enrollment succeeds → REWARDS_ADDED
+  → customer declines                              → REWARDS_DECLINED
+  → customer reconsiders                           → DEFAULT
 ```
 
-![Block Builder schema preview mock](/work/high-friction-checkout/block_builder_schema_preview.svg)
+The membership SKU mutation also stays in code. Content editors can change the call-to-action label or move it within the layout, but they cannot configure what gets added to the purchase contract.
 
-```md
-Key shift:
-Content/layout → Block Builder schema
-Dynamic checkout data → checkout state
-Interaction flow → local reducer/context
+## Checkout owns the escape hatch
+
+The HFC component does not enable the overlay directly. It emits `onVeilChange`; the surrounding checkout section translates that request into `enableVeil` and `disableVeil` actions in global checkout state.
+
+That separation gives checkout an escape hatch when the component fails:
+
+```text
+HFC asks checkout to enable the veil
+  → checkout sections become inactive
+  → HFC hits a render error
+  → its error boundary asks checkout to disable the veil
+  → HFC is removed
+  → the customer can continue checkout
 ```
 
-## The architecture: schema owns content, checkout owns facts
+The fallback behavior follows the same rule. If Block Builder omits a message for one reward band, the component uses default content and logs the missing tier with the block ID. A content mistake can produce generic copy; it should not make the payment page unusable.
 
-The banner became configurable content instead of a one-off hardcoded component.
+## What changed
 
-- **Block Builder owned content:** screens, copy, terms, CTAs, images, layout, spacing, and tiered reward messaging.
-- **Checkout owned facts:** cart total, potential rewards, membership price, whether the loyalty membership item was already in the cart, and global veil behavior.
-- **The component owned interaction:** selected choice, terms accepted, loading/error, current screen, and whether the veil had been dismissed.
+Before the migration, changing HFC copy, layout, or screen content meant changing a checkout-specific payload and shipping code. Live checkout facts and presentation were part of the same contract.
 
-![State separation diagram](/work/high-friction-checkout/state_separation.svg)
+Afterward, Product could configure the experience across five storefront locales without a frontend deploy. The React component rendered and validated that configuration, while checkout retained the operations with customer or revenue consequences: terms gating, screen transitions, purchase-contract mutations, and overlay recovery.
 
-{% callout title="Key idea" %}
-Checkout provided the facts, Block Builder provided the content, and HFC managed only its own interaction state.
-{% /callout %}
-
-## Safety rails
-
-Because this lived in checkout, failure handling mattered as much as the happy path.
-
-- **Error boundary:** protect checkout if the component fails.
-- **Veil escape hatch:** disable the overlay on errors so the customer cannot get trapped.
-- **Default values:** keep rendering if optional data is missing.
-- **Schema warnings:** log missing CMS variants and fall back to default screen content.
-- **Observability:** watch checkout errors, payment failures, and latency regressions.
-
-![Representative Datadog observability mock](/work/high-friction-checkout/datadog_observability_mock.svg)
-
+The line I landed on was consequence. The CMS could describe the experience and express what it wanted. Code still decided whether that intent was valid, what changed the order, and how checkout recovered when something went wrong.
