@@ -3,7 +3,7 @@ slug: high-friction-checkout
 collection: work
 order: 2
 eyebrow: Wayfair · Checkout architecture
-title: "How Much Should a CMS Own in Checkout?"
+title: "Wayfair Rewards in Checkout: Making a Revenue-Critical Flow Configurable"
 summary: "Migrating a loyalty enrollment flow forced a harder architecture question: how much control should a CMS have inside a revenue-critical checkout?"
 impact: Product can change copy, layout, reward tiers, and interaction intent across five storefront locales without a code deploy, while purchase mutations and checkout recovery stay in code.
 hero:
