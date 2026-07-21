@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ResumeDocument,
   type ResumeArticle,
@@ -15,6 +15,9 @@ type ResumeModalProps = {
   className?: string;
   icon?: string;
   icons?: string[];
+  source?: string;
+  autoOpenFromSearchParam?: string;
+  autoOpenDelayMs?: number;
 };
 
 export function ResumeModal({
@@ -24,8 +27,39 @@ export function ResumeModal({
   className = "text-link",
   icon,
   icons,
+  source = "homepage",
+  autoOpenFromSearchParam,
+  autoOpenDelayMs = 1000,
 }: ResumeModalProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const openResume = useCallback((openSource = source) => {
+    capturePortfolioEvent("resume_opened", { source: openSource });
+    setIsOpen(true);
+  }, [source]);
+
+  useEffect(() => {
+    if (!autoOpenFromSearchParam) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const shouldAutoOpen = params.get(autoOpenFromSearchParam) === "1";
+
+    if (!shouldAutoOpen) return;
+
+    params.delete(autoOpenFromSearchParam);
+    const nextSearch = params.toString();
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${nextSearch ? `?${nextSearch}` : ""}${window.location.hash}`,
+    );
+
+    const timer = window.setTimeout(() => {
+      openResume("url_param");
+    }, autoOpenDelayMs);
+
+    return () => window.clearTimeout(timer);
+  }, [autoOpenDelayMs, autoOpenFromSearchParam, openResume]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -48,10 +82,7 @@ export function ResumeModal({
       <button
         className={className}
         type="button"
-        onClick={() => {
-          capturePortfolioEvent("resume_opened", { source: "homepage" });
-          setIsOpen(true);
-        }}
+        onClick={() => openResume()}
       >
         {(icon || icons?.length) && (
           <span className="resume-link-icon" aria-hidden="true">

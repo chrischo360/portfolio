@@ -66,9 +66,11 @@ export function ArticleMedia(props: ArticleMediaProps) {
           <video
             className="block h-auto w-full rounded-card border border-border bg-surface"
             controls
+            playsInline
+            preload="metadata"
             poster={props.poster}
           >
-            <source src={props.src} />
+            <source src={props.src} type="video/mp4" />
           </video>
           {props.caption && <figcaption className={captionClass}>{props.caption}</figcaption>}
         </figure>

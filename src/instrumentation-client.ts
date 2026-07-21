@@ -75,12 +75,13 @@ applyAnalyticsPreference(url);
 const linkId = getLinkId(url);
 cleanLinkIdFromUrl(url);
 
+const isProductionHost = window.location.hostname === "www.christopher-cho.dev";
+const analyticsEnvironment = isProductionHost ? "production" : "development";
 const isAnalyticsDebug =
-  process.env.NODE_ENV === "development" &&
-  process.env.NEXT_PUBLIC_POSTHOG_DEBUG === "true";
+  !isProductionHost && process.env.NEXT_PUBLIC_POSTHOG_DEBUG === "true";
 
 const shouldCapture =
-  (process.env.NODE_ENV === "production" || isAnalyticsDebug) &&
+  (isProductionHost || isAnalyticsDebug) &&
   Boolean(process.env.NEXT_PUBLIC_POSTHOG_KEY) &&
   getLocalStorageValue(analyticsOptOutKey) !== "1";
 
@@ -98,14 +99,18 @@ if (shouldCapture) {
       ...event,
       properties: {
         ...event.properties,
-        analytics_environment: process.env.NODE_ENV,
+        analytics_environment: analyticsEnvironment,
       },
     }),
+    disable_session_recording: isAnalyticsDebug,
+    capture_dead_clicks: isAnalyticsDebug ? false : undefined,
     session_recording: {
       maskAllInputs: true,
     },
     defaults: "2025-05-24",
     loaded: (ph) => {
+      ph.register({ analytics_environment: analyticsEnvironment });
+
       if (!linkId) {
         return;
       }

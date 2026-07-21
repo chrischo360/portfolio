@@ -186,6 +186,7 @@ export function ArticleVideoComparison({
               muted
               playsInline
               preload="metadata"
+              controls
               loop={activeVideo === "complete"}
               onEnded={playAfter}
             >
@@ -208,6 +209,7 @@ export function ArticleVideoComparison({
               muted
               playsInline
               preload="metadata"
+              controls
               loop={activeVideo === "complete"}
               onEnded={finishComparison}
             >

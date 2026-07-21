@@ -32,6 +32,8 @@ export default function Home() {
                 label={resumeActionLabel}
                 articles={resumeArticles}
                 icons={["◔ ◔", "☞"]}
+                source="homepage_hero"
+                autoOpenFromSearchParam="resume"
               />
             </div>
           </div>
@@ -93,7 +95,7 @@ export default function Home() {
               <TrackedLink
                 className="work-item"
                 href={article.href}
-                eventName="work_article_clicked"
+                eventName="case_study_cta_clicked"
                 eventProperties={{
                   article_slug: article.slug,
                   article_title: article.title,
@@ -187,7 +189,7 @@ export default function Home() {
             <TrackedAnchor
               className="contact-pill"
               href={`mailto:${siteConfig.email}`}
-              eventName="contact_clicked"
+              eventName="contact_cta_clicked"
               eventProperties={{ contact_type: "email", source: "homepage" }}
             >
               <svg
@@ -211,7 +213,7 @@ export default function Home() {
               href={siteConfig.links.linkedin}
               target="_blank"
               rel="noreferrer"
-              eventName="contact_clicked"
+              eventName="contact_cta_clicked"
               eventProperties={{ contact_type: "linkedin", source: "homepage" }}
             >
               <svg
@@ -230,7 +232,7 @@ export default function Home() {
               href={siteConfig.links.github}
               target="_blank"
               rel="noreferrer"
-              eventName="contact_clicked"
+              eventName="contact_cta_clicked"
               eventProperties={{ contact_type: "github", source: "homepage" }}
             >
               <svg

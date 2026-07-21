@@ -28,7 +28,7 @@ function RelatedWorkLink({
         href={article.href}
         aria-label={`${work.label ?? "Related work"}: ${article.title}`}
         aria-describedby={tooltipId}
-        eventName="work_article_clicked"
+        eventName="case_study_cta_clicked"
         eventProperties={{
           article_slug: article.slug,
           article_title: article.title,

@@ -1979,8 +1979,9 @@ h1 {
 .resume-modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(20, 20, 20, 0.62);
-  backdrop-filter: blur(10px);
+  background: rgba(34, 30, 24, 0.36);
+  backdrop-filter: blur(6px);
+  animation: resume-backdrop-in 0.55s ease-out both;
 }
 
 .resume-modal-panel {
@@ -1995,6 +1996,37 @@ h1 {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  transform-origin: top center;
+  animation: resume-panel-in 0.48s 0.12s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes resume-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes resume-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resume-modal-backdrop,
+  .resume-modal-panel {
+    animation: none;
+  }
 }
 
 .resume-modal-header {
@@ -2433,7 +2465,7 @@ h1 {
 
 @media (max-width: 980px) {
   .shell {
-    width: min(100% - 28px, 760px);
+    width: min(100% - 36px, 760px);
   }
 
   .nav {
@@ -2449,9 +2481,9 @@ h1 {
   }
 
   .hero {
-    padding: 72px 0 54px;
+    padding: 60px 0 42px;
     grid-template-columns: 1fr;
-    gap: 34px;
+    gap: 28px;
     border-bottom: 1px solid var(--border);
   }
 
@@ -2462,11 +2494,11 @@ h1 {
   }
 
   .section-pad {
-    padding: 58px 0;
+    padding: 50px 0;
   }
 
   #work {
-    padding-top: 58px;
+    padding-top: 50px;
   }
 
   .section-head {
@@ -2545,8 +2577,25 @@ h1 {
   }
 
   h1 {
-    font-size: clamp(40px, 11vw, 56px);
+    font-size: clamp(38px, 10.5vw, 50px);
     letter-spacing: -0.028em;
+  }
+
+  .lead {
+    margin-top: 16px;
+    font-size: 16px;
+  }
+
+  .resume-prompt {
+    margin-top: 22px;
+  }
+
+  .resume-prompt h2 {
+    font-size: 22px;
+  }
+
+  .resume-prompt-action .text-link {
+    font-size: 15px;
   }
 
   .resume-prompt-action {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArticle, getArticles } from "@/lib/markdoc/articles";
+import { ArticleEngagementTracker } from "@/components/ArticleEngagementTracker";
 import { renderArticle } from "@/lib/markdoc/render";
 
 type BlogArticlePageProps = {
@@ -44,6 +45,11 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
 
   return (
     <article className="section-pad article-page">
+      <ArticleEngagementTracker
+        slug={article.slug}
+        title={article.title}
+        type="blog"
+      />
       <Link className="case-link" href="/blog">
         ← Back to blog
       </Link>

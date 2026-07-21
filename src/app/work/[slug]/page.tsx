@@ -6,6 +6,7 @@ import { getArticle, getArticles } from "@/lib/markdoc/articles";
 import { renderArticle } from "@/lib/markdoc/render";
 import { getHeadings } from "@/lib/markdoc/toc";
 import { ArticleToc } from "@/components/ArticleToc";
+import { ArticleEngagementTracker } from "@/components/ArticleEngagementTracker";
 
 type WorkArticlePageProps = {
   params: Promise<{
@@ -52,6 +53,11 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
 
   return (
     <article className="section-pad article-page">
+      <ArticleEngagementTracker
+        slug={article.slug}
+        title={article.title}
+        type="work"
+      />
       <Link className="case-link" href="/#work">
         ← Back to selected work
       </Link>
