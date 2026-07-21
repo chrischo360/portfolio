@@ -75,8 +75,12 @@ applyAnalyticsPreference(url);
 const linkId = getLinkId(url);
 cleanLinkIdFromUrl(url);
 
+const isAnalyticsDebug =
+  process.env.NODE_ENV === "development" &&
+  process.env.NEXT_PUBLIC_POSTHOG_DEBUG === "true";
+
 const shouldCapture =
-  process.env.NODE_ENV === "production" &&
+  (process.env.NODE_ENV === "production" || isAnalyticsDebug) &&
   Boolean(process.env.NEXT_PUBLIC_POSTHOG_KEY) &&
   getLocalStorageValue(analyticsOptOutKey) !== "1";
 
@@ -85,8 +89,18 @@ if (shouldCapture) {
     api_host: "/ingest",
     ui_host: "https://us.posthog.com",
     capture_pageview: "history_change",
-    autocapture: false,
+    autocapture: {
+      dom_event_allowlist: ["click"],
+      element_allowlist: ["a", "button"],
+    },
     person_profiles: "identified_only",
+    before_send: (event) => ({
+      ...event,
+      properties: {
+        ...event.properties,
+        analytics_environment: process.env.NODE_ENV,
+      },
+    }),
     session_recording: {
       maskAllInputs: true,
     },
@@ -102,9 +116,7 @@ if (shouldCapture) {
         ...(linkLabel ? { portfolio_link_label: linkLabel } : {}),
       };
 
-      ph.register(linkProperties);
-
-      ph.identify(`portfolio:${linkId}`, linkProperties);
+      ph.register_for_session(linkProperties);
 
       ph.capture("portfolio_link_opened", {
         ...linkProperties,

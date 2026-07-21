@@ -1,3 +1,4 @@
+import { TrackedAnchor } from "@/components/TrackedLink";
 import { resumeData, type RelatedWork, type ResumeEntry } from "@/data/resume";
 
 export type ResumeArticle = {
@@ -22,14 +23,20 @@ function RelatedWorkLink({
 
   return (
     <span className="resume-related">
-      <a
+      <TrackedAnchor
         className="resume-related-link"
         href={article.href}
         aria-label={`${work.label ?? "Related work"}: ${article.title}`}
         aria-describedby={tooltipId}
+        eventName="work_article_clicked"
+        eventProperties={{
+          article_slug: article.slug,
+          article_title: article.title,
+          source: "resume_modal",
+        }}
       >
         {work.label ?? "Related work"} <span aria-hidden="true">↗</span>
-      </a>
+      </TrackedAnchor>
       <span className="resume-related-preview" id={tooltipId} role="tooltip">
         <span className="resume-related-eyebrow">
           {work.label ?? "Related work"}

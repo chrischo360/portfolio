@@ -5,6 +5,8 @@ import {
   ResumeDocument,
   type ResumeArticle,
 } from "@/components/ResumeDocument";
+import { TrackedAnchor } from "@/components/TrackedLink";
+import { capturePortfolioEvent } from "@/lib/analytics";
 
 type ResumeModalProps = {
   href: string;
@@ -43,7 +45,14 @@ export function ResumeModal({
 
   return (
     <>
-      <button className={className} type="button" onClick={() => setIsOpen(true)}>
+      <button
+        className={className}
+        type="button"
+        onClick={() => {
+          capturePortfolioEvent("resume_opened", { source: "homepage" });
+          setIsOpen(true);
+        }}
+      >
         {(icon || icons?.length) && (
           <span className="resume-link-icon" aria-hidden="true">
             {icons?.length
@@ -71,9 +80,15 @@ export function ResumeModal({
                 <h2 id="resume-modal-title">Resume</h2>
               </div>
               <div className="resume-modal-actions">
-                <a className="button secondary" href={href} download>
+                <TrackedAnchor
+                  className="button secondary"
+                  href={href}
+                  download
+                  eventName="resume_downloaded"
+                  eventProperties={{ source: "resume_modal" }}
+                >
                   Download PDF
-                </a>
+                </TrackedAnchor>
                 <button
                   className="icon-button"
                   type="button"

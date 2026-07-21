@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ResumeModal } from "@/components/ResumeModal";
+import { TrackedAnchor, TrackedLink } from "@/components/TrackedLink";
 import { SectionHeading } from "@/components/SectionHeading";
 import { homeContent } from "@/data/content";
 import { siteConfig } from "@/data/site";
@@ -90,7 +90,16 @@ export default function Home() {
         <ul className="work-list">
           {workArticles.map((article) => (
             <li key={article.slug}>
-              <Link className="work-item" href={article.href}>
+              <TrackedLink
+                className="work-item"
+                href={article.href}
+                eventName="work_article_clicked"
+                eventProperties={{
+                  article_slug: article.slug,
+                  article_title: article.title,
+                  source: "homepage",
+                }}
+              >
                 {article.cardImage && (
                   <div className="work-item-image">
                     <Image
@@ -110,7 +119,7 @@ export default function Home() {
                     Read story <span aria-hidden="true">→</span>
                   </span>
                 </div>
-              </Link>
+              </TrackedLink>
             </li>
           ))}
         </ul>
@@ -175,7 +184,12 @@ export default function Home() {
             Contact
           </h2>
           <div className="contact-links" aria-label="Contact links">
-            <a className="contact-pill" href={`mailto:${siteConfig.email}`}>
+            <TrackedAnchor
+              className="contact-pill"
+              href={`mailto:${siteConfig.email}`}
+              eventName="contact_clicked"
+              eventProperties={{ contact_type: "email", source: "homepage" }}
+            >
               <svg
                 aria-hidden="true"
                 width="16"
@@ -191,12 +205,14 @@ export default function Home() {
                 <path d="m3 7 9 6 9-6" />
               </svg>
               Email
-            </a>
-            <a
+            </TrackedAnchor>
+            <TrackedAnchor
               className="contact-pill"
               href={siteConfig.links.linkedin}
               target="_blank"
               rel="noreferrer"
+              eventName="contact_clicked"
+              eventProperties={{ contact_type: "linkedin", source: "homepage" }}
             >
               <svg
                 aria-hidden="true"
@@ -208,12 +224,14 @@ export default function Home() {
                 <path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.4 8.05h4.15V24H.4V8.05Zm7.2 0h3.98v2.18h.06c.55-1.05 1.9-2.16 3.9-2.16 4.17 0 4.94 2.74 4.94 6.31V24h-4.14v-6.98c0-1.66-.03-3.8-2.32-3.8-2.32 0-2.68 1.81-2.68 3.68V24H7.6V8.05Z" />
               </svg>
               LinkedIn
-            </a>
-            <a
+            </TrackedAnchor>
+            <TrackedAnchor
               className="contact-pill"
               href={siteConfig.links.github}
               target="_blank"
               rel="noreferrer"
+              eventName="contact_clicked"
+              eventProperties={{ contact_type: "github", source: "homepage" }}
             >
               <svg
                 aria-hidden="true"
@@ -225,7 +243,7 @@ export default function Home() {
                 <path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z" />
               </svg>
               GitHub
-            </a>
+            </TrackedAnchor>
           </div>
         </div>
       </section>
