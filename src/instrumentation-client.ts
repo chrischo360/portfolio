@@ -82,13 +82,16 @@ if (shouldCapture) {
       element_allowlist: ["a", "button"],
     },
     person_profiles: "identified_only",
-    before_send: (event) => ({
-      ...event,
-      properties: {
-        ...event.properties,
-        analytics_environment: analyticsEnvironment,
-      },
-    }),
+    before_send: (event) => {
+      if (!event) return null;
+      return {
+        ...event,
+        properties: {
+          ...event.properties,
+          analytics_environment: analyticsEnvironment,
+        },
+      };
+    },
     disable_session_recording: isAnalyticsDebug,
     capture_dead_clicks: isAnalyticsDebug ? false : undefined,
     session_recording: {
