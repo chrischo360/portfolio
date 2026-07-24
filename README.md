@@ -1,8 +1,6 @@
 # [christopher-cho.dev](https://www.christopher-cho.dev/?utm_source=github)
 
-<img width="1240" height="632" alt="Screenshot 2026-07-05 at 5 14 25 PM" src="https://github.com/user-attachments/assets/bce663b2-6729-4d54-a38e-64b214ff170a" />
-<img width="1251" height="936" alt="Screenshot 2026-07-05 at 5 13 17 PM" src="https://github.com/user-attachments/assets/3effb7cc-a0ec-4261-ab71-1242591d34b4" />
-
+<img width="1317" height="864" alt="Screenshot 2026-07-24 at 10 36 43 AM" src="https://github.com/user-attachments/assets/f5f849e3-f9ce-4fff-a91a-335c8742500a" />
 
 ## Tech stack
 
