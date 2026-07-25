@@ -30,7 +30,7 @@ type ResumeData = {
   education: {
     school: string;
     degree: string;
-    honors: string;
+    honors?: string;
   };
   skills: Array<{
     label: string;

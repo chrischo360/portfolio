@@ -2,15 +2,15 @@
   "name": "Christopher Cho",
   "contact": [
     {
+      "label": "US Citizen"
+    },
+    {
       "label": "201-779-9417",
       "href": "tel:+12017799417"
     },
     {
       "label": "christopher.cho.dev@gmail.com",
       "href": "mailto:christopher.cho.dev@gmail.com"
-    },
-    {
-      "label": "New York, NY"
     },
     {
       "label": "linkedin.com/in/chrischo360",
@@ -29,66 +29,59 @@
       "period": "March 2025 — Present",
       "bullets": [
         {
-          "text": "Shipped features end to end across checkout, cart, and browse pages serving 200M+ annual sessions, iterating quickly based on product and design feedback"
+          "text": "Optimized checkout loyalty enrollment through A/B experimentation, increasing Membership Attach Rate by 220% and contributing to projected $2.2M annual GRS."
         },
         {
-          "text": "Ran A/B experiments on checkout loyalty enrollment modals, contributing to a +220% Membership Attach Rate lift projected to generate $2.2M in annual GRS"
-        },
-        {
-          "text": "Drove migration of a high-traffic checkout page from a legacy monolith to a federated GraphQL and Java architecture",
-          "relatedWork": {
-            "slug": "high-friction-checkout"
-          }
-        },
-        {
-          "text": "Decoupled CMS preview from checkout contract creation, cutting modal load time from 3.8s to 0.5s",
+          "text": "Decoupled CMS preview from checkout contract creation, cutting load time by 86% from 3.8s to 0.5s.",
           "relatedWork": {
             "slug": "rewards-modal-preloading"
           }
         },
         {
-          "text": "Designed a server-side API integration within a day of a rate limit issue at major sale launch, preventing customer impact",
-          "relatedWork": {
-            "slug": "sale-rate-limit-incident"
-          }
+          "text": "Engineered end-to-end checkout, cart, and browse features serving 200M+ annual sessions, accelerating feature delivery through rapid cross-functional iteration."
         },
         {
-          "text": "Configured Datadog dashboards, alerts, and synthetics to monitor checkout errors, payment failures, and page latency",
+          "text": "Migrated high-traffic checkout functionality from a legacy monolith to federated GraphQL and Java architecture, improving scalability, maintainability, and service modularity.",
           "relatedWork": {
-            "slug": "checkout-performance"
+            "slug": "high-friction-checkout"
           }
         }
       ]
     },
     {
       "organization": "Lacuna Mentors",
-      "role": "Co-Founder and Software Engineer",
+      "location": "Boston, MA",
+      "role": "Co-Founder & Software Engineer",
       "period": "December 2023 — May 2024",
       "bullets": [
         {
-          "text": "Co-founded and led engineering from zero to one for a mentorship marketplace, growing to 60+ mentors and validating the concept through direct customer feedback",
+          "text": "Co-founded and led engineering for a zero-to-one mentorship marketplace, scaling the platform to support 60+ mentors through iterative software development.",
           "relatedWork": {
             "slug": "lacuna-mentors"
           }
         },
         {
-          "text": "Owned product execution across onboarding, scheduling, and mentor discovery workflows, prioritizing high-leverage improvements from user conversations"
+          "text": "Engineered a custom scheduling system, eliminating third-party dependencies and reducing operational software costs, saving ~$1,000 per month."
         },
         {
-          "text": "Built a custom scheduling system, saving the business $900/month in costs"
+          "text": "Developed and optimized onboarding, scheduling, and mentor discovery workflows, translating customer feedback into scalable, high-impact product and engineering improvements."
         }
       ]
     },
     {
       "organization": "Hariri Software & Application Innovation Lab",
+      "location": "Boston, MA",
       "role": "Software Engineer",
       "period": "May 2021 — August 2023",
       "bullets": [
         {
-          "text": "Worked directly with university researchers to manage the full product lifecycle for a suite of full-stack applications — from requirements gathering and rapid iteration based on weekly demos to final deployment"
+          "text": "Engineered and delivered multiple full-stack applications for university researchers, managing 100% of the development lifecycle from requirements gathering through production deployment."
         },
         {
-          "text": "Selected as one of only two students to receive the 2023 Hariri Student Excellence Award for exceptional skill, strong work ethic, and commitment to excellence"
+          "text": "Accelerated development cycles through weekly stakeholder demos and iterative feedback, enabling continuous feature refinement and reducing requirements-to-deployment turnaround."
+        },
+        {
+          "text": "Collaborated directly with university researchers to translate complex requirements into production-ready applications, earning the 2023 Hariri Student Excellence Award for engineering excellence."
         }
       ]
     }
@@ -99,62 +92,41 @@
       "role": "Julius Sheets",
       "bullets": [
         {
-          "text": "Built an excel editor inside Julius AI's Data Explorer, enabling users to open, edit, and save .xlsx files directly within the product"
+          "text": "Engineered an in-product Excel editor using SpreadJS, enabling in-browser opening, editing, and saving of .xlsx files within Data Explorer."
         },
         {
-          "text": "Integrated SpreadJS for in-browser sheet rendering with backend changes to persist edits to the user's spreadsheet"
+          "text": "Integrated frontend spreadsheet rendering with backend persistence, enabling real-time streaming of agent-generated cell operations during AI-planned execution."
         },
         {
-          "text": "Streamed agent-generated cell operations into the spreadsheet in real time as Julius AI planned and executed steps"
-        },
-        {
-          "text": "Shipped to dev environment behind a feature flag within three days"
-        }
-      ]
-    },
-    {
-      "organization": "Pi-cc",
-      "role": "github.com/chrischo360/pi-cc",
-      "roleHref": "https://github.com/chrischo360/pi-cc",
-      "bullets": [
-        {
-          "text": "Built an open-source extension for pi, an agent harness, that detects fenced code blocks and presents a numbered picker to copy them cleanly",
-          "relatedWork": {
-            "slug": "pi-codeblock-copy"
-          }
+          "text": "Delivered the end-to-end spreadsheet editing feature to the development environment behind a feature flag within three days, enabling controlled testing and deployment."
         }
       ]
     }
   ],
   "education": {
     "school": "Boston University",
-    "degree": "Bachelor of Arts in Computer Science",
-    "honors": "Dean's List (Fall 2021, Spring 2022, Fall 2022, Spring 2023, Fall 2023)"
+    "degree": "Bachelor of Arts in Computer Science"
   },
   "skills": [
     {
-      "label": "Languages",
-      "value": "TypeScript, JavaScript, Python, Java, SQL, Bash"
+      "label": "Languages & Tools",
+      "value": "Python, Java, C++, SQL, Git, Linux, VS Code, HTML, CSS, JavaScript, TypeScript, Go, Rust, Bash, JSON, YAML, GraphQL, Postman"
     },
     {
-      "label": "Frontend",
-      "value": "React, Next.js, Redux, Apollo Client, Tailwind, Styled Components"
+      "label": "Frameworks & Libraries",
+      "value": "React, Node.js, Flask, FastAPI, Django, Express, Spring Boot, Next.js, Redux, Tailwind CSS, Angular, Vue.js, JUnit, PyTest, Jest, Cypress, Selenium, gRPC"
     },
     {
-      "label": "Backend",
-      "value": "Node.js, Nest.js, FastAPI, GraphQL, Apollo, Prisma, REST APIs"
-    },
-    {
-      "label": "Analytics",
-      "value": "BigQuery, Posthog, Google Analytics, Datadog, Datadog Synthetics"
+      "label": "Databases & Storage",
+      "value": "PostgreSQL, MySQL, MongoDB, Redis, Firebase, DynamoDB, Cassandra, SQLite, Elasticsearch"
     },
     {
       "label": "Cloud & DevOps",
-      "value": "Google Cloud Platform, Vercel, Docker, Terraform, Buildkite, Git, Playwright, Jest"
+      "value": "AWS, GCP, Azure, Docker, Kubernetes, Terraform, CI/CD, Jenkins, ArgoCD, Helm, Prometheus"
+    },
+    {
+      "label": "Systems & Architecture",
+      "value": "Microservices, REST/GraphQL APIs, WebSockets, Kafka, RabbitMQ"
     }
-  ],
-  "howIWork": {
-    "slug": "dev-environment",
-    "label": "How I work"
-  }
+  ]
 }

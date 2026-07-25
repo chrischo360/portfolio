@@ -157,7 +157,7 @@ export function ResumeDocument({ articles }: { articles: ResumeArticle[] }) {
           <div className="resume-education">
             <strong>{resumeData.education.school}</strong>
             <em>{resumeData.education.degree}</em>
-            <span>Honors: {resumeData.education.honors}</span>
+            {resumeData.education.honors && <span>Honors: {resumeData.education.honors}</span>}
           </div>
         </ResumeSection>
 
