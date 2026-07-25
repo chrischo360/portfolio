@@ -18,7 +18,7 @@ export type Article = {
   title: string;
   summary: string;
   impact?: string;
-  headerDisplay?: "full" | "minimal" | "hero-only";
+  headerDisplay?: "full" | "minimal" | "hero-only" | "copy-only";
   hidden?: boolean;
   order?: number;
   hero?: ArticleImage;

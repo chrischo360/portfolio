@@ -3,7 +3,7 @@ slug: high-friction-checkout
 collection: work
 order: 2
 eyebrow: Wayfair · Checkout architecture
-title: "Wayfair Rewards in Checkout: Making a Revenue-Critical Flow Configurable"
+title: "Wayfair: Making a Revenue-Critical Flow Configurable in Checkout"
 summary: "I moved a blocking Rewards enrollment flow from a legacy PHP payload to server-driven UI without giving the CMS control of purchase mutations or recovery."
 impact: Content editors can change copy, layout, and reward-tier messaging across five locales without a deploy, while checkout keeps control of enrollment mutations and failure recovery.
 headerDisplay: hero-only
@@ -27,12 +27,6 @@ Too little, and every copy tweak needs an engineer in a revenue-critical path. T
 The name High Friction Checkout (HFC) is literal: customers have to accept or decline the Rewards offer before the rest of checkout becomes interactive. The flow sits above checkout behind a global veil, so a failure can stop payment—not just break a banner.
 
 When I migrated that existing flow from Wayfair's legacy PHP checkout stack to Block Builder, I had to decide where configurability ended and checkout control began.
-
-_The product visuals below are representative recreations. They contain no customer or internal production data._
-
-{% callout title="The boundary" %}
-Block Builder could describe the experience and express its intent. Checkout code kept control of purchase mutations, gating, and recovery.
-{% /callout %}
 
 ## Before the migration
 

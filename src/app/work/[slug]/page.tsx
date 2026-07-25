@@ -47,7 +47,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
   }
 
   const headings = getHeadings(article.content);
-  const showHero = article.headerDisplay !== "minimal";
+  const showHero = article.headerDisplay !== "minimal" && article.headerDisplay !== "copy-only";
   const showHeaderCopy =
     article.headerDisplay !== "minimal" && article.headerDisplay !== "hero-only";
 
@@ -66,7 +66,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
         <div className="min-w-0">
           <header
             className={`mx-auto mt-[28px] max-w-[860px] border-b border-border pt-0 ${
-              showHeaderCopy ? "pb-[42px]" : "pb-[24px]"
+              article.headerDisplay === "copy-only" ? "pb-[12px]" : showHeaderCopy ? "pb-[42px]" : "pb-[24px]"
             }`}
           >
             <h1 className="m-0 max-w-[780px] font-heading text-[clamp(46px,8vw,82px)] font-medium leading-[0.95] tracking-[-0.065em]">
@@ -114,7 +114,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
             )}
           </header>
 
-          <div className={showHeaderCopy ? "mt-[54px]" : "mt-[28px]"}>
+          <div className={article.headerDisplay === "copy-only" ? "mt-[18px]" : showHeaderCopy ? "mt-[54px]" : "mt-[28px]"}>
             <div className="prose prose-neutral max-w-none prose-headings:max-w-[680px] prose-p:max-w-[680px] prose-ul:max-w-[680px] prose-ol:max-w-[680px] prose-blockquote:max-w-[780px] prose-pre:m-0 prose-pre:rounded-none prose-pre:p-[22px] prose-pre:!bg-transparent">
               {renderArticle(article.content, {
                 title: article.title,
