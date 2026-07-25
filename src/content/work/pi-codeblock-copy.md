@@ -4,7 +4,7 @@ collection: work
 order: 1
 eyebrow: Pi · Developer tooling
 title: "pi-cc: Safer Copy-Paste for Shell Commands"
-summary: A Pi extension that detects code blocks in the latest assistant response and lets you copy the exact one you want, without wrapped lines and mangled line breaks.
+summary: A Pi extension that detects code blocks and lets you copy the exact one you want without fighting the terminal.
 hero:
   type: gif
   src: /work/pi-codeblock-copy/demo.gif
@@ -18,7 +18,7 @@ tags: []
 
 # pi-cc: Safer Copy-Paste for Shell Commands
 
-The difference is easiest to see. First, tmux copy mode turns a wrapped block into broken lines and stray terminal text. Then `pi-cc` copies the original fenced block exactly as written.
+While tmux copy mode turns a wrapped block into broken lines and stray terminal text, `pi-cc` **copies the original block exactly as written.**
 
 {% videocomparison beforeSrc="/work/pi-codeblock-copy/before-tmux-copy.mp4" afterSrc="/work/pi-codeblock-copy/after-pi-cc.mp4" beforeLabel="Before: tmux copy mode" afterLabel="After: pi-cc" /%}
 
@@ -26,7 +26,7 @@ The difference is easiest to see. First, tmux copy mode turns a wrapped block in
 [https://github.com/chrischo360/pi-cc](https://github.com/chrischo360/pi-cc)
 ### What is Pi?
 
-[Pi](https://pi.dev/) is a terminal-native AI coding agent — a minimal agent harness. Adapt Pi to your workflows, not the other way around.
+[Pi](https://pi.dev/) is a minimal agent harness. Adapt Pi to your workflows, not the other way around.
 
 ### What problem does `pi-cc` solve?
 

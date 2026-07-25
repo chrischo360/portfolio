@@ -65,7 +65,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_220px] lg:items-start lg:gap-16">
         <div className="min-w-0">
           <header
-            className={`mx-auto mt-[28px] max-w-[860px] border-b border-border pt-0 ${
+            className={`mx-auto mt-[28px] max-w-[800px] border-b border-border pt-0 ${
               article.headerDisplay === "copy-only" ? "pb-[12px]" : showHeaderCopy ? "pb-[42px]" : "pb-[24px]"
             }`}
           >
@@ -115,7 +115,7 @@ export default async function WorkArticlePage({ params }: WorkArticlePageProps) 
           </header>
 
           <div className={article.headerDisplay === "copy-only" ? "mt-[18px]" : showHeaderCopy ? "mt-[54px]" : "mt-[28px]"}>
-            <div className="prose prose-neutral max-w-none prose-headings:max-w-[680px] prose-p:max-w-[680px] prose-ul:max-w-[680px] prose-ol:max-w-[680px] prose-blockquote:max-w-[780px] prose-pre:m-0 prose-pre:rounded-none prose-pre:p-[22px] prose-pre:!bg-transparent">
+            <div className="prose prose-neutral max-w-[800px] prose-pre:m-0 prose-pre:rounded-none prose-pre:p-[22px] prose-pre:!bg-transparent">
               {renderArticle(article.content, {
                 title: article.title,
                 summary: article.summary,
